@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#11796c">
+  <title>Case #{{case.id}} · {{case.patient_name}} · Prana Homeo Care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #11796c;
+      --brand-dark: #0b5b52;
+      --mint: #eaf6f2;
+      --ink: #172d2a;
+      --muted: #647b75;
+      --line: #dfe9e5;
+      --bg: #f4f8f6;
+      --card: #ffffff;
+      --shadow: 0 14px 38px rgba(24, 65, 55, 0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #e4f5ee 0%, transparent 32%), var(--bg);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+    .shell {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      padding: clamp(14px, 3.5vw, 32px);
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--brand-dark);
+      text-decoration: none;
+      font-weight: 750;
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      transition: all 0.16s;
+    }
+    .back-btn:hover {
+      background: var(--mint);
+      border-color: #b8e0d4;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 44px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 750;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.16s;
+      white-space: nowrap;
+    }
+    .btn.primary {
+      background: var(--brand);
+      color: white;
+      border-color: var(--brand);
+    }
+    .btn.primary:hover {
+      background: var(--brand-dark);
+    }
+    .btn.secondary {
+      background: #ffffff;
+      color: var(--brand-dark);
+      border-color: #cfe3db;
+    }
+    .btn.secondary:hover {
+      background: var(--mint);
+    }
+    .btn.print-btn {
+      background: #2b3e39;
+      color: #ffffff;
+    }
+    .btn.print-btn:hover {
+      background: #172522;
+    }
+    .case-title-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: clamp(18px, 3.5vw, 26px);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--brand);
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .case-title-card h1 {
+      font-size: clamp(24px, 4vw, 32px);
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+    }
+    .case-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+    .case-quick-contact {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .contact-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: var(--mint);
+      color: var(--brand-dark);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .contact-badge:hover {
+      background: #d4ece3;
+    }
+    .flash {
+      background: #e6f6f0;
+      color: #0e6255;
+      border: 1px solid #bce4d6;
+      padding: 13px 18px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: clamp(16px, 3vw, 26px);
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .panel-header h2 {
+      font-size: 20px;
+      letter-spacing: -0.4px;
+    }
+    .panel-header p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .fields-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .field-item {
+      min-width: 0;
+    }
+    .field-item.full-width {
+      grid-column: 1 / -1;
+    }
+    label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 750;
+      margin-bottom: 6px;
+      color: #2e443f;
+      text-transform: capitalize;
+    }
+    input, textarea {
+      display: block;
+      width: 100%;
+      min-height: 46px;
+      padding: 11px 14px;
+      border: 1.5px solid #d5e4de;
+      border-radius: 12px;
+      background: #fbfdfc;
+      color: var(--ink);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.16s, box-shadow 0.16s;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(17, 121, 108, 0.16);
+      background: #ffffff;
+    }
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    .followup-entry {
+      background: #fcfdfc;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+    .followup-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed var(--line);
+    }
+    .followup-head strong {
+      font-size: 15px;
+      color: var(--brand-dark);
+    }
+    .followup-section {
+      margin-top: 10px;
+    }
+    .followup-section h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .answer-box {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: #ffffff;
+      border: 1px solid #e4efe9;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .footer-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 24px;
+    }
+
+    /* Print Stylesheet for clean medical report export */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 12pt;
+      }
+      .shell {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .header-bar, .header-actions, .btn, .back-btn, form, #add-followup-form {
+        display: none !important;
+      }
+      .case-title-card {
+        border: none !important;
+        box-shadow: none !important;
+        border-bottom: 2px solid #11796c !important;
+        border-radius: 0 !important;
+        padding: 0 0 12pt 0 !important;
+        margin-bottom: 16pt !important;
+      }
+      .panel {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+        border-radius: 4px !important;
+        padding: 10pt !important;
+        page-break-inside: avoid;
+      }
+      .fields-grid {
+        grid-template-columns: 1fr 1fr !important;
+      }
+      input, textarea {
+        border: 1px solid #ddd !important;
+        background: #fff !important;
+        font-size: 10pt !important;
+      }
+      .print-header {
+        display: block !important;
+        margin-bottom: 14pt;
+        text-align: center;
+      }
+    }
+    .print-header {
+      display: none;
+    }
+
+    @media (max-width: 680px) {
+      .fields-grid {
+        grid-template-columns: 1fr;
+      }
+      .field-item.full-width {
+        grid-column: auto;
+      }
+      .case-title-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-actions {
+        width: 100%;
+      }
+      .header-actions .btn {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="print-header">
+      <h2 style="font-size:18pt;color:#11796c;">Prana Homeo Care</h2>
+      <p style="font-size:10pt;">Plot no 121, 2/94A Jayalakshmi Nagar, Kattupakkam, Chennai 600056 · Helpline: +91 99623 03009</p>
+      <hr style="margin:10pt 0;">
+    </div>
+
+    <header class="header-bar">
+      <a class="back-btn" href="{{url_for('admin_dashboard')}}">← Back to Dashboard</a>
+      <div class="header-actions">
+        <button class="btn print-btn" type="button" onclick="window.print()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print / Save PDF
+        </button>
+        <a class="btn secondary" href="{{url_for('index')}}">Patient Intake Form ↗</a>
+        <form method="post" action="{{url_for('delete_case', case_id=case.id)}}" style="display:inline;margin:0;" onsubmit="return confirm('Are you sure you want to permanently delete this case record?');">
+          <button class="btn secondary" type="submit" style="color:#c0392b;border-color:#f5c6cb;">Delete</button>
+        </form>
+      </div>
+    </header>
+
+    <div class="case-title-card">
+      <div>
+        <div class="kicker">Clinical Case File · Ref #{{case.id}}</div>
+        <h1>{{case.patient_name}}</h1>
+        <div class="case-meta">
+          Submitted: {{case.created_at}} · Last updated: {{case.updated_at}} · Language: {{case.language|upper}}
+        </div>
+      </div>
+      <div class="case-quick-contact">
+        {% if case.phone %}
+          <a class="contact-badge" href="tel:{{case.phone}}">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            Call: {{case.phone}}
+          </a>
+          <a class="contact-badge" href="https://wa.me/{{case.phone|replace('+','')|replace(' ','')|replace('-','')}}?text=Hello%20{{case.patient_name|urlencode}},%20this%20is%20Prana%20Homeo%20Care%20regarding%20your%20case%20record%20#{{case.id}}." target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            WhatsApp
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% with messages=get_flashed_messages() %}
+      {% for m in messages %}
+        <div class="flash">{{m}}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="post" action="{{url_for('edit_case', case_id=case.id)}}">
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Patient Clinical Record</h2>
+            <p>Review submitted information, edit or append clinical details, and save updates.</p>
+          </div>
+          <button class="btn primary" type="submit">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+            Save Case Updates
+          </button>
+        </div>
+
+        <div class="fields-grid">
+          {% for key, value in answers.items() %}
+            {% if key != 'consent' and key != 'disclaimerText' %}
+              <div class="field-item {% if value is string and (value|length > 80 or '\n' in value) %}full-width{% endif %}">
+                <label for="f_{{key}}">{{key|replace('_',' ')|replace('  ',' ')|title}}</label>
+                {% if value is boolean %}
+                  <input id="f_{{key}}" value="{{'Yes / Acknowledged' if value else 'No'}}" readonly style="background:#f4f7f6;">
+                  <input type="hidden" name="answer__{{key}}" value="{{'true' if value else 'false'}}">
+                {% elif value is string and (value|length > 80 or '\n' in value) %}
+                  <textarea id="f_{{key}}" name="answer__{{key}}">{{value}}</textarea>
+                {% else %}
+                  <input id="f_{{key}}" name="answer__{{key}}" value="{{value}}">
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div style="margin-top:20px;text-align:right;">
+          <button class="btn primary" type="submit">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+            Save Case Updates
+          </button>
+        </div>
+      </section>
+    </form>
+
+    <section class="panel" id="followups">
+      <div class="panel-header">
+        <div>
+          <div class="kicker">Continuity of Clinical Care</div>
+          <h2>Follow-up Consultations & Prescriptions</h2>
+          <p>Document patient progress, response to remedies, prescriptions, and next visit plans.</p>
+        </div>
+      </div>
+
+      <form id="add-followup-form" method="post" action="{{url_for('add_followup', case_id=case.id)}}">
+        <div class="fields-grid">
+          <div class="field-item">
+            <label for="visit_date">Visit Date</label>
+            <input id="visit_date" name="visit_date" type="date" required>
+          </div>
+          <div class="field-item full-width">
+            <label for="notes">Clinical Progress & Changes</label>
+            <textarea id="notes" name="notes" placeholder="Amelioration/aggravation, new symptoms, mental state changes since last visit…"></textarea>
+          </div>
+          <div class="field-item full-width">
+            <label for="prescription">Remedy, Potency & Dosage</label>
+            <textarea id="prescription" name="prescription" placeholder="e.g. Lycopodium 200C - 1 dose weekly, Sac Lac daily..."></textarea>
+          </div>
+          <div class="field-item full-width">
+            <label for="advice">Dietary Advice & Next Review Date</label>
+            <textarea id="advice" name="advice" placeholder="Diet restrictions, general advice, review in 3 weeks..."></textarea>
+          </div>
+        </div>
+        <div style="margin-top:16px;">
+          <button class="btn primary" type="submit">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            Record Follow-up Visit
+          </button>
+        </div>
+      </form>
+
+      {% if followups %}
+        <h3 style="margin-top:30px;font-size:17px;color:var(--brand-dark);border-bottom:1px solid var(--line);padding-bottom:8px;">
+          Visit History ({{followups|length}} recorded)
+        </h3>
+        {% for f in followups %}
+          <article class="followup-entry">
+            <div class="followup-head">
+              <strong>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Visit on {{f.visit_date}}
+              </strong>
+              <span style="font-size:12px;color:var(--muted)">Recorded: {{f.created_at}}</span>
+            </div>
+            {% if f.notes %}
+              <div class="followup-section">
+                <h4>Patient Progress & Response</h4>
+                <div class="answer-box">{{f.notes}}</div>
+              </div>
+            {% endif %}
+            {% if f.prescription %}
+              <div class="followup-section">
+                <h4>Prescription & Dosage</h4>
+                <div class="answer-box" style="border-left:3px solid var(--brand);">{{f.prescription}}</div>
+              </div>
+            {% endif %}
+            {% if f.advice %}
+              <div class="followup-section">
+                <h4>Advice & Next Plan</h4>
+                <div class="answer-box">{{f.advice}}</div>
+              </div>
+            {% endif %}
+          </article>
+        {% endfor %}
+      {% else %}
+        <div style="margin-top:20px;padding:24px;text-align:center;background:#f9fbfb;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:14px;">
+          No follow-up visits recorded yet. Use the form above to record the patient's next clinical review.
+        </div>
+      {% endif %}
+    </section>
+
+    <footer class="footer-note">
+      <strong>Prana Homeo Care</strong> · Plot no 121, 2/94A Jayalakshmi Nagar, Kattupakkam, Chennai 600056<br>
+      Confidential patient record · Restricted doctor access
+    </footer>
+  </div>
+</body>
+</html>

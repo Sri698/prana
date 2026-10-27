@@ -1,0 +1,31 @@
+# Large distribution and backup archives (prevents hitting GitHub 50MB/100MB limit)
+FINISH_PRANA.zip
+prana_nch.zip
+prana_latest_deploy.zip
+
+# Sensitive API credentials and service account private keys
+credentials_oauth.json
+api/google_service_account.json
+google_service_account.json
+prana-homeo-care-*.json
+token.json
+.env
+
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Local databases
+*.sqlite3
+*.db
+prana_cases.sqlite3
+
+# Operating System and Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

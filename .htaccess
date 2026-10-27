@@ -1,0 +1,31 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # PRANA CLINICAL PORTAL — FIX CASE PAGE ROUTING
+# Allow the actual HTML file to load directly
+RewriteRule ^case\.html$ - [L]
+
+# Support the clean URL /case
+RewriteRule ^case/?$ case.html [L]
+    # Leave API and PHP files alone
+    RewriteCond %{REQUEST_URI} \.php$
+    RewriteRule ^ - [L]
+
+    # Leave assets alone
+    RewriteCond %{REQUEST_URI} \.(css|js|jpg|jpeg|png|gif|svg|ico|ttf|woff|woff2|json|xml|txt|pdf|mp4|webm)$
+    RewriteRule ^ - [L]
+
+    # If the requested URI is a directory, append a trailing slash and let DirectoryIndex handle it
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
+
+    # If the requested URI is an HTML file but accessed with .html, redirect to extensionless URL
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^\ ]+)\.html\ HTTP/
+    RewriteRule ^(.*)\.html$ /$1 [R=301,L]
+
+    # If the requested URI does not have an extension and is not an existing directory
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}\.html -f
+    RewriteRule ^(.*)$ $1.html [L]
+</IfModule>

@@ -1,0 +1,2096 @@
+import os
+import json
+import zipfile
+
+BASE_DIR = r"c:\Users\syrko\Downloads\prana_nch"
+
+sections_data = [
+  ["Patient details", [
+    ["Name /", "text"],
+    ["Age /", "number"],
+    ["Sex / Gender /", "select", [["Male", "ஆண்"], ["Female", "பெண்"], ["Other", "பிற"]]],
+    ["Date of Birth /", "date"],
+    ["Religion /", "text"],
+    ["Occupation /", "text"],
+    ["Address /", "textarea"],
+    ["Sign /", "text"],
+    ["Star/", "text"],
+    ["Ph.No ./", "tel"],
+    ["E.mail id", "email"],
+    ["Registration date /", "date"],
+    ["Marital status /", "select", [["Single", "திருமணமாகாதவர்"], ["Married", "திருமணமானவர்"], ["Widowed", "விதவை"], ["Divorced", "விவாகரத்து பெற்றவர்"], ["Separated", "பிரிந்து வாழ்பவர்"]]],
+    ["PHC ID /", "text"],
+    ["Referred by /", "text"],
+    ["Diagnosis /", "text"],
+    ["Reference /", "text"],
+    ["Height", "text"],
+    ["Weight", "text"],
+    ["Blood pressure", "text"],
+    ["BMI", "text"]
+  ]],
+  ["Before you proceed", [
+    ["JUST A MINUTE, BEFORE YOU PROCEED FURTHER :", "notice"],
+    ["Kindly read the questionnaire and write down accurate details.", "notice"],
+    ["You may seek the help of relatives and friends, where needed.", "notice"],
+    ["I have read and understood the above instructions", "checkbox"]
+  ]],
+  ["Patient own words", [
+    ["1. what is your feeling related to your illness", "textarea"],
+    ["2. what is your emotion related to your illness", "textarea"],
+    ["3. how you behave or react during the illness", "textarea"],
+    ["4. what is your thoughts repeatedly coming your mind regarding your sufferings.", "textarea"],
+    ["5. at present what is your need and expectation from me", "textarea"],
+    ["6. how you know about me and how you come to my clinic", "textarea"],
+    ["7. how the complaint affected you", "textarea"],
+    ["8. what is your worries regarding the sufferings", "textarea"]
+  ]],
+  ["Presenting complaints", [
+    ["Since how long you have this trouble, in your opinion what caused this problem; event (s) that preceded the commencement of this; factors that increase or decrease the complaint", "textarea"],
+    ["While describing your complaints to a Homoeopath, please describe the part affected sensation, aggravating, ameliorating factors. Also write down since how long you are suffering from each problem. Is it practically impossible to prescribe a homoeopathic remedy if you simply say \"Head ache\", \"Cold\", \"Throat pain\" etc.", "textarea"],
+    ["History of presenting complaints:", "textarea"],
+    ["Investigation report:", "textarea"],
+    ["Treatment history:", "textarea"]
+  ]],
+  ["Past illness and Family History", [
+    ["Please tick (3) in appropriate square if you or any of your blood relative (Brother /sister/ Father / mother/ their brothers & sisters / Grand parents) suffered / is suffering from any of the following disease.", "notice"],
+    ["Name of Disease", "notice"],
+    ["Whether you suffered form this any time / suffering now?", "notice"],
+    ["Any blood relative suffered from this / suffering now? To Whom?", "notice"],
+    ["AIDS / Herpes Zoster", "checkbox"],
+    ["Measles", "checkbox"],
+    ["Pox", "checkbox"],
+    ["Mumps", "checkbox"],
+    ["Typhoid", "checkbox"],
+    ["Malaria", "checkbox"],
+    ["Carbuncle", "checkbox"],
+    ["Plague", "checkbox"],
+    ["Dengue", "checkbox"],
+    ["Chickunquniya", "checkbox"],
+    ["Pneumonia", "checkbox"],
+    ["Flu", "checkbox"],
+    ["Whooping Cough", "checkbox"],
+    ["Diphtheria", "checkbox"],
+    ["Skin Scabies, Fungal infection", "checkbox"],
+    ["Ring worm", "checkbox"],
+    ["Jaundice", "checkbox"],
+    ["Boils", "checkbox"],
+    ["Delayed wound healing", "checkbox"],
+    ["Corn foot", "checkbox"],
+    ["Venomons stings — Scorpion — Dog — Snake — Rat", "checkbox"],
+    ["Warts", "checkbox"],
+    ["Moles", "checkbox"],
+    ["Primary complex / Tuberculosis", "checkbox"],
+    ["Diabetes", "checkbox"],
+    ["Hypertension High BP", "checkbox"],
+    ["Asthma", "checkbox"],
+    ["Cancer", "checkbox"],
+    ["Heart attack", "checkbox"],
+    ["Paralysis, stroke", "checkbox"],
+    ["Arthritis, Rheumatoid arthritis", "checkbox"],
+    ["Piles, Fistula, Fissure", "checkbox"],
+    ["Surgery Anaesthesia", "checkbox"],
+    ["Injury to head, any body part, accidents.", "checkbox"],
+    ["Head, hair related diseases, hair dye.", "checkbox"],
+    ["Eye, Vision related diseases", "checkbox"],
+    ["Ear, Hearing related diseases.", "checkbox"],
+    ["Nose, smell, nose bleeding related diseases.", "checkbox"],
+    ["Mouth, Tongue, teeth-caries-filled — extracted", "checkbox"],
+    ["Internal throat, tonsils, external throat, thyroid.", "checkbox"],
+    ["Stomach, abdomen, digestion, liver, gall bladder, diarrhoea, vomiting, constipation, worms.", "checkbox"],
+    ["Kidney, stones, Prostate", "checkbox"],
+    ["Woman, Breasts, Menstrual problems.", "checkbox"],
+    ["Males — sexual dysfunctions.", "checkbox"],
+    ["Lungs", "checkbox"],
+    ["Heart", "checkbox"],
+    ["Leprosy", "checkbox"],
+    ["Upper limbs, lower limbs, joints", "checkbox"],
+    ["Blood diseases", "checkbox"],
+    ["Brain, Nerves, fits, convulsions, polio, meningitis.", "checkbox"],
+    ["Contraception methods-copper-T/ pills/ family planning surgery.", "checkbox"],
+    ["Abortion — spontaneous, induced.", "checkbox"],
+    ["Tablets/ injections to advance or postpone menses.", "checkbox"],
+    ["Treatment to stop milk secretion.", "checkbox"],
+    ["Psychiatric diseases", "checkbox"],
+    ["Physical, mental diseases since birth", "checkbox"],
+    ["Dead born children", "checkbox"],
+    ["Childlessness, Delayed child birth.", "checkbox"],
+    ["Did your mother had any physical/ psychological problem during pregnancy?", "textarea"],
+    ["Was there any difficulty about your birth / mother feeding?", "textarea"],
+    ["At which month/year of age, as a child, you had head holding, teeth eruption, / learn to sit/ stand/ walk/ talk?", "textarea"],
+    ["Any time you ate stone, mud, slate pencil, chalk, charcoal, with desire?", "textarea"],
+    ["Till what age you had bed wetting?", "textarea"],
+    ["Vaccination: What vaccines, at what age, how many times? was there any reaction or complaints after a vaccine?", "textarea"],
+    ["If Married : Husband/ wife’s Health status, age child (ren)’s Health status, age abortion(s) -- spontaneons/ induced dead born/ premature.", "textarea"],
+    ["Tea, coffee, alcohol, tobacco, smoking sleeping pills, laxatives, purgatives.", "textarea"],
+    ["PAST HISTORY: Any history of hospitalisation", "textarea"],
+    ["Any surgery", "textarea"],
+    ["Any diseases", "textarea"],
+    ["FAMILY HISTORY: Father", "textarea"],
+    ["Mother", "textarea"],
+    ["Paternal grand father", "textarea"],
+    ["Paternal grand mother", "textarea"],
+    ["Paternal uncle", "textarea"],
+    ["Paternal aunty", "textarea"],
+    ["Cousins on father side", "textarea"],
+    ["Maternal grand father", "textarea"],
+    ["Maternal grand mother", "textarea"],
+    ["Maternal uncle", "textarea"],
+    ["Maternal aunty", "textarea"],
+    ["Cousins on maternal side", "textarea"],
+    ["Others in family history", "textarea"]
+  ]],
+  ["Physical generals", [
+    ["How is your appetite?", "textarea"],
+    ["When are you hungry?", "textarea"],
+    ["What happens if you have to remain hungry for long?", "textarea"],
+    ["How fast do you eat?", "textarea"],
+    ["In a day how much of water do you drink in summer/ rainy/ winter season", "textarea"],
+    ["Any particular time/ during an act you are specially thirsty?", "textarea"],
+    ["Do you feel any change in you mouth's smell/ taste/ feeling?", "textarea"],
+    ["Food / Drink you like, dislike, that disagrees you.", "textarea"],
+    ["ABOUT YOUR DESIRE:", "textarea"],
+    ["ABOUT YOUR AVERSION:", "textarea"],
+    ["EATING FOOD:", "textarea"],
+    ["Do you have any problem regarding your stools?", "textarea"],
+    ["When and how many times a day do you pass stools?", "textarea"],
+    ["When is it urgent?", "textarea"],
+    ["Do you have belching or passing gas? Describe its character", "textarea"],
+    ["How do you feel after passing gas up or down?", "textarea"],
+    ["Any problem about urine / urination", "textarea"],
+    ["Any problem before / during / after passing urine?", "textarea"],
+    ["Sweat/ How much / Body part / smell / stain / nature / time?", "textarea"],
+    ["Any problem before / during & with / after sweat?", "textarea"],
+    ["THERMAL STATUS:", "textarea"],
+    ["SEASON:", "textarea"],
+    ["BATHING:", "textarea"],
+    ["COVERING:", "textarea"],
+    ["FANNING:", "textarea"],
+    ["Body part / time/ factors increase, decrease heat. Complaints before/ with, during / after heat.", "textarea"],
+    ["Chest / Hart/ cough/ sputum/ threat / larynx/ trachea / voice", "textarea"],
+    ["Any problem in these?", "textarea"],
+    ["Sleep position - side / back/ abdomen", "textarea"],
+    ["In Which position you can't sleep and if so, why?", "textarea"],
+    ["In sleep — Snoring, grinding teeth, salivation, sweat, eye/mouth remain open, walk, talk, weep, moan, startle/jerk, roll a lot.", "textarea"],
+    ["Covering, upto which part of body", "textarea"],
+    ["Do you have to uncover any parts?", "textarea"],
+    ["Dreams in sleep", "textarea"],
+    ["ABOUT YOUR MENSES — CYCLE", "textarea"],
+    ["ABOUT YOUR MENSES — FLOW", "textarea"],
+    ["ABOUT YOUR MENSES — ODOR", "textarea"],
+    ["NO OF PADS USE PER DAY", "textarea"],
+    ["BEFORE MENSES", "textarea"],
+    ["DURING MENSES", "textarea"],
+    ["AFTER MENSES", "textarea"],
+    ["ABOUT YOUR OTHER DISCHARGE — LEUCORRHOEA:", "textarea"],
+    ["LEUCORRHOEA — FLOW", "textarea"],
+    ["LEUCORRHOEA — ODOR", "textarea"],
+    ["LEUCORRHOEA — COLOUR", "textarea"],
+    ["LEUCORRHOEA — CONSISTENCY", "textarea"],
+    ["LEUCORRHOEA — LOOK LIKE", "textarea"]
+  ]],
+  ["Sexology", [
+    ["Any excessive indulgence in sex.in past/ present? Any effect on your health.", "textarea"],
+    ["How do you feel after sexual intercourse?", "textarea"],
+    ["Any particular feeling or symptoms appear before / during /after sexual intercourse?", "textarea"],
+    ["Habit of masturbation etc...", "textarea"],
+    ["Any sexual disturbance / perversion ?", "textarea"],
+    ["Venereal disease / treatment", "textarea"],
+    ["Increased / decreased sexual desire", "textarea"],
+    ["Family planning method", "textarea"],
+    ["Any difficulties in erection?", "textarea"],
+    ["Any Problem related to ejaculation", "textarea"],
+    ["Menses: At what age it began? Any trouble then?", "textarea"],
+    ["Once in How many days you get?", "textarea"],
+    ["Stain/ Nature / colour/ smell/ quantity of blood", "textarea"],
+    ["How you will come-to known that you are about to have “Periods”?", "textarea"],
+    ["Any problem before / during/ after menses?", "textarea"],
+    ["At what age you attained menopause? was there any problem related to menses during that period? Any bodily or emotional trouble at that time?", "textarea"],
+    ["White discharge / leucorrhoea - nature / colour/ smell/ quantity/ stain ?", "textarea"],
+    ["When / How it increase and decrease?", "textarea"],
+    ["Is it related to menses in any way?", "textarea"],
+    ["What is the effect of this discharge on your general feeling, and other symptoms?", "textarea"],
+    ["Any problem in breasts?", "textarea"]
+  ]],
+  ["Other physical symptoms", [
+    ["Vertigo", "textarea"],
+    ["Faintness", "textarea"],
+    ["Head", "textarea"],
+    ["Eyes, vision", "textarea"],
+    ["Ear, Hearing", "textarea"],
+    ["Nose, smell", "textarea"],
+    ["Face, expression", "textarea"],
+    ["Mouth, tongue, taste", "textarea"],
+    ["Lips, teeth, gums", "textarea"],
+    ["caries teeth, filed, extracted", "textarea"],
+    ["Throat. tonsils", "textarea"],
+    ["Limbs", "textarea"],
+    ["Back", "textarea"],
+    ["joints", "textarea"],
+    ["skin disease", "textarea"],
+    ["warts / moles/ corns / skin peeling / ulcers / boils / itching / skin colour change", "textarea"],
+    ["Nails", "textarea"],
+    ["Hair fall, dandruff, lice, colour?", "textarea"],
+    ["Delayed wound healing", "textarea"],
+    ["Neurological problems?", "textarea"],
+    ["Please mention whether you feel worse / better / otherwise from these factors", "notice"],
+    ["Hot Weather", "textarea"],
+    ["Cold weather", "textarea"],
+    ["Rain", "textarea"],
+    ["Cloudy weather", "textarea"],
+    ["Change of season / Weather", "textarea"],
+    ["Thunder, storm", "textarea"],
+    ["Covering", "textarea"],
+    ["Warm bathing", "textarea"],
+    ["Sun light", "textarea"],
+    ["Sun heat", "textarea"],
+    ["Cold bating", "textarea"],
+    ["Lying with head up/low", "textarea"],
+    ["Sitting", "textarea"],
+    ["Sitting erect", "textarea"],
+    ["Running", "textarea"],
+    ["Climbing stairs", "textarea"],
+    ["Going down stairs", "textarea"],
+    ["Travel — Train, Bus, Car, Plane etc.,", "textarea"],
+    ["Lying— Back /Abdomen/ Right side / left side", "textarea"],
+    ["Eating/ Drinking", "textarea"],
+    ["After sexual intercourse", "textarea"],
+    ["Dust", "textarea"],
+    ["Noise, sound", "textarea"],
+    ["Music", "textarea"],
+    ["Light", "textarea"],
+    ["smells", "textarea"],
+    ["When constipated", "textarea"],
+    ["Before / During/ after stool", "textarea"],
+    ["Before/ During/ after urination", "textarea"],
+    ["Before/ During/ after menses", "textarea"],
+    ["Before / During/ after sweating", "textarea"],
+    ["When fasting", "textarea"],
+    ["Before/ during/ after eating", "textarea"],
+    ["Before important engagement", "textarea"],
+    ["Before exams", "textarea"],
+    ["When angry", "textarea"],
+    ["When sad", "textarea"],
+    ["When worried", "textarea"],
+    ["Smoke", "textarea"],
+    ["Touch", "textarea"],
+    ["Pressure", "textarea"],
+    ["Massage", "textarea"],
+    ["Tight clothes", "textarea"],
+    ["Before / during/ after sleep", "textarea"],
+    ["Standing", "textarea"],
+    ["Looking up/ down", "textarea"],
+    ["Looking from high places", "textarea"],
+    ["Looking at moving object", "textarea"],
+    ["After afternoon sleep", "textarea"],
+    ["Loss of sleep", "textarea"],
+    ["Cough", "textarea"],
+    ["Sneeze", "textarea"],
+    ["Laughing", "textarea"],
+    ["Talking", "textarea"],
+    ["Reading", "textarea"],
+    ["Writing", "textarea"],
+    ["Stooping", "textarea"],
+    ["After hair cut", "textarea"],
+    ["Combing hair", "textarea"],
+    ["Brushing teeth", "textarea"],
+    ["Moon light", "textarea"],
+    ["After Weeping", "textarea"],
+    ["Consolation", "textarea"],
+    ["In a Crowd", "textarea"],
+    ["In a closed room", "textarea"],
+    ["When thinking of illness", "textarea"],
+    ["New / full moon", "textarea"],
+    ["Morning", "textarea"],
+    ["Afternoon", "textarea"],
+    ["Evening", "textarea"],
+    ["Night", "textarea"],
+    ["Bathing", "textarea"],
+    ["Air draft", "textarea"],
+    ["Biting / Chewing", "textarea"],
+    ["Blowing nose", "textarea"],
+    ["When alone", "textarea"],
+    ["in company", "textarea"],
+    ["Belching / passing flatus", "textarea"],
+    ["Smoking", "textarea"],
+    ["Hanging limbs", "textarea"],
+    ["Near sea", "textarea"],
+    ["Shaving", "textarea"],
+    ["Swallowing", "textarea"],
+    ["On arms", "textarea"],
+    ["Vomiting", "textarea"],
+    ["Yawning", "textarea"],
+    ["listening to others talk", "textarea"],
+    ["Moving eyes", "textarea"],
+    ["Getting feet wet", "textarea"],
+    ["Fanning", "textarea"],
+    ["Over eating", "textarea"]
+  ]],
+  ["Mental generals", [
+    ["Describe your thoughts,", "textarea"],
+    ["Fears,", "textarea"],
+    ["Worries,", "textarea"],
+    ["Griefs,", "textarea"],
+    ["Impatience", "textarea"],
+    ["Hurry", "textarea"],
+    ["Mental traumas", "textarea"],
+    ["Desires,", "textarea"],
+    ["Suspicions,", "textarea"],
+    ["Jealousies,", "textarea"],
+    ["Revenge fullness,", "textarea"],
+    ["Proud", "textarea"],
+    ["Suicidal thoughts,", "textarea"],
+    ["fearing / Brooding", "textarea"],
+    ["Depression", "textarea"],
+    ["Cheerfulness,", "textarea"],
+    ["Happiness,", "textarea"],
+    ["Sexual feelings,", "textarea"],
+    ["Unnecessary thoughts,", "textarea"],
+    ["Memory", "textarea"],
+    ["Weeping nature", "textarea"],
+    ["Anger / factors that excite anger", "textarea"],
+    ["Desire to be alone", "textarea"],
+    ["Company", "textarea"],
+    ["Influence of your environment on you,", "textarea"],
+    ["Cleanliness, fastidiousness, your importance,", "textarea"],
+    ["Best moments and worst moments of your life,", "textarea"],
+    ["Most sad moments of your life.", "textarea"],
+    ["Acts which you love to do the most and you hate the most?", "textarea"],
+    ["Your life since childhood; your future in your view point.", "textarea"],
+    ["ABOUT CHILDHOOD", "textarea"],
+    ["ABOUT SCHOOLING", "textarea"],
+    ["ABOUT COLLEGE", "textarea"],
+    ["ABOUT WORK PALCE", "textarea"],
+    ["ABUT MARRIAGE", "textarea"],
+    ["MOST STRESS FULL PERIOD in your life", "textarea"],
+    ["ABOUT YOUR FEAR: WHAT FEAR DO YOU HAVE NOW, CHILDHOOD. TRIGGERING FACTORS, HOW YOU EXPRESS. WITH 2-3 EXAMPLES", "textarea"],
+    ["ABOUT YOUR ANGER: WHAT MAKES YOU ANGER. TRIGGERING FACTORS, HOW YOU EXPRESS. WITH 2-3 EXAMPLES", "textarea"],
+    ["ABOUT WEEPING: WHAT MAKES YOU WEEP. TRIGGERING FACTORS, HOW YOU EXPRESS. WITH 2-3 EXAMPLES", "textarea"],
+    ["ABOUT YOUR WORRY:", "textarea"]
+  ]],
+  ["Childhood / behavioural questions", [
+    ["According to intensity", "notice"],
+    ["For children or you as a child Mark as +,++,+++", "notice"],
+    ["Obstinacy", "textarea"],
+    ["Temper", "textarea"],
+    ["Disobedience", "textarea"],
+    ["Aggression", "textarea"],
+    ["Hyper activity", "textarea"],
+    ["Destructiveness", "textarea"],
+    ["Courage", "textarea"],
+    ["Possessiveness", "textarea"],
+    ["Competition — winning spirit", "textarea"],
+    ["Sibling jealous", "textarea"],
+    ["Any special skills", "textarea"],
+    ["Unusual desires", "textarea"],
+    ["Boasting", "textarea"],
+    ["Stealing", "textarea"],
+    ["Telling lies", "textarea"],
+    ["unusual fears", "textarea"],
+    ["Shames", "textarea"],
+    ["Unusual attachments (to whom)", "textarea"],
+    ["Nail biting", "textarea"],
+    ["Finger sucking", "textarea"],
+    ["Picking/ playing with", "textarea"],
+    ["Religious", "textarea"],
+    ["Dullness of memory", "textarea"],
+    ["Slowness (in what)", "textarea"]
+  ]],
+  ["Nature and disposition", [
+    ["AFFECATIONATE", "checkbox"],
+    ["CARING", "checkbox"],
+    ["PLAYFUL", "checkbox"],
+    ["AMOROUS", "checkbox"],
+    ["AGGRASSIVE", "checkbox"],
+    ["MISHIEVOUS", "checkbox"],
+    ["ALERT", "checkbox"],
+    ["QUICK TO REACT", "checkbox"],
+    ["ANIMATED", "checkbox"],
+    ["RESTLESS", "checkbox"],
+    ["DECEITFUL", "checkbox"],
+    ["CURIOUS", "checkbox"],
+    ["MALICIOUS", "checkbox"],
+    ["JEALOUS", "checkbox"],
+    ["EXPRESSIVE", "checkbox"],
+    ["COMMUNICATIVE", "checkbox"],
+    ["SYSTEMATIC", "checkbox"],
+    ["CALCULATIVE", "checkbox"],
+    ["FASTIDIOUS", "checkbox"],
+    ["ORGANIZED", "checkbox"],
+    ["SOFT", "checkbox"],
+    ["SENSITIVE", "checkbox"],
+    ["EMOTIONAL", "checkbox"],
+    ["SENTIMENTAL", "checkbox"],
+    ["DISORGANIZED", "checkbox"],
+    ["ADJUSTING", "checkbox"],
+    ["INFLUENCED EASILY", "checkbox"],
+    ["ADAPTABLE", "checkbox"],
+    ["IRRITABLE", "checkbox"]
+  ]],
+  ["Causation", [
+    ["REJECTION", "checkbox"],
+    ["NEGLETED", "checkbox"],
+    ["LOOKED DOWN ON", "checkbox"],
+    ["FAILURE IN DEFENSE", "checkbox"],
+    ["FAILURE IN COMPETITION", "checkbox"],
+    ["AGGRESSIVE/ ATTACK", "checkbox"],
+    ["FAILURE IN LOVE", "checkbox"],
+    ["BREAK OF STRUCTURE", "checkbox"],
+    ["BREAK OF REATIONSHIP", "checkbox"],
+    ["FAILURE IN PERFORMANCE", "checkbox"],
+    ["FAILURE IN POWER / RESPONSIBILITY", "checkbox"],
+    ["EMOTIONAL OR PHYSICAL HURT", "checkbox"],
+    ["SHOCK", "checkbox"]
+  ]],
+  ["Case summary and doctor notes", [
+    ["SUMMERISE WHOLE YOUR PROBLEM IN FEW LINE OR 2 LINE OR COMPARE WITH ANYTHNG", "textarea"],
+    ["Miasm", "textarea"],
+    ["Analysis of the case:", "textarea"],
+    ["Repertory analysis:", "textarea"],
+    ["Remedy and dd", "textarea"],
+    ["Prescription:", "textarea"],
+    ["Management advice:", "textarea"]
+  ]]
+]
+
+translations = {
+  "Patient details": "நோயாளி விவரங்கள்",
+  "Before you proceed": "தொடர்வதற்கு முன்",
+  "Patient own words": "நோயாளியின் சொந்த வார்த்தைகள்",
+  "Presenting complaints": "தற்போதைய புகார்கள்",
+  "Past illness and Family History": "கடந்தகால நோய் மற்றும் குடும்ப வரலாறு",
+  "Physical generals": "உடல் பொதுவான அறிகுறிகள்",
+  "Sexology": "பாலியல் நலம்",
+  "Other physical symptoms": "பிற உடல் அறிகுறிகள்",
+  "Mental generals": "மன பொதுவான அறிகுறிகள்",
+  "Childhood / behavioural questions": "குழந்தைப் பருவம் / நடத்தை தொடர்பான கேள்விகள்",
+  "Nature and disposition": "இயல்பு மற்றும் மனப்பாங்கு",
+  "Causation": "காரணிகள்",
+  "Case summary and doctor notes": "வழக்கு சுருக்கம் மற்றும் மருத்துவர் குறிப்புகள்",
+  "Name /": "பெயர் /",
+  "Age /": "வயது /",
+  "Sex / Gender /": "பாலினம் /",
+  "Date of Birth /": "பிறந்த தேதி /",
+  "Religion /": "மதம் /",
+  "Occupation /": "தொழில் /",
+  "Address /": "முகவரி /",
+  "Sign /": "ராசி /",
+  "Star/": "நட்சத்திரம் /",
+  "Ph.No ./": "தொலைபேசி எண் /",
+  "E.mail id": "மின்னஞ்சல் முகவரி",
+  "Registration date /": "பதிவு தேதி /",
+  "Marital status /": "திருமண நிலை /",
+  "PHC ID /": "PHC அடையாள எண் /",
+  "Referred by /": "பரிந்துரைத்தவர் /",
+  "Diagnosis /": "நோயறிதல் /",
+  "Reference /": "குறிப்பு /",
+  "Height": "உயரம்",
+  "Weight": "எடை",
+  "Blood pressure": "இரத்த அழுத்தம்",
+  "BMI": "உடல் நிறை குறியீடு",
+  "JUST A MINUTE, BEFORE YOU PROCEED FURTHER :": "தொடர்வதற்கு முன் ஒரு நிமிடம்:",
+  "Kindly read the questionnaire and write down accurate details.": "கேள்வித்தாளை கவனமாகப் படித்து சரியான விவரங்களை எழுதவும்.",
+  "You may seek the help of relatives and friends, where needed.": "தேவைப்பட்டால் உறவினர்கள் மற்றும் நண்பர்களின் உதவியைப் பெறலாம்.",
+  "I have read and understood the above instructions": "மேலே உள்ள வழிமுறைகளைப் படித்துப் புரிந்துகொண்டேன்",
+  "How is your appetite?": "உங்கள் பசி எப்படி உள்ளது?",
+  "When are you hungry?": "உங்களுக்கு எப்போது பசி எடுக்கிறது?",
+  "What happens if you have to remain hungry for long?": "நீண்ட நேரம் பசியுடன் இருந்தால் என்ன நடக்கும்?",
+  "How fast do you eat?": "நீங்கள் எவ்வளவு வேகமாகச் சாப்பிடுகிறீர்கள்?",
+  "Do you have any problem regarding your stools?": "மலம் கழிப்பதில் ஏதேனும் பிரச்சினை உள்ளதா?",
+  "When and how many times a day do you pass stools?": "ஒரு நாளில் எப்போது, எத்தனை முறை மலம் கழிக்கிறீர்கள்?",
+  "When is it urgent?": "எப்போது அவசரமாக மலம் கழிக்க வேண்டியிருக்கும்?",
+  "Any problem about urine / urination": "சிறுநீர் அல்லது சிறுநீர் கழிப்பதில் ஏதேனும் பிரச்சினை உள்ளதா?",
+  "Any problem before / during / after passing urine?": "சிறுநீர் கழிப்பதற்கு முன், கழிக்கும்போது அல்லது கழித்த பின் ஏதேனும் பிரச்சினை உள்ளதா?",
+  "How do you feel after sexual intercourse?": "உடலுறவுக்குப் பிறகு எப்படி உணர்கிறீர்கள்?",
+  "Any difficulties in erection?": "ஆணுறுப்பு விறைப்பதில் ஏதேனும் சிரமம் உள்ளதா?",
+  "Any problem in breasts?": "மார்பகங்களில் ஏதேனும் பிரச்சினை உள்ளதா?",
+  "Prana HomeoCare": "பிராணா ஹோமியோகேர்",
+  "Patient case record": "நோயாளி மருத்துவப் பதிவு",
+  "Patient intake · Case record": "நோயாளர் பதிவு · மருத்துவக் குறிப்பேடு",
+  "A clearer picture of your health starts here.": "உங்கள் உடல்நலத்தைப் பற்றிய தெளிவான புரிதல் இங்கே தொடங்குகிறது.",
+  "Complete each section at your own pace. Your answers are saved as a draft in this browser while you work.": "ஒவ்வொரு பகுதியையும் உங்கள் வசதிக்கேற்ப நிரப்பவும். உங்கள் பதில்கள் இந்த உலாவியில் வரைவு வடிவில் தானாகச் சேமிக்கப்படும்.",
+  "Private on this device": "இந்தச் சாதனத்தில் மட்டும் தனிப்பட்டது",
+  "Your progress": "உங்கள் முன்னேற்றம்",
+  "Take your time": "நிதானமாக நிரப்பவும்",
+  "Answer each question as accurately as possible. You can move between sections at any time.": "ஒவ்வொரு கேள்விக்கும் முடிந்தவரை துல்லியமாகப் பதிலளிக்கவும். எந்த நேரத்திலும் பகுதிகளுக்கு இடையில் மாறலாம்.",
+  "Enter the details in the fields below.": "கீழே உள்ள புலங்களில் விவரங்களை உள்ளிடவும்.",
+  "Draft saves on this device": "வரைவு இந்தச் சாதனத்தில் சேமிக்கப்படுகிறது",
+  "← Previous": "← முந்தையது",
+  "Continue →": "தொடரவும் →",
+  "Submit Case Record": "மருத்துவப் பதிவைச் சமர்ப்பிக்கவும்",
+  "SECTION": "பகுதி",
+  "Guided sections": "வழிகாட்டப்பட்ட பகுதிகள்",
+  "Autosaved draft": "வரைவு தானாகச் சேமிக்கப்படுகிறது",
+  "Mobile friendly": "கைப்பேசிக்கு ஏற்ற வடிவம்",
+  "Other questions": "மற்ற கேள்விகள்",
+  "Since how long you have this trouble, in your opinion what caused this problem; event (s) that preceded the commencement of this; factors that increase or decrease the complaint": "இந்தப் பிரச்சினை எவ்வளவு காலமாக உள்ளது? உங்கள் கருத்துப்படி இதற்குக் காரணம் என்ன? இது தொடங்குவதற்கு முன் ஏதேனும் நிகழ்வு நடந்ததா? புகாரை அதிகரிக்கும் அல்லது குறைக்கும் காரணிகள் என்ன?",
+  "While describing your complaints to a Homoeopath, please describe the part affected sensation, aggravating, ameliorating factors. Also write down since how long you are suffering from each problem. Is it practically impossible to prescribe a homoeopathic remedy if you simply say \"Head ache\", \"Cold\", \"Throat pain\" etc.": "ஹோமியோபதி மருத்துவரிடம் உங்கள் புகார்களை விவரிக்கும்போது, பாதிக்கப்பட்ட பகுதி மற்றும் உணர்வை விளக்கவும். புகாரை அதிகரிக்கும் மற்றும் குறைக்கும் காரணிகளையும் குறிப்பிடவும். ஒவ்வொரு பிரச்சினையும் எவ்வளவு காலமாக உள்ளது என்பதையும் எழுதவும். ‘தலைவலி’, ‘சளி’, ‘தொண்டைவலி’ என்று மட்டும் கூறினால், ஹோமியோபதி மருந்தைத் தேர்ந்தெடுப்பது மிகவும் கடினமாகும்.",
+  "In a day how much of water do you drink in summer/ rainy/ winter season": "கோடை, மழை மற்றும் குளிர்காலங்களில் ஒரு நாளைக்கு எவ்வளவு தண்ணீர் குடிக்கிறீர்கள்?",
+  "Any particular time/ during an act you are specially thirsty?": "குறிப்பிட்ட நேரத்தில் அல்லது ஏதேனும் செயலைச் செய்யும்போது அதிக தாகம் ஏற்படுகிறதா?",
+  "Do you feel any change in you mouth's smell/ taste/ feeling?": "வாயின் மணம், சுவை அல்லது உணர்வில் ஏதேனும் மாற்றம் உள்ளதா?",
+  "Food / Drink you like, dislike, that disagrees you.": "உங்களுக்குப் பிடித்த, பிடிக்காத அல்லது ஒவ்வாமை/அசௌகரியம் ஏற்படுத்தும் உணவுகள் மற்றும் பானங்கள்.",
+  "Do you have belching or passing gas? Describe its character": "ஏப்பம் அல்லது வாயு வெளியேறுதல் உள்ளதா? அதன் தன்மையை விவரிக்கவும்.",
+  "How do you feel after passing gas up or down?": "ஏப்பம் அல்லது கீழ்வழியாக வாயு வெளியேறிய பின் எப்படி உணர்கிறீர்கள்?",
+  "Sweat/ How much / Body part / smell / stain / nature / time?": "வியர்வை: அளவு, உடல் பகுதி, மணம், கறை, தன்மை மற்றும் ஏற்படும் நேரம்?",
+  "Any problem before / during & with / after sweat?": "வியர்ப்பதற்கு முன், வியர்க்கும்போது அல்லது வியர்த்த பின் ஏதேனும் பிரச்சினை உள்ளதா?",
+  "Body part / time/ factors increase, decrease heat. Complaints before/ with, during / after heat.": "உடலில் வெப்பம் ஏற்படும் பகுதி மற்றும் நேரம்; வெப்பத்தை அதிகரிக்கும் அல்லது குறைக்கும் காரணிகள்; வெப்பத்திற்கு முன், வெப்பத்தின்போது அல்லது பின் ஏற்படும் புகார்கள்.",
+  "Chest / Hart/ cough/ sputum/ threat / larynx/ trachea / voice": "மார்பு / இதயம் / இருமல் / சளி / தொண்டை / குரல்வளை / மூச்சுக்குழாய் / குரல்",
+  "Any problem in these?": "இவற்றில் ஏதேனும் பிரச்சினை உள்ளதா?",
+  "Sleep position - side / back/ abdomen": "தூங்கும் நிலை — பக்கவாட்டில் / முதுகில் / குப்புற.",
+  "In Which position you can't sleep and if so, why?": "எந்த நிலையில் உங்களால் தூங்க முடியாது? முடியாவிட்டால் ஏன்?",
+  "Covering, upto which part of body": "போர்வையால் உடலின் எந்தப் பகுதி வரை மூடிக்கொள்கிறீர்கள்?",
+  "Do you have to uncover any parts?": "உடலின் ஏதேனும் பகுதிகளைத் திறந்து வைத்திருக்க வேண்டுமா?",
+  "Dreams in sleep": "தூக்கத்தில் காணும் கனவுகள்",
+  "Any Problem related to ejaculation": "விந்து வெளியேறுவதில் ஏதேனும் பிரச்சினை உள்ளதா?",
+  "Vertigo": "தலைச்சுற்றல்",
+  "Faintness": "மயக்கம் ஏற்படும் உணர்வு",
+  "Head": "தலை",
+  "Eyes, vision": "கண்கள், பார்வை",
+  "Ear, Hearing": "காது, கேட்கும் திறன்",
+  "Nose, smell": "மூக்கு, மணம் அறியும் திறன்",
+  "Face, expression": "முகம், முகபாவனை",
+  "Mouth, tongue, taste": "வாய், நாக்கு, சுவை",
+  "Lips, teeth, gums": "உதடுகள், பற்கள், ஈறுகள்",
+  "Throat. tonsils": "தொண்டை, டான்சில்கள்",
+  "Limbs": "கைகள் மற்றும் கால்கள்",
+  "Back": "முதுகு",
+  "joints": "மூட்டுகள்",
+  "skin disease": "தோல் நோய்கள்",
+  "Nails": "நகங்கள்",
+  "Delayed wound healing": "காயம் ஆறுவதில் தாமதம்",
+  "Neurological problems?": "நரம்பியல் தொடர்பான பிரச்சினைகள் உள்ளனவா?",
+  "Hot Weather": "வெப்பமான வானிலை",
+  "Cold weather": "குளிரான வானிலை",
+  "Rain": "மழை",
+  "Cloudy weather": "மேகமூட்டமான வானிலை",
+  "Change of season / Weather": "பருவம் / வானிலை மாற்றம்",
+  "Thunder, storm": "இடி, புயல்",
+  "Covering": "போர்வையால் மூடிக்கொள்ளுதல்",
+  "Warm bathing": "வெதுவெதுப்பான நீரில் குளித்தல்",
+  "Sun light": "சூரிய ஒளி",
+  "Sun heat": "சூரிய வெப்பம்",
+  "Sitting": "உட்காருதல்",
+  "Sitting erect": "நிமிர்ந்து உட்காருதல்",
+  "Running": "ஓடுதல்",
+  "Climbing stairs": "படிகளில் ஏறுதல்",
+  "Going down stairs": "படிகளில் இறங்குதல்",
+  "Eating/ Drinking": "சாப்பிடுதல் / குடித்தல்",
+  "After sexual intercourse": "உடலுறவுக்குப் பிறகு",
+  "Dust": "தூசி",
+  "Noise, sound": "சத்தம், ஒலி",
+  "Music": "இசை",
+  "Light": "ஒளி",
+  "smells": "மணங்கள்",
+  "When constipated": "மலச்சிக்கல் இருக்கும்போது",
+  "When fasting": "உண்ணாவிரதம் / உணவு உண்ணாமல் இருக்கும்போது",
+  "Before exams": "தேர்வுகளுக்கு முன்",
+  "When angry": "கோபமாக இருக்கும்போது",
+  "When sad": "சோகமாக இருக்கும்போது",
+  "Appetite": "பசி",
+  "Thirst": "தாகம்",
+  "Food desires and aversions": "விருப்பமான மற்றும் வெறுக்கும் உணவுகள்",
+  "Stool": "மலம்",
+  "Urine": "சிறுநீர்",
+  "Perspiration / Sweat": "வியர்வை",
+  "Heat": "உடல் வெப்பம்",
+  "Chest and respiratory symptoms": "மார்பு மற்றும் சுவாச அறிகுறிகள்",
+  "Sleep": "தூக்கம்",
+  "General sexual history": "பொதுவான பாலியல் வரலாறு",
+  "Man": "ஆண்கள்",
+  "Women": "பெண்கள்",
+  "Factors that affect you": "உங்களைப் பாதிக்கும் காரணிகள்",
+  "Other symptoms": "பிற அறிகுறிகள்",
+  "Thoughts and emotions": "எண்ணங்கள் மற்றும் உணர்வுகள்",
+  "Life experiences": "வாழ்க்கை அனுபவங்கள்",
+  "Childhood behaviour": "குழந்தைப் பருவ நடத்தை",
+  "Select applicable traits": "பொருந்தும் பண்புகளைத் தேர்ந்தெடுக்கவும்",
+  "Select relevant causation factors": "பொருத்தமான காரணிகளைத் தேர்ந்தெடுக்கவும்",
+  "Case summary": "வழக்கின் சுருக்கம்",
+  "Clinical analysis": "மருத்துவப் பகுப்பாய்வு",
+  "Miasm": "மையாசம்",
+  "Analysis of the case:": "வழக்கின் பகுப்பாய்வு:",
+  "Repertory analysis:": "ரெப்பர்டரி பகுப்பாய்வு:",
+  "Remedy and dd": "மருந்து மற்றும் வேறுபாட்டு நோயறிதல்",
+  "Prescription:": "மருந்துச் சீட்டு:",
+  "Management advice:": "மேலாண்மை ஆலோசனை:",
+  "Describe your thoughts,": "உங்கள் எண்ணங்களை விவரிக்கவும்.",
+  "Fears,": "அச்சங்கள்",
+  "Worries,": "கவலைகள்",
+  "Griefs,": "துயரங்கள்",
+  "Impatience": "பொறுமையின்மை",
+  "Hurry": "அவசரம்",
+  "Mental traumas": "மன அதிர்ச்சிகள்",
+  "Desires,": "ஆசைகள்",
+  "Suspicions,": "சந்தேகங்கள்",
+  "Jealousies,": "பொறாமை",
+  "Revenge fullness,": "பழிவாங்கும் எண்ணம்",
+  "Proud": "பெருமிதம்",
+  "Suicidal thoughts,": "தற்கொலை எண்ணங்கள்",
+  "fearing / Brooding": "அச்சம் / ஆழ்ந்த கவலை",
+  "Depression": "மனச்சோர்வு",
+  "Cheerfulness,": "மகிழ்ச்சியான மனநிலை",
+  "Happiness,": "மகிழ்ச்சி",
+  "Sexual feelings,": "பாலியல் உணர்வுகள்",
+  "Unnecessary thoughts,": "தேவையற்ற எண்ணங்கள்",
+  "Memory": "நினைவாற்றல்",
+  "Weeping nature": "அழும் இயல்பு",
+  "Anger / factors that excite anger": "கோபம் / கோபத்தைத் தூண்டும் காரணிகள்",
+  "Desire to be alone": "தனியாக இருக்க விரும்புதல்",
+  "Company": "பிறருடன் இருக்க விரும்புதல்",
+  "Influence of your environment on you,": "உங்கள் சுற்றுப்புறம் உங்களை எவ்வாறு பாதிக்கிறது",
+  "Cleanliness, fastidiousness, your importance,": "தூய்மை, நுணுக்கம், உங்களுக்கான முக்கியத்துவ உணர்வு",
+  "Best moments and worst moments of your life,": "உங்கள் வாழ்க்கையின் சிறந்த மற்றும் மோசமான தருணங்கள்",
+  "Most sad moments of your life.": "உங்கள் வாழ்க்கையின் மிகவும் துயரமான தருணங்கள்",
+  "Acts which you love to do the most and you hate the most?": "நீங்கள் மிகவும் விரும்பிச் செய்யும் செயல்கள் மற்றும் மிகவும் வெறுக்கும் செயல்கள் யாவை?",
+  "Your life since childhood; your future in your view point.": "குழந்தைப் பருவத்திலிருந்து இதுவரையிலான உங்கள் வாழ்க்கை; உங்கள் பார்வையில் உங்கள் எதிர்காலம்.",
+  "SUMMERISE WHOLE YOUR PROBLEM IN FEW LINE OR 2 LINE OR COMPARE WITH ANYTHNG": "உங்கள் முழுப் பிரச்சினையையும் சில வரிகளில் அல்லது இரண்டு வரிகளில் சுருக்கமாக எழுதவும்; தேவையெனில் ஏதேனும் ஒன்றுடன் ஒப்பிடவும்."
+}
+
+subheadings = {
+  "Patient details": [
+    ["Personal details", ["Name /", "Age /", "Sex / Gender /", "Date of Birth /", "Religion /", "Occupation /"]],
+    ["Contact & Clinical measurements", ["Address /", "Sign /", "Star/", "Ph.No ./", "E.mail id", "Registration date /", "Marital status /", "PHC ID /", "Referred by /", "Diagnosis /", "Reference /", "Height", "Weight", "Blood pressure", "BMI"]]
+  ],
+  "Before you proceed": [
+    ["Instructions", [
+      "JUST A MINUTE, BEFORE YOU PROCEED FURTHER :",
+      "Kindly read the questionnaire and write down accurate details.",
+      "You may seek the help of relatives and friends, where needed.",
+      "I have read and understood the above instructions"
+    ]]
+  ],
+  "Patient own words": [
+    ["In your own words", [
+      "1. what is your feeling related to your illness",
+      "2. what is your emotion related to your illness",
+      "3. how you behave or react during the illness",
+      "4. what is your thoughts repeatedly coming your mind regarding your sufferings.",
+      "5. at present what is your need and expectation from me",
+      "6. how you know about me and how you come to my clinic",
+      "7. how the complaint affected you",
+      "8. what is your worries regarding the sufferings"
+    ]]
+  ],
+  "Presenting complaints": [
+    ["Presenting complaint details", [
+      "Since how long you have this trouble, in your opinion what caused this problem; event (s) that preceded the commencement of this; factors that increase or decrease the complaint",
+      "While describing your complaints to a Homoeopath, please describe the part affected sensation, aggravating, ameliorating factors. Also write down since how long you are suffering from each problem. Is it practically impossible to prescribe a homoeopathic remedy if you simply say \"Head ache\", \"Cold\", \"Throat pain\" etc.",
+      "History of presenting complaints:",
+      "Investigation report:",
+      "Treatment history:"
+    ]]
+  ],
+  "Past illness and Family History": [
+    ["Instructions and disease checklist", [
+      "Please tick (3) in appropriate square if you or any of your blood relative (Brother /sister/ Father / mother/ their brothers & sisters / Grand parents) suffered / is suffering from any of the following disease.",
+      "Name of Disease",
+      "Whether you suffered form this any time / suffering now?",
+      "Any blood relative suffered from this / suffering now? To Whom?"
+    ]],
+    ["Infectious and skin conditions", [
+      "AIDS / Herpes Zoster", "Measles", "Pox", "Mumps", "Typhoid", "Malaria", "Carbuncle", "Plague", "Dengue", "Chickunquniya", "Pneumonia", "Flu", "Whooping Cough", "Diphtheria", "Skin Scabies, Fungal infection", "Ring worm", "Jaundice", "Boils", "Delayed wound healing", "Corn foot", "Venomons stings — Scorpion — Dog — Snake — Rat", "Warts", "Moles"
+    ]],
+    ["Chronic and systemic conditions", [
+      "Primary complex / Tuberculosis", "Diabetes", "Hypertension High BP", "Asthma", "Cancer", "Heart attack", "Paralysis, stroke", "Arthritis, Rheumatoid arthritis", "Piles, Fistula, Fissure", "Surgery Anaesthesia", "Injury to head, any body part, accidents."
+    ]],
+    ["Organ-specific conditions", [
+      "Head, hair related diseases, hair dye.", "Eye, Vision related diseases", "Ear, Hearing related diseases.", "Nose, smell, nose bleeding related diseases.", "Mouth, Tongue, teeth-caries-filled — extracted", "Internal throat, tonsils, external throat, thyroid.", "Stomach, abdomen, digestion, liver, gall bladder, diarrhoea, vomiting, constipation, worms.", "Kidney, stones, Prostate", "Woman, Breasts, Menstrual problems.", "Males — sexual dysfunctions.", "Lungs", "Heart", "Leprosy", "Upper limbs, lower limbs, joints", "Blood diseases", "Brain, Nerves, fits, convulsions, polio, meningitis.", "Contraception methods-copper-T/ pills/ family planning surgery.", "Abortion — spontaneous, induced.", "Tablets/ injections to advance or postpone menses.", "Treatment to stop milk secretion.", "Psychiatric diseases", "Physical, mental diseases since birth", "Dead born children", "Childlessness, Delayed child birth."
+    ]],
+    ["Childhood and Family History", [
+      "Did your mother had any physical/ psychological problem during pregnancy?",
+      "Was there any difficulty about your birth / mother feeding?",
+      "At which month/year of age, as a child, you had head holding, teeth eruption, / learn to sit/ stand/ walk/ talk?",
+      "Any time you ate stone, mud, slate pencil, chalk, charcoal, with desire?",
+      "Till what age you had bed wetting?",
+      "Vaccination: What vaccines, at what age, how many times? was there any reaction or complaints after a vaccine?",
+      "If Married : Husband/ wife’s Health status, age child (ren)’s Health status, age abortion(s) -- spontaneons/ induced dead born/ premature.",
+      "Tea, coffee, alcohol, tobacco, smoking sleeping pills, laxatives, purgatives.",
+      "PAST HISTORY: Any history of hospitalisation", "Any surgery", "Any diseases",
+      "FAMILY HISTORY: Father", "Mother", "Paternal grand father", "Paternal grand mother", "Paternal uncle", "Paternal aunty", "Cousins on father side", "Maternal grand father", "Maternal grand mother", "Maternal uncle", "Maternal aunty", "Cousins on maternal side", "Others in family history"
+    ]]
+  ],
+  "Physical generals": [
+    ["Appetite", [
+      "How is your appetite?", "When are you hungry?", "What happens if you have to remain hungry for long?", "How fast do you eat?"
+    ]],
+    ["Thirst", [
+      "In a day how much of water do you drink in summer/ rainy/ winter season",
+      "Any particular time/ during an act you are specially thirsty?",
+      "Do you feel any change in you mouth's smell/ taste/ feeling?"
+    ]],
+    ["Food desires and aversions", [
+      "Food / Drink you like, dislike, that disagrees you.",
+      "ABOUT YOUR DESIRE:", "ABOUT YOUR AVERSION:", "EATING FOOD:"
+    ]],
+    ["Stool & Flatus", [
+      "Do you have any problem regarding your stools?",
+      "When and how many times a day do you pass stools?",
+      "When is it urgent?",
+      "Do you have belching or passing gas? Describe its character",
+      "How do you feel after passing gas up or down?"
+    ]],
+    ["Urine", [
+      "Any problem about urine / urination",
+      "Any problem before / during / after passing urine?"
+    ]],
+    ["Perspiration / Sweat", [
+      "Sweat/ How much / Body part / smell / stain / nature / time?",
+      "Any problem before / during & with / after sweat?"
+    ]],
+    ["Thermal & Heat", [
+      "THERMAL STATUS:", "SEASON:", "BATHING:", "COVERING:", "FANNING:",
+      "Body part / time/ factors increase, decrease heat. Complaints before/ with, during / after heat."
+    ]],
+    ["Chest and respiratory symptoms", [
+      "Chest / Hart/ cough/ sputum/ threat / larynx/ trachea / voice",
+      "Any problem in these?"
+    ]],
+    ["Sleep & Dreams", [
+      "Sleep position - side / back/ abdomen",
+      "In Which position you can't sleep and if so, why?",
+      "In sleep — Snoring, grinding teeth, salivation, sweat, eye/mouth remain open, walk, talk, weep, moan, startle/jerk, roll a lot.",
+      "Covering, upto which part of body",
+      "Do you have to uncover any parts?",
+      "Dreams in sleep"
+    ]],
+    ["Menstrual cycle & Leucorrhoea details", [
+      "ABOUT YOUR MENSES — CYCLE", "ABOUT YOUR MENSES — FLOW", "ABOUT YOUR MENSES — ODOR", "NO OF PADS USE PER DAY",
+      "BEFORE MENSES", "DURING MENSES", "AFTER MENSES",
+      "ABOUT YOUR OTHER DISCHARGE — LEUCORRHOEA:", "LEUCORRHOEA — FLOW", "LEUCORRHOEA — ODOR", "LEUCORRHOEA — COLOUR", "LEUCORRHOEA — CONSISTENCY", "LEUCORRHOEA — LOOK LIKE"
+    ]]
+  ],
+  "Sexology": [
+    ["General sexual history", [
+      "Any excessive indulgence in sex.in past/ present? Any effect on your health.",
+      "How do you feel after sexual intercourse?",
+      "Any particular feeling or symptoms appear before / during /after sexual intercourse?",
+      "Habit of masturbation etc...",
+      "Any sexual disturbance / perversion ?",
+      "Venereal disease / treatment",
+      "Increased / decreased sexual desire",
+      "Family planning method"
+    ]],
+    ["Man", [
+      "Any difficulties in erection?",
+      "Any Problem related to ejaculation"
+    ]],
+    ["Women", [
+      "Menses: At what age it began? Any trouble then?",
+      "Once in How many days you get?",
+      "Stain/ Nature / colour/ smell/ quantity of blood",
+      "How you will come-to known that you are about to have “Periods”?",
+      "Any problem before / during/ after menses?",
+      "At what age you attained menopause? was there any problem related to menses during that period? Any bodily or emotional trouble at that time?",
+      "White discharge / leucorrhoea - nature / colour/ smell/ quantity/ stain ?",
+      "When / How it increase and decrease?",
+      "Is it related to menses in any way?",
+      "What is the effect of this discharge on your general feeling, and other symptoms?",
+      "Any problem in breasts?"
+    ]]
+  ],
+  "Other physical symptoms": [
+    ["Factors that affect you (Modalities)", [
+      "Please mention whether you feel worse / better / otherwise from these factors",
+      "Hot Weather", "Cold weather", "Rain", "Cloudy weather", "Change of season / Weather", "Thunder, storm",
+      "Covering", "Warm bathing", "Sun light", "Sun heat", "Cold bating", "Lying with head up/low",
+      "Sitting", "Sitting erect", "Running", "Climbing stairs", "Going down stairs", "Travel — Train, Bus, Car, Plane etc.,",
+      "Lying— Back /Abdomen/ Right side / left side", "Eating/ Drinking", "After sexual intercourse", "Dust", "Noise, sound", "Music", "Light", "smells",
+      "When constipated", "Before / During/ after stool", "Before/ During/ after urination", "Before/ During/ after menses", "Before / During/ after sweating",
+      "When fasting", "Before/ during/ after eating", "Before important engagement", "Before exams", "When angry", "When sad", "When worried", "Smoke",
+      "Touch", "Pressure", "Massage", "Tight clothes", "Before / during/ after sleep", "Standing", "Looking up/ down", "Looking from high places", "Looking at moving object",
+      "After afternoon sleep", "Loss of sleep", "Cough", "Sneeze", "Laughing", "Talking", "Reading", "Writing", "Stooping", "After hair cut", "Combing hair", "Brushing teeth", "Moon light", "After Weeping", "Consolation", "In a Crowd", "In a closed room", "When thinking of illness", "New / full moon", "Morning", "Afternoon", "Evening", "Night", "Bathing", "Air draft", "Biting / Chewing", "Blowing nose", "When alone", "in company", "Belching / passing flatus", "Smoking", "Hanging limbs", "Near sea", "Shaving", "Swallowing", "On arms", "Vomiting", "Yawning", "listening to others talk", "Moving eyes", "Getting feet wet", "Fanning", "Over eating"
+    ]],
+    ["Other symptoms", [
+      "Vertigo", "Faintness", "Head", "Eyes, vision", "Ear, Hearing", "Nose, smell", "Face, expression", "Mouth, tongue, taste", "Lips, teeth, gums", "caries teeth, filed, extracted", "Throat. tonsils", "Limbs", "Back", "joints", "skin disease", "warts / moles/ corns / skin peeling / ulcers / boils / itching / skin colour change", "Nails", "Hair fall, dandruff, lice, colour?", "Delayed wound healing", "Neurological problems?"
+    ]]
+  ],
+  "Mental generals": [
+    ["Thoughts and emotions", [
+      "Describe your thoughts,", "Fears,", "Worries,", "Griefs,", "Impatience", "Hurry", "Mental traumas", "Desires,", "Suspicions,", "Jealousies,", "Revenge fullness,", "Proud", "Suicidal thoughts,", "fearing / Brooding", "Depression", "Cheerfulness,", "Happiness,", "Sexual feelings,", "Unnecessary thoughts,", "Memory", "Weeping nature", "Anger / factors that excite anger", "Desire to be alone", "Company", "Influence of your environment on you,", "Cleanliness, fastidiousness, your importance,",
+      "ABOUT YOUR FEAR: WHAT FEAR DO YOU HAVE NOW, CHILDHOOD. TRIGGERING FACTORS, HOW YOU EXPRESS. WITH 2-3 EXAMPLES",
+      "ABOUT YOUR ANGER: WHAT MAKES YOU ANGER. TRIGGERING FACTORS, HOW YOU EXPRESS. WITH 2-3 EXAMPLES",
+      "ABOUT WEEPING: WHAT MAKES YOU WEEP. TRIGGERING FACTORS, HOW YOU EXPRESS. WITH 2-3 EXAMPLES",
+      "ABOUT YOUR WORRY:"
+    ]],
+    ["Life experiences", [
+      "Best moments and worst moments of your life,", "Most sad moments of your life.", "Acts which you love to do the most and you hate the most?", "Your life since childhood; your future in your view point.",
+      "ABOUT CHILDHOOD", "ABOUT SCHOOLING", "ABOUT COLLEGE", "ABOUT WORK PALCE", "ABUT MARRIAGE", "MOST STRESS FULL PERIOD in your life"
+    ]]
+  ],
+  "Childhood / behavioural questions": [
+    ["Childhood behaviour", [
+      "According to intensity", "For children or you as a child Mark as +,++,+++",
+      "Obstinacy", "Temper", "Disobedience", "Aggression", "Hyper activity", "Destructiveness", "Courage", "Possessiveness", "Competition — winning spirit", "Sibling jealous", "Any special skills", "Unusual desires", "Boasting", "Stealing", "Telling lies", "unusual fears", "Shames", "Unusual attachments (to whom)", "Nail biting", "Finger sucking", "Picking/ playing with", "Religious", "Dullness of memory", "Slowness (in what)"
+    ]]
+  ],
+  "Nature and disposition": [
+    ["Select applicable traits", []]
+  ],
+  "Causation": [
+    ["Select relevant causation factors", []]
+  ],
+  "Case summary and doctor notes": [
+    ["Case summary", [
+      "SUMMERISE WHOLE YOUR PROBLEM IN FEW LINE OR 2 LINE OR COMPARE WITH ANYTHNG"
+    ]],
+    ["Clinical analysis", [
+      "Miasm", "Analysis of the case:", "Repertory analysis:", "Remedy and dd", "Prescription:", "Management advice:"
+    ]]
+  ]
+}
+
+sections_json_str = json.dumps(sections_data, ensure_ascii=False)
+translations_json_str = json.dumps(translations, ensure_ascii=False)
+subheadings_json_str = json.dumps(subheadings, ensure_ascii=False)
+
+def generate_html(logo_src):
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Prana HomeoCare — Source wording form</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;850&family=Noto+Sans+Tamil:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {{
+  color-scheme: light;
+  --ink: #172b27;
+  --muted: #687d77;
+  --brand: #176b57;
+  --brand-bright: #23836b;
+  --brand-dark: #105341;
+  --mint: #e8f5ef;
+  --line: #dfe7e8;
+  --surface: #ffffff;
+  --canvas: #f5f7f8;
+  --gold: #b08a48;
+  --shadow: 0 4px 20px rgba(20,38,45,0.05);
+  --radius: 18px;
+}}
+* {{ box-sizing: border-box; margin: 0; padding: 0; }}
+html {{ scroll-behavior: smooth; scroll-padding-top: 90px; -webkit-text-size-adjust: 100%; }}
+body {{
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font: 15px/1.55 'Inter', 'Noto Sans Tamil', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}}
+button, input, textarea, select {{
+  font-family: inherit;
+  font-size: 15px;
+}}
+button {{ cursor: pointer; touch-action: manipulation; }}
+
+/* Topbar */
+.topbar {{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #ffffff;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 8px rgba(18,35,42,0.035);
+}}
+.topinner {{
+  max-width: 1440px;
+  margin: auto;
+  min-height: 72px;
+  padding: 10px clamp(14px, 3vw, 36px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}}
+.brandlock {{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  text-decoration: none;
+}}
+.brandlogo {{
+  height: 48px;
+  max-height: 48px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}}
+.brandmark {{
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--brand);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  flex-shrink: 0;
+}}
+.brandtext {{
+  display: flex;
+  flex-direction: column;
+}}
+.brandname {{
+  font-size: clamp(16px, 2vw, 18px);
+  font-weight: 850;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.2;
+}}
+.brandcaption {{
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}}
+.topactions {{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}}
+.privacy-pill {{
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 12px;
+  color: #405e52;
+  font-size: 11.5px;
+  font-weight: 700;
+  background: #f7f9fa;
+}}
+.dot {{
+  width: 7px;
+  height: 7px;
+  background: #176b57;
+  border-radius: 50%;
+}}
+.lang-switch {{
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  background: #f7f9fa;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}}
+.lang-option {{
+  border: 0;
+  background: transparent;
+  color: #556e66;
+  border-radius: 8px;
+  padding: 7px 11px;
+  font-size: 11.5px;
+  font-weight: 750;
+  transition: all 0.16s ease;
+  white-space: nowrap;
+}}
+.lang-option:hover {{
+  background: #ffffff;
+  color: var(--brand);
+}}
+.lang-option.active {{
+  background: #ffffff;
+  color: var(--brand);
+  box-shadow: 0 2px 7px rgba(20,38,45,0.08);
+}}
+.lang-ta {{
+  display: block;
+  color: #537469;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-top: 3px;
+}}
+
+/* Main wrapper */
+.wrap {{
+  max-width: 1440px;
+  margin: auto;
+  padding: clamp(14px, 2.5vw, 32px);
+}}
+
+/* Hero section */
+.hero {{
+  position: relative;
+  overflow: hidden;
+  background: #123e35;
+  border-radius: 20px;
+  padding: clamp(20px, 3.5vw, 40px);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(15,57,47,0.12);
+  margin-bottom: 22px;
+}}
+.hero-kicker {{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.08);
+  padding: 5px 11px;
+  border-radius: 999px;
+  color: #d4f4e5;
+  font-size: 10.5px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}}
+.hero h1 {{
+  font-size: clamp(24px, 3.5vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  max-width: 760px;
+  margin: 14px 0 10px;
+  font-weight: 850;
+}}
+.hero p {{
+  color: #d8ebe4;
+  max-width: 720px;
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+}}
+.hero-meta {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}}
+.hero-chip {{
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 7px 11px;
+  color: #e8f7ef;
+  font-size: 11.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}}
+
+/* Two column layout */
+.layout {{
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}}
+.side {{
+  position: sticky;
+  top: 90px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+}}
+.side-top {{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 850;
+  margin-bottom: 8px;
+}}
+.stepcount {{
+  font-size: 11.5px;
+  color: var(--brand);
+  font-weight: 750;
+  background: var(--mint);
+  padding: 2px 8px;
+  border-radius: 99px;
+}}
+.progress {{
+  height: 6px;
+  background: #e8eeef;
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 8px 0 16px;
+}}
+.progress div {{
+  height: 100%;
+  background: var(--brand);
+  border-radius: 99px;
+  transition: width 0.25s ease;
+}}
+.navlist {{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}}
+.nav {{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 9px 10px;
+  border-radius: 11px;
+  color: #556c64;
+  font-size: 12.5px;
+  font-weight: 650;
+  line-height: 1.35;
+  transition: all 0.16s ease;
+}}
+.nav:hover {{
+  background: #f4f8f6;
+  color: var(--ink);
+}}
+.nav.active {{
+  background: var(--mint);
+  color: var(--brand);
+  border-color: #c9dfd5;
+  font-weight: 850;
+}}
+.navnum {{
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  border-radius: 7px;
+  background: #f0f4f2;
+  color: #647d75;
+  font-size: 10px;
+  font-weight: 850;
+}}
+.nav.active .navnum {{
+  background: var(--brand);
+  color: #ffffff;
+}}
+.side-note {{
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+  padding: 13px 4px 2px;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.5;
+}}
+.side-note strong {{
+  color: #2e5546;
+  display: block;
+  margin-bottom: 3px;
+}}
+
+/* Main Card */
+.maincard {{
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}}
+.mainhead {{
+  padding: clamp(18px, 2.8vw, 30px);
+  border-bottom: 1px solid var(--line);
+  background: #ffffff;
+}}
+.eyebrow {{
+  font-size: 10.5px;
+  font-weight: 850;
+  color: var(--brand);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}}
+.eyebrow:before {{
+  content: "";
+  height: 2px;
+  width: 18px;
+  background: var(--gold);
+  border-radius: 5px;
+}}
+.mainhead h2 {{
+  margin: 8px 0 5px;
+  font-size: clamp(21px, 2.8vw, 28px);
+  letter-spacing: -0.04em;
+  line-height: 1.25;
+  font-weight: 850;
+}}
+.mainhead p {{
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.5px;
+}}
+#body {{
+  padding: clamp(16px, 2.8vw, 30px);
+}}
+.section {{
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  margin: 0 0 18px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(22,42,49,0.02);
+}}
+.section:last-child {{
+  margin-bottom: 0;
+}}
+.section h3 {{
+  margin: 0;
+  padding: 13px 18px;
+  background: #f6f8f9;
+  border-bottom: 1px solid #e4eaeb;
+  color: #253b43;
+  font-size: 13.5px;
+  letter-spacing: -0.01em;
+  font-weight: 850;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}}
+.section h3:before {{
+  content: "";
+  width: 5px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--brand);
+  flex-shrink: 0;
+}}
+.section > .grid {{
+  padding: clamp(14px, 2vw, 20px);
+}}
+.grid {{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}}
+.field {{
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}}
+.field.full {{
+  grid-column: 1 / -1;
+}}
+.field label {{
+  font-size: 12.5px;
+  font-weight: 750;
+  color: #314b40;
+  line-height: 1.45;
+}}
+.field input, .field textarea, .field select {{
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dce5e7;
+  background: #ffffff;
+  border-radius: 11px;
+  padding: 12px 14px;
+  color: var(--ink);
+  outline: none;
+  font-size: 15px;
+  line-height: 1.5;
+  transition: border-color 0.16s, box-shadow 0.16s;
+}}
+.field input {{
+  min-height: 48px;
+}}
+.field textarea {{
+  min-height: 108px;
+  resize: vertical;
+}}
+.field select {{
+  min-height: 48px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23176b57' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  padding-right: 36px;
+  appearance: none;
+  -webkit-appearance: none;
+}}
+.field input:focus, .field textarea:focus, .field select:focus {{
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(23,107,87,0.12);
+  background: #ffffff;
+}}
+.check {{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  border: 1px solid #dce5e7;
+  background: #ffffff;
+  border-radius: 11px;
+  padding: 12px;
+  font-size: 12.5px;
+  font-weight: 650;
+  color: #3f594e;
+  line-height: 1.45;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}}
+.check:has(input:checked) {{
+  border-color: #9fc7b7;
+  background: #edf5f1;
+  color: var(--ink);
+}}
+.check input {{
+  width: 17px;
+  height: 17px;
+  flex: none;
+  margin-top: 2px;
+  accent-color: var(--brand);
+}}
+.note {{
+  background: #f2f7f4;
+  border: 1px solid #d7e6df;
+  border-left: 4px solid var(--brand);
+  padding: 14px 16px;
+  border-radius: 11px;
+  color: #355648;
+  font-size: 13.5px;
+  line-height: 1.6;
+  white-space: pre-line;
+}}
+
+/* Bottom Action Dock */
+.actions {{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px clamp(16px, 3vw, 30px);
+  border-top: 1px solid var(--line);
+  background: #ffffff;
+}}
+.actiongroup {{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}}
+.btn {{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #dce5e7;
+  border-radius: 11px;
+  padding: 11px 18px;
+  min-height: 48px;
+  background: #ffffff;
+  color: #263a43;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.16s ease;
+  flex-wrap: wrap;
+  row-gap: 0;
+}}
+.btn:hover:not(:disabled) {{
+  border-color: #b8d5c9;
+  background: #f7f9fa;
+}}
+.btn:disabled {{
+  opacity: 0.45;
+  cursor: not-allowed;
+}}
+.btn.primary {{
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #ffffff;
+  min-width: 136px;
+  box-shadow: 0 4px 12px rgba(23,107,87,0.18);
+}}
+.btn.primary:hover:not(:disabled) {{
+  background: var(--brand-dark);
+  border-color: var(--brand-dark);
+}}
+.btn .lang-ta {{
+  flex: 0 0 100%;
+  display: block;
+  margin: 1px 0 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.25;
+  color: inherit;
+}}
+.btn.primary .lang-ta {{
+  color: #ffffff !important;
+  font-weight: 800;
+}}
+.status {{
+  font-size: 11.5px;
+  color: var(--muted);
+  text-align: center;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: #f7f9fa;
+  border: 1px solid var(--line);
+}}
+.footer-note {{
+  text-align: center;
+  padding: 22px 14px;
+  color: var(--muted);
+  font-size: 11.5px;
+}}
+
+/* Success View */
+.success-card {{
+  padding: clamp(24px, 4vw, 44px) clamp(16px, 3vw, 36px);
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}}
+.success-badge {{
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--brand);
+  border: 2px solid #bce4d6;
+  font-size: 36px;
+  font-weight: 850;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 8px 24px rgba(23,107,87,0.16);
+}}
+.success-tag {{
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: var(--mint);
+  color: var(--brand-dark);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  border: 1px solid #c8e8de;
+}}
+.success-title {{
+  font-size: clamp(22px, 3.2vw, 30px);
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 12px;
+  font-weight: 850;
+}}
+.success-sub {{
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}}
+.ref-box {{
+  background: #fbfdfc;
+  border: 1.5px dashed #bce4d6;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+}}
+.ref-kicker {{
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--brand);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}}
+.ref-num {{
+  font-size: 34px;
+  font-weight: 850;
+  color: var(--brand);
+  letter-spacing: -0.5px;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  margin-bottom: 12px;
+}}
+.success-action-grid {{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}}
+.wa-btn {{
+  background: #25d366 !important;
+  color: #ffffff !important;
+  border-color: #20bd5a !important;
+  font-weight: 800;
+  text-decoration: none;
+  grid-column: 1 / -1;
+  font-size: 15px;
+  min-height: 48px;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+}}
+.wa-btn:hover {{
+  background: #20bd5a !important;
+}}
+.clinic-box {{
+  text-align: left;
+  background: #f6faf8;
+  border: 1px solid #dceee8;
+  border-radius: 14px;
+  padding: 16px 18px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink);
+}}
+.clinic-box strong {{
+  font-size: 14px;
+  color: var(--brand-dark);
+}}
+
+/* Modal for offline fallback */
+.modal-backdrop {{
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 37, 45, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 1000;
+}}
+.modal-card {{
+  background: #fff;
+  border-radius: 18px;
+  max-width: 500px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+  border: 1px solid var(--line);
+}}
+
+/* Responsive media queries */
+@media (max-width: 980px) {{
+  .layout {{ grid-template-columns: 1fr; }}
+  .side {{ position: static; max-height: none; }}
+  .navlist {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }}
+  .side-note {{ display: none; }}
+}}
+@media (max-width: 700px) {{
+  .topinner {{ padding: 10px 12px; }}
+  .brandlogo {{ height: 38px; max-width: 165px; }}
+  .privacy-pill {{ display: none; }}
+  .wrap {{ padding: 12px 10px 20px; }}
+  .hero {{ padding: 20px 16px; border-radius: 16px; }}
+  .grid {{ grid-template-columns: 1fr; gap: 14px; }}
+  .field.full {{ grid-column: auto; }}
+  .actions {{
+    position: sticky;
+    bottom: 0;
+    z-index: 40;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    gap: 8px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 -8px 24px rgba(20,38,45,0.08);
+  }}
+  .actions > #prev {{ grid-column: 1; grid-row: 1; width: 100%; }}
+  .actions > .actiongroup {{ grid-column: 2; grid-row: 1; width: 100%; }}
+  .actiongroup .btn {{ width: 100%; min-width: 0; }}
+  .actions > .status {{ grid-column: 1 / -1; grid-row: 2; width: 100%; justify-content: center; }}
+  .success-action-grid {{ grid-template-columns: 1fr; }}
+}}
+@media (max-width: 380px) {{
+  .brandlogo {{ height: 34px; max-width: 140px; }}
+  .brandcaption {{ display: none; }}
+  .lang-option {{ padding: 6px 8px; font-size: 10.5px; }}
+}}
+@media print {{
+  .topbar, .hero, .side, .actions, .footer-note, .wa-btn, #downloadBackupBtn, #newCaseBtn {{
+    display: none !important;
+  }}
+  body, .maincard, .section {{
+    background: #fff !important;
+    box-shadow: none !important;
+    border: 0 !important;
+  }}
+}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topinner">
+    <div class="brandlock">
+      <img src="{logo_src}" alt="Prana Homeo Care — Door of Hope" class="brandlogo" onerror="if(this.src.indexOf('logo.png')!==-1&&this.src.indexOf('/static/')===-1){{this.style.display='none';this.nextElementSibling.style.display='grid';}}else{{this.src='logo.png';}}" />
+      <div class="brandmark" style="display:none;">✚</div>
+      <div class="brandtext">
+        <span class="brandname">Prana HomeoCare</span>
+        <span class="brandcaption">Patient case record</span>
+      </div>
+    </div>
+    <div class="topactions">
+      <span class="privacy-pill"><span class="dot"></span>Private on this device</span>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-option" data-lang="en">English</button>
+        <button type="button" class="lang-option" data-lang="ta">தமிழ்</button>
+        <button type="button" class="lang-option active" data-lang="both">Both</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-kicker">✦ Patient intake · Case record</div>
+    <h1 id="hero">A clearer picture of your health starts here.</h1>
+    <p>Complete each section at your own pace. Your answers are saved as a draft in this browser while you work.</p>
+    <div class="hero-meta">
+      <span class="hero-chip">◉ Guided sections</span>
+      <span class="hero-chip">⌁ Autosaved draft</span>
+      <span class="hero-chip">▦ Mobile friendly</span>
+    </div>
+  </section>
+
+  <div class="layout">
+    <aside class="side">
+      <div class="side-top">
+        <span id="progressLabel">Your progress</span>
+        <span class="stepcount" id="count"></span>
+      </div>
+      <div class="progress"><div id="bar" style="width:0"></div></div>
+      <nav id="nav" class="navlist"></nav>
+      <div class="side-note">
+        <strong>Take your time</strong>Answer each question as accurately as possible. You can move between sections at any time.
+      </div>
+    </aside>
+
+    <section class="maincard">
+      <div class="mainhead">
+        <div class="eyebrow" id="step"></div>
+        <h2 id="title"></h2>
+        <p>Enter the details in the fields below.</p>
+      </div>
+      <div id="body"></div>
+      <div class="actions">
+        <button id="prev" class="btn">← Previous</button>
+        <span id="status" class="status">Draft saves on this device</span>
+        <div class="actiongroup">
+          <button id="next" class="btn primary">Continue →</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="footer-note">Prana HomeoCare · Patient case record · Dr. G. Srinivasan M.D(Hom)</div>
+</main>
+
+<script>
+const sections = {sections_json_str};
+const translations = {translations_json_str};
+const subheadings = {subheadings_json_str};
+
+let idx = 0, language = 'both', answers = {{}};
+const $ = x => document.getElementById(x);
+
+try {{
+  answers = JSON.parse(localStorage.getItem('pranaSourceExactDraft') || '{{}}');
+}} catch(e) {{}}
+
+function esc(s) {{
+  return String(s ?? "").replace(/[&<>"']/g, c => ({{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}}[c]));
+}}
+
+function save() {{
+  document.querySelectorAll('[data-key]').forEach(el => {{
+    answers[el.dataset.key] = el.type === 'checkbox' ? el.checked : el.value;
+  }});
+  try {{
+    localStorage.setItem('pranaSourceExactDraft', JSON.stringify(answers));
+    if ($('status')) $('status').textContent = language === 'ta' ? 'வரைவு இந்தச் சாதனத்தில் சேமிக்கப்பட்டது' : 'Draft saved on this device';
+  }} catch(e) {{}}
+}}
+
+function ui(en, ta) {{
+  return language === 'ta' ? ta : (language === 'both' ? en + '<span class="lang-ta">' + ta + '</span>' : en);
+}}
+
+function labelHTML(label) {{
+  const tamil = translations[label];
+  if (language === 'ta') return esc(tamil || label);
+  if (language === 'both' && tamil) return esc(label) + '<span class="lang-ta">' + esc(tamil) + '</span>';
+  return esc(label);
+}}
+
+function makeField(f, i) {{
+  let key = 's' + idx + 'f' + i, typ = f[1], v = answers[key] ?? '';
+  if (typ === 'notice') return `<div class="note field full">${{labelHTML(f[0])}}</div>`;
+  if (typ === 'checkbox') return `<label class="check"><input type="checkbox" data-key="${{key}}" ${{v ? 'checked' : ''}}><span>${{labelHTML(f[0])}}</span></label>`;
+  if (typ === 'select') {{
+    const opts = (f[2] || []).map(([val, taVal]) => `
+      <option value="${{esc(val)}}" ${{v === val ? 'selected' : ''}}>${{esc(language === 'ta' ? taVal : (language === 'both' ? val + ' / ' + taVal : val))}}</option>
+    `).join('');
+    return `
+      <div class="field">
+        <label for="${{key}}">${{labelHTML(f[0])}}</label>
+        <select id="${{key}}" data-key="${{key}}">
+          <option value="">${{esc(language === 'ta' ? 'தேர்ந்தெடுக்கவும்…' : 'Select an option…')}}</option>
+          ${{opts}}
+        </select>
+      </div>
+    `;
+  }}
+  if (typ === 'textarea') return `<div class="field full"><label for="${{key}}">${{labelHTML(f[0])}}</label><textarea id="${{key}}" data-key="${{key}}">${{esc(v)}}</textarea></div>`;
+  const numAttrs = typ === 'number' ? 'min="0" max="130" step="1"' : '';
+  return `<div class="field"><label for="${{key}}">${{labelHTML(f[0])}}</label><input id="${{key}}" data-key="${{key}}" type="${{typ}}" value="${{esc(v)}}" ${{numAttrs}}></div>`;
+}}
+
+function render() {{
+  let s = sections[idx];
+  $('title').textContent = (language === 'ta' ? (translations[s[0]] || s[0]) : s[0]);
+  $('step').innerHTML = ui('SECTION ' + String(idx + 1).padStart(2, '0'), 'பகுதி ' + String(idx + 1).padStart(2, '0'));
+  $('count').textContent = (idx + 1) + ' / ' + sections.length;
+  $('bar').style.width = ((idx + 1) / sections.length * 100) + '%';
+  
+  $('nav').innerHTML = sections.map((v, i) => `
+    <button class="nav ${{i === idx ? 'active' : ''}}" data-i="${{i}}">
+      <span class="navnum">${{String(i + 1).padStart(2, '0')}}</span>
+      <span>${{language === 'ta' ? esc(translations[v[0]] || v[0]) : esc(v[0])}}</span>
+    </button>
+  `).join('');
+
+  $('nav').querySelectorAll('button').forEach(b => b.onclick = () => {{
+    save();
+    idx = +b.dataset.i;
+    render();
+    window.scrollTo({{ top: 0, behavior: 'smooth' }});
+  }});
+
+  const all = s[1], groups = subheadings[s[0]] || [], used = new Set();
+  let out = '';
+
+  if (groups.length) {{
+    for (const group of groups) {{
+      let matches = [];
+      group[1].forEach(label => {{
+        let i = all.findIndex((f, j) => !used.has(j) && f[0] === label);
+        if (i >= 0) {{
+          used.add(i);
+          matches.push([all[i], i]);
+        }}
+      }});
+      if (matches.length) {{
+        out += `<section class="section"><h3>${{esc(group[0])}}</h3><div class="grid">${{matches.map(([f, i]) => makeField(f, i)).join('')}}</div></section>`;
+      }}
+    }}
+    let rest = all.map((f, i) => [f, i]).filter(([f, i]) => !used.has(i));
+    if (rest.length) {{
+      out += `<section class="section"><h3>Other questions</h3><div class="grid">${{rest.map(([f, i]) => makeField(f, i)).join('')}}</div></section>`;
+    }}
+  }} else {{
+    out = `<section class="section"><h3>${{esc(s[0])}}</h3><div class="grid">${{all.map((f, i) => makeField(f, i)).join('')}}</div></section>`;
+  }}
+
+  if (s[0] === 'Nature and disposition' || s[0] === 'Causation') {{
+    out = `<section class="section"><h3>${{s[0] === 'Nature and disposition' ? 'Nature and disposition' : 'CAUSATION: ALL THE PROBLEM STARTED AFTER'}}</h3><div class="grid">${{all.map((f, i) => makeField(f, i)).join('')}}</div></section>`;
+  }}
+
+  $('body').innerHTML = out;
+  $('prev').innerHTML = ui('← Previous', '← முந்தையது');
+  $('prev').disabled = idx === 0;
+  $('next').innerHTML = idx === sections.length - 1 ? ui('Submit Case Record', 'மருத்துவப் பதிவைச் சமர்ப்பிக்கவும்') : ui('Continue →', 'தொடரவும் →');
+
+  document.querySelectorAll('.lang-option').forEach(b => b.classList.toggle('active', b.dataset.lang === language));
+
+  const staticMap = [
+    ['.brandcaption', 'Patient case record', 'நோயாளி மருத்துவப் பதிவு'],
+    ['.privacy-pill', 'Private on this device', 'இந்தச் சாதனத்தில் மட்டும் தனிப்பட்டது'],
+    ['.hero-kicker', '✦ Patient intake · Case record', '✦ நோயாளர் பதிவு · மருத்துவக் குறிப்பேடு'],
+    ['.hero h1', 'A clearer picture of your health starts here.', 'உங்கள் உடல்நலத்தைப் பற்றிய தெளிவான புரிதல் இங்கே தொடங்குகிறது.'],
+    ['.hero p', 'Complete each section at your own pace. Your answers are saved as a draft in this browser while you work.', 'ஒவ்வொரு பகுதியையும் உங்கள் வசதிக்கேற்ப நிரப்பவும். உங்கள் பதில்கள் இந்த உலாவியில் வரைவு வடிவில் தானாகச் சேமிக்கப்படும்.'],
+    ['#progressLabel', 'Your progress', 'உங்கள் முன்னேற்றம்'],
+    ['.side-note strong', 'Take your time', 'நிதானமாக நிரப்பவும்'],
+    ['.mainhead > p', 'Enter the details in the fields below.', 'கீழே உள்ள புலங்களில் விவரங்களை உள்ளிடவும்.'],
+    ['.status', 'Draft saves on this device', 'வரைவு இந்தச் சாதனத்தில் சேமிக்கப்படுகிறது'],
+    ['.footer-note', 'Prana HomeoCare · Patient case record · Dr. G. Srinivasan M.D(Hom)', 'பிராணா ஹோமியோகேர் · நோயாளி மருத்துவப் பதிவு · டாக்டர் ஜி. சீனிவாசன் M.D(Hom)']
+  ];
+
+  staticMap.forEach(([sel, en, ta]) => {{
+    const el = document.querySelector(sel);
+    if (el) el.innerHTML = ui(en, ta);
+  }});
+}}
+
+async function submitCaseToServer() {{
+  save();
+  const nextBtn = $('next');
+  const prevBtn = $('prev');
+  const origHTML = nextBtn.innerHTML;
+  nextBtn.disabled = true;
+  prevBtn.disabled = true;
+  nextBtn.innerHTML = ui('Submitting case record…', 'சமர்ப்பிக்கிறது…');
+
+  const patientName = String(answers['s0f0'] || answers['patientName'] || answers['Name /'] || '').trim() || 'Patient';
+  const phone = String(answers['s0f9'] || answers['s0f8'] || answers['Ph.No ./'] || answers['phone'] || '').trim();
+  let diagnosis = '';
+  for (let k in answers) {{
+    if (k.toLowerCase().includes('diagnosis')) diagnosis = answers[k];
+  }}
+  diagnosis = String(diagnosis || answers['diagnosis'] || '').trim();
+
+  const payload = {{
+    formName: "Prana HomeoCare Case Record",
+    submittedAt: new Date().toISOString(),
+    language: language,
+    answers: {{
+      ...answers,
+      patientName: patientName,
+      phone: phone,
+      diagnosis: diagnosis
+    }}
+  }};
+
+  try {{
+    const res = await fetch("/api/cases", {{
+      method: "POST",
+      headers: {{ "Content-Type": "application/json" }},
+      body: JSON.stringify(payload)
+    }});
+    const result = await res.json().catch(() => ({{}}));
+    if (!res.ok) {{
+      throw new Error(result.error || `Server returned error (${{res.status}})`);
+    }}
+
+    try {{ localStorage.removeItem('pranaSourceExactDraft'); }} catch(e) {{}}
+    renderSuccessScreen(result.id, patientName, phone);
+  }} catch(err) {{
+    console.error("Submission failed:", err);
+    nextBtn.disabled = false;
+    prevBtn.disabled = false;
+    nextBtn.innerHTML = origHTML;
+    showSubmitErrorModal(payload, err.message);
+  }}
+}}
+
+function renderSuccessScreen(caseId, patientName, phone) {{
+  const waMsg = encodeURIComponent(
+    `Hello Dr. Srinivasan, I have submitted my case sheet record on Prana Homeo Care. Case ID: #${{caseId}}. Patient Name: ${{patientName}}${{phone ? " (Phone: " + phone + ")" : ""}}.`
+  );
+  const waUrl = `https://wa.me/919962303009?text=${{waMsg}}`;
+
+  document.querySelector('.actions').style.display = 'none';
+  $('step').innerHTML = ui('SUBMISSION COMPLETE', 'சமர்ப்பிப்பு முடிந்தது');
+  $('title').textContent = language === 'ta' ? 'வெற்றிகரமாகச் சமர்ப்பிக்கப்பட்டது' : 'Case Submitted Successfully';
+
+  $('body').innerHTML = `
+    <div class="success-card">
+      <div class="success-badge">✓</div>
+      <div class="success-tag">${{ui('SUBMISSION CONFIRMED', 'சமர்ப்பிப்பு உறுதிசெய்யப்பட்டது')}}</div>
+      <h2 class="success-title">
+        ${{ui('Submitted! Our doctor will reach out to you soon.', 'சமர்ப்பிக்கப்பட்டது! எங்கள் மருத்துவர் விரைவில் உங்களைத் தொடர்புகொள்வார்.')}}
+      </h2>
+      <p class="success-sub">
+        ${{ui(
+          `Thank you, <strong>${{esc(patientName)}}</strong>. Your comprehensive case sheet has been securely recorded for <strong>Dr. G. Srinivasan M.D(Hom)</strong> at Prana Homeo Care. Our clinical team will review your symptoms and will reach out to you soon.`,
+          `நன்றி, <strong>${{esc(patientName)}}</strong>. உங்கள் முழுமையான மருத்துவப் பதிவு <strong>டாக்டர் ஜி. சீனிவாசன் M.D(Hom)</strong> அவர்களிடம் பாதுகாப்பாகப் பதிவு செய்யப்பட்டுள்ளது. எங்கள் மருத்துவக் குழு உங்கள் அறிகுறிகளை ஆய்வு செய்து விரைவில் உங்களைத் தொடர்புகொள்வார்கள்.`
+        )}}
+      </p>
+
+      <div class="ref-box">
+        <span class="ref-kicker">${{ui('YOUR CASE REFERENCE ID', 'உங்கள் வழக்கு குறிப்பு எண்')}}</span>
+        <div class="ref-num">#${{esc(caseId)}}</div>
+        <button type="button" class="btn" id="copyRefBtn" style="padding:6px 14px;font-size:12px;min-height:36px;">
+          📋 ${{ui('Copy Reference ID', 'குறிப்பு எண்ணை நகலெடு')}}
+        </button>
+      </div>
+
+      <div class="success-action-grid">
+        <a class="btn wa-btn" href="${{waUrl}}" target="_blank" rel="noopener">
+          💬 ${{ui('Notify Doctor via WhatsApp (+91 99623 03009)', 'வாட்ஸ்அப் மூலம் மருத்துவருக்குத் தெரிவிக்கவும்')}}
+        </a>
+        <button type="button" class="btn primary" onclick="window.print()">
+          🖨️ ${{ui('Print / Save Record Copy', 'பதிவை அச்சிடு / சேமி')}}
+        </button>
+        <button type="button" class="btn" id="downloadBackupBtn">
+          📥 ${{ui('Download Case Record (JSON)', 'வழக்கு பதிவைப் பதிவிறக்கு (JSON)')}}
+        </button>
+        <button type="button" class="btn" id="newCaseBtn" style="grid-column:1/-1;">
+          ＋ ${{ui('Submit Another Case', 'மற்றொரு வழக்கைப் பதிவு செய்')}}
+        </button>
+      </div>
+
+      <div class="clinic-box">
+        <strong>Prana Homeo Care</strong><br>
+        Dr. G. Srinivasan M.D(Hom) · Specialist Pediatric & Classical Constitutional Homeopathy<br>
+        Plot no 121, 2/94A Jayalakshmi Nagar, Kattupakkam, Chennai 600056<br>
+        <span style="color:var(--brand);font-weight:700;">📞 Helpline: +91 99623 03009 · In-clinic & Worldwide Consultations</span>
+      </div>
+    </div>
+  `;
+
+  $('copyRefBtn').onclick = () => {{
+    if (navigator.clipboard) {{
+      navigator.clipboard.writeText(`#${{caseId}}`).then(() => {{
+        $('copyRefBtn').textContent = language === 'ta' ? '✓ நகலெடுக்கப்பட்டது!' : '✓ Copied to Clipboard!';
+        setTimeout(() => {{ $('copyRefBtn').textContent = '📋 ' + (language === 'ta' ? 'குறிப்பு எண்ணை நகலெடு' : 'Copy Reference ID'); }}, 2500);
+      }});
+    }}
+  }};
+
+  $('downloadBackupBtn').onclick = () => {{
+    const blob = new Blob([JSON.stringify({{ id: caseId, patientName, answers }}, null, 2)], {{ type: 'application/json;charset=utf-8' }});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `prana-case-record-${{patientName.replace(/[^a-zA-Z0-9]/g, '_')}}-#${{caseId}}.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }};
+
+  $('newCaseBtn').onclick = () => {{
+    localStorage.removeItem('pranaSourceExactDraft');
+    window.location.reload();
+  }};
+
+  window.scrollTo({{ top: 0, behavior: 'smooth' }});
+}}
+
+function showSubmitErrorModal(payload, errorMsg) {{
+  const existing = document.querySelector('.modal-backdrop');
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.className = 'modal-backdrop';
+  modal.innerHTML = `
+    <div class="modal-card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <span style="font-size:24px;">⚠️</span>
+        <h3 style="margin:0;font-size:18px;color:var(--ink);">${{ui('Server Connection Notice', 'சேவையக இணைப்பு அறிவிப்பு')}}</h3>
+      </div>
+      <p style="font-size:14px;color:var(--ink);line-height:1.55;margin-bottom:10px;">
+        ${{ui(
+          'We could not reach the backend server (' + esc(errorMsg) + '). Don’t worry — your complete case record is safely saved on this device.',
+          'சேவையகத்துடன் இணைக்க முடியவில்லை (' + esc(errorMsg) + '). கவலைப்பட வேண்டாம் — உங்கள் வழக்கு விவரங்கள் இந்தச் சாதனத்தில் பாதுகாப்பாக உள்ளன.'
+        )}}
+      </p>
+      <p style="font-size:12.5px;color:var(--muted);line-height:1.5;">
+        ${{ui(
+          'You can download a backup copy of your case record right now, or retry submitting once connected to the backend.',
+          'உங்கள் பதிவின் காப்புப் பிரதியை இப்போதே பதிவிறக்கம் செய்யலாம், அல்லது சேவையக இணைப்பு கிடைத்ததும் மீண்டும் சமர்ப்பிக்கலாம்.'
+        )}}
+      </p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <button class="btn primary" id="modalDownloadBtn" type="button">📥 ${{ui('Download Case Record (JSON)', 'பதிவைப் பதிவிறக்கு (JSON)')}}</button>
+        <button class="btn" id="modalRetryBtn" type="button">🔄 ${{ui('Retry Submit', 'மீண்டும் சமர்ப்பி')}}</button>
+        <button class="btn" id="modalCloseBtn" type="button">${{ui('Close', 'மூடு')}}</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  $('modalDownloadBtn').onclick = () => {{
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {{ type: 'application/json;charset=utf-8' }});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `prana-case-record-${{(payload.answers.patientName || 'patient').replace(/[^a-zA-Z0-9]/g, '_')}}-${{new Date().toISOString().slice(0, 10)}}.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }};
+
+  $('modalRetryBtn').onclick = () => {{
+    modal.remove();
+    submitCaseToServer();
+  }};
+
+  $('modalCloseBtn').onclick = () => modal.remove();
+}}
+
+$('prev').onclick = () => {{
+  save();
+  if (idx > 0) {{
+    idx--;
+    render();
+    window.scrollTo({{ top: 0, behavior: 'smooth' }});
+  }}
+}};
+
+$('next').onclick = () => {{
+  save();
+  if (idx < sections.length - 1) {{
+    idx++;
+    render();
+    window.scrollTo({{ top: 0, behavior: 'smooth' }});
+  }} else {{
+    submitCaseToServer();
+  }}
+}};
+
+document.querySelectorAll('.lang-option').forEach(b => b.onclick = () => {{
+  save();
+  language = b.dataset.lang;
+  render();
+}});
+
+// Initialize
+render();
+</script>
+</body>
+</html>
+'''
+
+if __name__ == "__main__":
+    fixed_html = generate_html("logo.png")
+    fixed_path = os.path.join(BASE_DIR, "prana_homeocare_fixed (5).html")
+    with open(fixed_path, "w", encoding="utf-8") as f:
+        f.write(fixed_html)
+    print(f"Generated {fixed_path} ({len(fixed_html)} bytes)")
+
+    backend_templates_dir = os.path.join(BASE_DIR, "prana_homeocare_responsive_redesign", "prana_backend", "templates")
+    os.makedirs(backend_templates_dir, exist_ok=True)
+    index_path = os.path.join(backend_templates_dir, "index.html")
+    backend_html = generate_html("/static/logo.png")
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write(backend_html)
+    print(f"Generated {index_path} ({len(backend_html)} bytes)")
+
+    build_index_path = os.path.join(BASE_DIR, "prana_homeocare_responsive_redesign", "prana_backend", "build_index.py")
+    with open(build_index_path, "w", encoding="utf-8") as f:
+        f.write(f'''# Build script for prana_backend templates/index.html with exact original clinical content
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_PATH = os.path.join(BASE_DIR, "templates", "index.html")
+
+HTML_CONTENT = \'\'\'{backend_html}\'\'\'
+
+if __name__ == "__main__":
+    os.makedirs(os.path.dirname(TEMPLATE_PATH), exist_ok=True)
+    with open(TEMPLATE_PATH, "w", encoding="utf-8") as f:
+        f.write(HTML_CONTENT)
+    print(f"Successfully wrote index.html ({{len(HTML_CONTENT)}} bytes)")
+''')
+    print(f"Generated {build_index_path}")
+
+    # Repackage zip
+    base_folder = os.path.join(BASE_DIR, "prana_homeocare_responsive_redesign")
+    zip_filename = os.path.join(BASE_DIR, "prana_homeocare_responsive_redesign.zip")
+    with zipfile.ZipFile(zip_filename, 'w', zipfile.ZIP_DEFLATED) as zf:
+        for root, dirs, files in os.walk(base_folder):
+            dirs[:] = [d for d in dirs if d != '__pycache__']
+            for file in files:
+                if file.endswith('.pyc') or file == 'prana_cases.sqlite3':
+                    continue
+                full_path = os.path.join(root, file)
+                rel_path = os.path.relpath(full_path, start=os.path.dirname(base_folder))
+                zf.write(full_path, rel_path)
+    print(f"Successfully packaged {zip_filename} ({os.path.getsize(zip_filename)} bytes)")

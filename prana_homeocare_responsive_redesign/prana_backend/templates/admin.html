@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#11796c">
+  <title>Doctor Dashboard · Prana Homeo Care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #11796c;
+      --brand-dark: #0b5b52;
+      --mint: #eaf6f2;
+      --mint-border: #b8e0d4;
+      --ink: #172d2a;
+      --muted: #627974;
+      --line: #dfe9e5;
+      --bg: #f4f8f6;
+      --card: #ffffff;
+      --shadow: 0 16px 44px rgba(24, 65, 55, 0.07);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #e4f5ee 0%, transparent 35%), var(--bg);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    .shell {
+      width: min(1260px, 100%);
+      margin: 0 auto;
+      padding: clamp(14px, 3.5vw, 36px);
+    }
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #168b7b, #07574e);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 850;
+      box-shadow: 0 8px 20px rgba(17, 121, 108, 0.22);
+      flex-shrink: 0;
+    }
+    .brand h1 {
+      font-size: clamp(19px, 3.5vw, 24px);
+      letter-spacing: -0.6px;
+      line-height: 1.2;
+    }
+    .brand p {
+      font-size: 12.5px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.16s ease-in-out;
+      white-space: nowrap;
+    }
+    .btn.primary {
+      background: var(--brand);
+      color: white;
+      border-color: var(--brand);
+    }
+    .btn.primary:hover {
+      background: var(--brand-dark);
+      transform: translateY(-1px);
+    }
+    .btn.secondary {
+      background: #ffffff;
+      color: var(--brand-dark);
+      border-color: #cfe2db;
+    }
+    .btn.secondary:hover {
+      background: var(--mint);
+      border-color: var(--mint-border);
+    }
+    .hero-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      margin: 26px 0 20px;
+      flex-wrap: wrap;
+    }
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      color: var(--brand);
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .hero-banner h2 {
+      font-size: clamp(23px, 4.5vw, 32px);
+      letter-spacing: -0.9px;
+      line-height: 1.2;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: 0 4px 16px rgba(24, 65, 55, 0.04);
+    }
+    .stat-card span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .stat-card strong {
+      display: block;
+      font-size: clamp(24px, 4vw, 32px);
+      letter-spacing: -0.8px;
+      color: var(--ink);
+      margin-top: 4px;
+    }
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: clamp(16px, 3vw, 26px);
+    }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .panel-head h3 {
+      font-size: 19px;
+      letter-spacing: -0.4px;
+    }
+    .panel-head p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .search-form {
+      display: flex;
+      gap: 8px;
+      flex: 1;
+      max-width: 460px;
+      width: 100%;
+    }
+    .search-input {
+      flex: 1;
+      min-width: 0;
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1.5px solid #d4e3dc;
+      border-radius: 12px;
+      background: #fbfdfc;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.16s, box-shadow 0.16s;
+    }
+    .search-input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(17, 121, 108, 0.16);
+      background: #fff;
+    }
+    /* Desktop table view */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      background: #ffffff;
+    }
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #edf2ef;
+      vertical-align: middle;
+    }
+    th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #6d827c;
+      background: #f7faf8;
+      font-weight: 750;
+    }
+    tbody tr:hover {
+      background: #f9fcfb;
+    }
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+    .pill-id {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--mint);
+      color: var(--brand-dark);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .patient-name {
+      font-weight: 750;
+      color: var(--ink);
+      font-size: 15px;
+    }
+    .action-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 750;
+      color: var(--brand);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: var(--mint);
+      transition: all 0.15s;
+    }
+    .action-link:hover {
+      background: var(--brand);
+      color: white;
+    }
+    /* Mobile Cards View for Narrow Screens */
+    .mobile-cards {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .m-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(24, 65, 55, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .m-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .m-card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .m-card-detail {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .m-card-detail span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .m-card-detail a {
+      color: var(--brand);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .empty-state {
+      padding: 45px 20px;
+      text-align: center;
+      color: var(--muted);
+    }
+    .empty-state strong {
+      display: block;
+      color: var(--ink);
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .footer-bar {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    @media (max-width: 768px) {
+      .table-container {
+        display: none;
+      }
+      .mobile-cards {
+        display: flex;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .search-form {
+        max-width: 100%;
+      }
+    }
+    @media (max-width: 520px) {
+      .shell {
+        padding: 12px;
+      }
+      header.topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .header-actions {
+        justify-content: space-between;
+      }
+      .header-actions .btn {
+        flex: 1;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .stat-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+      }
+      .stat-card strong {
+        margin: 0;
+      }
+      .search-form {
+        flex-direction: column;
+      }
+      .search-form .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v20M2 12h20"/></svg>
+        </div>
+        <div>
+          <h1>Prana Homeo Care</h1>
+          <p>Doctor Workspace · Clinical Case Records</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="btn secondary" href="{{url_for('index')}}">← Patient Intake Form</a>
+        <form method="post" action="{{url_for('logout')}}" style="display:inline;margin:0;">
+          <button class="btn secondary" type="submit">Log out ↗</button>
+        </form>
+      </div>
+    </header>
+
+    <section class="hero-banner">
+      <div>
+        <div class="eyebrow">Clinical Dashboard</div>
+        <h2>Patient Case Submissions</h2>
+        <p style="color:var(--muted);font-size:13.5px;margin-top:4px;">
+          Review intake submissions, update case notes, and manage patient follow-up visits.
+        </p>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span>Cases in this view</span>
+        <strong>{{cases|length}}</strong>
+      </div>
+      <div class="stat-card">
+        <span>Authenticated Role</span>
+        <strong>Doctor</strong>
+      </div>
+      <div class="stat-card">
+        <span>Data Privacy</span>
+        <strong style="color:var(--brand)">Confidential</strong>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h3>Submitted Records</h3>
+          <p>Search by patient name, contact number, or clinical diagnosis.</p>
+        </div>
+        <form class="search-form" method="get" action="{{url_for('admin_dashboard')}}">
+          <input class="search-input" name="q" value="{{q}}" placeholder="Search cases…" aria-label="Search patient records">
+          <button class="btn primary" type="submit">Search</button>
+          {% if q %}
+            <a class="btn secondary" href="{{url_for('admin_dashboard')}}">Reset</a>
+          {% endif %}
+        </form>
+      </div>
+
+      {% if cases %}
+        <!-- Desktop / Tablet Table View -->
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:80px;">Ref ID</th>
+                <th>Patient Name</th>
+                <th>Phone</th>
+                <th>Diagnosis</th>
+                <th>Submitted</th>
+                <th>Last Updated</th>
+                <th style="text-align:right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for c in cases %}
+                <tr>
+                  <td><span class="pill-id">#{{c.id}}</span></td>
+                  <td><div class="patient-name">{{c.patient_name}}</div></td>
+                  <td>
+                    {% if c.phone %}
+                      <a href="tel:{{c.phone}}" style="color:var(--brand);text-decoration:none;font-weight:600;">{{c.phone}}</a>
+                    {% else %}
+                      <span style="color:var(--muted)">—</span>
+                    {% endif %}
+                  </td>
+                  <td>{{c.diagnosis or '—'}}</td>
+                  <td style="font-size:13px;color:var(--muted);">{{c.created_at}}</td>
+                  <td style="font-size:13px;color:var(--muted);">{{c.updated_at}}</td>
+                  <td style="text-align:right;">
+                    <a class="action-link" href="{{url_for('case_detail', case_id=c.id)}}">Open Record →</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Card View (< 768px) -->
+        <div class="mobile-cards">
+          {% for c in cases %}
+            <div class="m-card">
+              <div class="m-card-header">
+                <span class="pill-id">Case #{{c.id}}</span>
+                <span style="font-size:11px;color:var(--muted)">{{c.created_at[:10]}}</span>
+              </div>
+              <div class="m-card-title">{{c.patient_name}}</div>
+              <div class="m-card-detail">
+                {% if c.phone %}
+                  <span>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <a href="tel:{{c.phone}}">{{c.phone}}</a>
+                  </span>
+                {% endif %}
+                {% if c.diagnosis %}
+                  <span>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                    <strong>Diagnosis:</strong> {{c.diagnosis}}
+                  </span>
+                {% endif %}
+                <span>
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  Updated: {{c.updated_at}}
+                </span>
+              </div>
+              <a class="btn primary" href="{{url_for('case_detail', case_id=c.id)}}" style="margin-top:6px;width:100%;">
+                Open Full Record →
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+
+      {% else %}
+        <div class="empty-state">
+          <strong>No patient records found</strong>
+          {% if q %}
+            <p>No results match "{{q}}". Try searching with another name, phone number, or term.</p>
+            <div style="margin-top:14px;">
+              <a class="btn secondary" href="{{url_for('admin_dashboard')}}">Clear Search</a>
+            </div>
+          {% else %}
+            <p>When patients submit their case-taking forms, their records will appear here automatically.</p>
+          {% endif %}
+        </div>
+      {% endif %}
+    </section>
+
+    <footer class="footer-bar">
+      <div>
+        <strong>Prana Homeo Care</strong> · Plot no 121, 2/94A Jayalakshmi Nagar, Kattupakkam, Chennai 600056
+      </div>
+      <div>
+        Confidential clinical database · Helpline: +91 99623 03009
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

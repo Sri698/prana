@@ -1,0 +1,1286 @@
+# Build script for prana_backend templates/index.html
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_PATH = os.path.join(BASE_DIR, "templates", "index.html")
+
+HTML_CONTENT = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#167c70">
+<title>Prana HomeoCare — Clinical Case Record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #167c70;
+  --green2: #0e6258;
+  --mint: #eaf6f2;
+  --ink: #203330;
+  --muted: #647d77;
+  --line: #dce8e4;
+  --paper: #ffffff;
+  --bg: #f4f8f6;
+  --gold: #d49722;
+  --danger: #b53c3c;
+  --radius: 20px;
+  --shadow-sm: 0 4px 16px rgba(22, 124, 112, 0.05);
+  --shadow-md: 0 10px 32px rgba(22, 124, 112, 0.09);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.55 'Inter', 'Noto Sans Tamil', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: 15px;
+}
+button { cursor: pointer; touch-action: manipulation; }
+.shell {
+  max-width: 1260px;
+  margin: auto;
+  padding: clamp(14px, 3vw, 28px);
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-logo {
+  height: 48px;
+  max-height: 48px;
+  width: auto;
+  max-width: 230px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+.logo-fallback {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--green), var(--green2));
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: 0 6px 16px rgba(22, 124, 112, 0.25);
+  flex-shrink: 0;
+}
+.brand-info {
+  display: flex;
+  flex-direction: column;
+}
+.brand h1 {
+  font-size: clamp(17px, 2.5vw, 20px);
+  margin: 0;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+  font-weight: 850;
+  color: var(--ink);
+}
+.brand p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.langbtn, .quietbtn {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 9px 14px;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 13.5px;
+  transition: all 0.16s ease-in-out;
+}
+.langbtn:hover, .quietbtn:hover {
+  background: var(--mint);
+  border-color: #b8ded4;
+}
+.langbtn {
+  border-color: #b8ded4;
+  color: var(--green2);
+}
+
+/* Hero section */
+.hero {
+  display: grid;
+  grid-template-columns: 1.5fr auto;
+  gap: 20px;
+  align-items: center;
+  background: linear-gradient(115deg, #eaf6f2 0%, #f7fbf9 100%);
+  border: 1px solid #dceee8;
+  border-radius: 24px;
+  padding: clamp(20px, 3.5vw, 32px);
+  margin-bottom: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 850;
+}
+.hero h2 {
+  font-size: clamp(23px, 3.2vw, 34px);
+  letter-spacing: -0.9px;
+  line-height: 1.2;
+  margin: 8px 0 10px;
+  font-weight: 850;
+}
+.hero p {
+  margin: 0;
+  color: #557069;
+  max-width: 650px;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.mascot {
+  justify-self: center;
+  width: 110px;
+  height: 110px;
+  border-radius: 36px;
+  background: #ffffff;
+  border: 1px solid #dceee8;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 12px 28px rgba(29, 125, 110, 0.10);
+  flex-shrink: 0;
+}
+.mascot svg {
+  width: 90px;
+  height: 90px;
+}
+
+/* Two column layout */
+.layout {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+.sidebar, .form-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.sidebar {
+  padding: 18px;
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+.progress-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.progress-pct {
+  color: var(--green);
+  font-family: ui-monospace, monospace;
+}
+.progress-track {
+  height: 7px;
+  border-radius: 99px;
+  background: #eaf1ee;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--green), #209d8e);
+  border-radius: 99px;
+  transition: width 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.progress-meta {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin: 7px 0 16px;
+}
+.steps {
+  display: grid;
+  gap: 4px;
+}
+.step-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 12px;
+  padding: 8px 10px;
+  color: #556e67;
+  font-size: 12.5px;
+  font-weight: 600;
+  transition: all 0.16s ease;
+}
+.step-nav:hover {
+  background: #f4f8f6;
+  color: var(--ink);
+}
+.step-nav.active {
+  background: var(--mint);
+  color: var(--green2);
+  border-color: #c9e4dc;
+  font-weight: 800;
+}
+.step-nav.done .num {
+  background: var(--green);
+  border-color: var(--green);
+  color: #ffffff;
+}
+.num {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  border: 1px solid #dce8e4;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  background: #ffffff;
+  color: var(--muted);
+}
+.step-label {
+  font-size: 12px;
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Form card */
+.form-card {
+  overflow: hidden;
+}
+.card-head {
+  padding: clamp(20px, 3.5vw, 30px) clamp(18px, 3.5vw, 32px) 18px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #ffffff, #fafdfb);
+}
+.step-kicker {
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  color: var(--green);
+  font-weight: 850;
+  text-transform: uppercase;
+}
+.card-head h2 {
+  font-size: clamp(22px, 3vw, 28px);
+  letter-spacing: -0.6px;
+  margin: 5px 0 4px;
+  line-height: 1.25;
+  font-weight: 850;
+}
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+.form-body {
+  padding: clamp(18px, 3vw, 32px);
+}
+.section-note {
+  padding: 13px 16px;
+  background: #f5faf8;
+  border: 1px solid #e0eee9;
+  border-left: 4px solid var(--green);
+  border-radius: 12px;
+  color: #48655e;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 22px;
+  white-space: pre-line;
+}
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 16px;
+}
+.field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.field.full {
+  grid-column: 1 / -1;
+}
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 750;
+  margin-bottom: 7px;
+  color: #273e38;
+  line-height: 1.4;
+}
+.label-ta {
+  display: block;
+  color: #647d76;
+  font-weight: 500;
+  font-size: 12px;
+  margin-top: 2px;
+}
+.required {
+  color: var(--danger);
+  font-weight: 800;
+}
+input:not([type=checkbox]), textarea, select {
+  width: 100%;
+  border: 1px solid #d5e3df;
+  background: #ffffff;
+  color: var(--ink);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+  font-size: 15px;
+  line-height: 1.5;
+  transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
+}
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+select {
+  min-height: 48px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23167c70' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  padding-right: 36px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(22, 124, 112, 0.14);
+  background: #ffffff;
+}
+input::placeholder, textarea::placeholder {
+  color: #9cb1ab;
+}
+.field .hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+.notice {
+  background: #f7faf9;
+  border: 1px solid #dbeae4;
+  padding: 16px 18px;
+  border-radius: 14px;
+  color: #3f5953;
+  font-size: 13.5px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+.checkline {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #edf7f3;
+  border: 1px solid #cde6dd;
+  padding: 15px 16px;
+  border-radius: 13px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.checkline:hover {
+  background: #e4f4ed;
+  border-color: #b0dcce;
+}
+.checkline input {
+  margin-top: 4px;
+  accent-color: var(--green);
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+}
+.checkline label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #213c35;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+.card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px clamp(18px, 3.5vw, 32px);
+  border-top: 1px solid var(--line);
+  background: #fcfdfc;
+  flex-wrap: wrap;
+}
+.btn {
+  border: 1px solid #d5e3df;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 11px 18px;
+  min-height: 46px;
+  font-weight: 750;
+  font-size: 13.5px;
+  color: #314842;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  text-decoration: none;
+  transition: all 0.16s ease-in-out;
+}
+.btn:hover:not(:disabled) {
+  background: #f5f9f7;
+  border-color: #b8ded4;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn.primary {
+  background: var(--green);
+  color: #ffffff;
+  border-color: var(--green);
+  box-shadow: 0 6px 18px rgba(22, 124, 112, 0.22);
+}
+.btn.primary:hover:not(:disabled) {
+  background: var(--green2);
+  border-color: var(--green2);
+}
+.foot-note {
+  font-size: 11.5px;
+  color: var(--muted);
+  text-align: center;
+}
+.toast {
+  font-size: 11.5px;
+  color: var(--green);
+  font-weight: 600;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+/* Review block */
+.review-block {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin: 0 0 14px;
+  overflow: hidden;
+}
+.review-head {
+  background: #f6faf8;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--line);
+}
+.review-body {
+  padding: 14px 16px;
+}
+.review-row {
+  padding: 9px 0;
+  border-bottom: 1px solid #edf4f1;
+}
+.review-row:last-child {
+  border-bottom: 0;
+}
+.review-row strong {
+  display: block;
+  font-size: 12.5px;
+  color: #4b665f;
+  margin-bottom: 2px;
+}
+.review-row p {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+  font-size: 14px;
+}
+.empty {
+  font-size: 12.5px;
+  color: #8fa29d;
+  font-style: italic;
+}
+
+/* Success screen */
+.success-wrap {
+  padding: clamp(24px, 4vw, 44px) clamp(16px, 3vw, 36px);
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.success-icon-badge {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--green);
+  border: 2px solid #bce4d6;
+  font-size: 38px;
+  font-weight: 850;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 10px 26px rgba(22, 124, 112, 0.18);
+  animation: pulse-badge 2.4s infinite ease-in-out;
+}
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); box-shadow: 0 10px 24px rgba(22, 124, 112, 0.16); }
+  50% { transform: scale(1.04); box-shadow: 0 14px 32px rgba(22, 124, 112, 0.28); }
+}
+.success-tag {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 99px;
+  background: var(--mint);
+  color: var(--green2);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  border: 1px solid #c8e8de;
+}
+.success-title {
+  font-size: clamp(22px, 3.4vw, 31px);
+  letter-spacing: -0.6px;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0 0 12px;
+  font-weight: 850;
+}
+.success-sub {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+.ref-box {
+  background: #fbfdfc;
+  border: 1.5px dashed #bce4d6;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.ref-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--green2);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.ref-code {
+  font-size: 34px;
+  font-weight: 850;
+  color: var(--green);
+  letter-spacing: -0.5px;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  margin-bottom: 12px;
+}
+.success-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.wa-btn {
+  background: #25d366 !important;
+  color: #ffffff !important;
+  border-color: #20bd5a !important;
+  font-weight: 800;
+  text-decoration: none;
+  grid-column: 1 / -1;
+  font-size: 15px;
+  min-height: 48px;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.28);
+}
+.wa-btn:hover {
+  background: #20bd5a !important;
+}
+.clinic-info-card {
+  text-align: left;
+  background: #f6faf8;
+  border: 1px solid #dceee8;
+  border-radius: 14px;
+  padding: 16px 18px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.clinic-name {
+  font-weight: 850;
+  font-size: 14.5px;
+  color: var(--green2);
+}
+.clinic-sub {
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.clinic-phone {
+  margin-top: 6px;
+  color: var(--green);
+  font-weight: 600;
+}
+
+/* Modal dialog */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 45, 38, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 999;
+}
+.modal-box {
+  background: #fff;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--line);
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.modal-head h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--ink);
+  font-weight: 800;
+}
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Responsive rules */
+@media (max-width: 960px) {
+  .shell { padding: 14px; }
+  .layout { grid-template-columns: 1fr; gap: 16px; }
+  .sidebar { position: static; max-height: none; padding: 14px; }
+  .steps { display: flex; overflow-x: auto; padding-bottom: 8px; gap: 6px; scroll-snap-type: x mandatory; }
+  .step-nav { min-width: 160px; width: auto; flex: 0 0 auto; scroll-snap-align: start; padding: 8px 10px; }
+  .hero { grid-template-columns: 1fr auto; padding: 20px; }
+  .mascot { width: 85px; height: 85px; border-radius: 26px; }
+  .mascot svg { width: 70px; height: 70px; }
+}
+@media (max-width: 680px) {
+  .topbar { margin-bottom: 14px; padding-bottom: 12px; }
+  .brand { gap: 10px; }
+  .brand-logo { height: 40px; max-width: 175px; }
+  .brand h1 { font-size: 16px; }
+  .brand p { font-size: 11px; }
+  .top-actions { gap: 6px; }
+  .langbtn, .quietbtn { padding: 7px 10px; font-size: 12px; min-height: 38px; }
+  .hero { padding: 18px 16px; border-radius: 18px; margin-bottom: 14px; }
+  .hero h2 { font-size: 22px; }
+  .hero p { font-size: 13px; }
+  .mascot { width: 68px; height: 68px; border-radius: 20px; }
+  .mascot svg { width: 56px; height: 56px; }
+  .form-card, .sidebar { border-radius: 16px; }
+  .card-head { padding: 18px 16px 14px; }
+  .card-head h2 { font-size: 20px; }
+  .form-body { padding: 16px; }
+  .fields { grid-template-columns: 1fr; gap: 14px; }
+  .field.full { grid-column: auto; }
+  .card-foot {
+    position: sticky;
+    bottom: 0;
+    z-index: 40;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 -8px 24px rgba(22, 124, 112, 0.10);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 8px;
+  }
+  .card-foot > #prevBtn { grid-column: 1; grid-row: 1; width: 100%; }
+  .card-foot > #nextBtn { grid-column: 2; grid-row: 1; width: 100%; }
+  .card-foot > .foot-note { grid-column: 1 / -1; grid-row: 2; text-align: center; font-size: 10.5px; }
+  .btn { min-height: 44px; padding: 9px 12px; font-size: 13px; }
+  .success-actions { grid-template-columns: 1fr; }
+}
+@media (max-width: 380px) {
+  .brand-logo { height: 34px; max-width: 140px; }
+  .brand p { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .mascot { display: none; }
+}
+@media print {
+  .topbar, .hero, .sidebar, .card-foot, .top-actions, .success-actions button:not([onclick*="print"]), .wa-btn, #downloadBackupBtn, #newCaseBtn {
+    display: none !important;
+  }
+  body, .form-card {
+    background: #fff !important;
+    box-shadow: none !important;
+    border: 0 !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <img src="/static/logo.png" onerror="this.onerror=null;this.src='logo.png';" alt="Prana Homeo Care — Door of Hope" class="brand-logo" onerror="if(this.src.indexOf('logo.png')!==-1&&this.src.indexOf('/static/')===-1){this.style.display='none';this.nextElementSibling.style.display='flex';}else{this.src='logo.png';}" />
+      <div class="logo-fallback" style="display:none;">✚</div>
+      <div class="brand-info">
+        <h1>Prana HomeoCare</h1>
+        <p id="brandCaption">Patient case record · Dr. G. Srinivasan M.D(Hom)</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="quietbtn" id="saveBtn" type="button">Save draft</button>
+      <button class="langbtn" id="langBtn" type="button">தமிழ்</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow" id="heroEyebrow">A guided clinical case-taking experience</div>
+      <h2 id="pageTitle">Let’s understand your story.</h2>
+      <p id="introText">Take your time and answer in your own words. Move through one section at a time. Your answers are auto-saved in this browser while you write.</p>
+      <div class="toast" id="saveState" aria-live="polite"></div>
+    </div>
+    <div class="mascot" aria-label="Friendly Prana mascot">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 45C20 25 33 14 50 14S80 25 80 45V66C80 79 68 87 50 87S20 79 20 66V45Z" fill="#DDF2E9" stroke="#167C70" stroke-width="2.5"/>
+        <path d="M25 44C25 28 36 21 50 21S75 28 75 44V61C75 73 64 80 50 80S25 73 25 61V44Z" fill="#FDFEFD"/>
+        <circle cx="39" cy="48" r="3.4" fill="#203330"/>
+        <circle cx="61" cy="48" r="3.4" fill="#203330"/>
+        <path d="M42 60C47 65 54 65 59 60" stroke="#167C70" stroke-width="2.8" stroke-linecap="round"/>
+        <circle cx="32" cy="57" r="4" fill="#F3B6A5" opacity=".8"/>
+        <circle cx="68" cy="57" r="4" fill="#F3B6A5" opacity=".8"/>
+        <path d="M50 4L53 11L60 14L53 17L50 24L47 17L40 14L47 11Z" fill="#E9BD62"/>
+      </svg>
+    </div>
+  </section>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="progress-head">
+        <span id="progressLabel">Your progress</span>
+        <span class="progress-pct" id="progressPct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-meta" id="progressMeta">Section 1 of 23</div>
+      <nav class="steps" id="stepsNav" aria-label="Form steps"></nav>
+    </aside>
+
+    <section class="form-card" id="formCard">
+      <div class="card-head">
+        <div class="step-kicker" id="stepKicker">STEP 01</div>
+        <h2 id="stepTitle"></h2>
+        <p class="subtitle" id="stepSubtitle"></p>
+      </div>
+      <form id="caseForm" novalidate>
+        <div class="form-body" id="formBody"></div>
+        <div class="card-foot" id="cardFoot">
+          <button class="btn" id="prevBtn" type="button">← Previous</button>
+          <span class="foot-note" id="footNote">You can review your answers before finishing.</span>
+          <button class="btn primary" id="nextBtn" type="button">Continue →</button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
+
+<script>
+const steps = [{"title": "Patient registration", "ta": "நோயாளர் பதிவு விவரங்கள்", "sub": "Complete the patient details before starting the case history.", "fields": [["patientName", "Patient name", "நோயாளியின் பெயர்", "text", true], ["occupation", "Occupation", "தொழில்", "text", false], ["regDate", "Registration date", "பதிவு தேதி", "date", true], ["age", "Age (years)", "வயது (ஆண்டுகளில்)", "number", true], ["gender", "Sex / Gender", "பாலினம்", "select", true, [["Male", "ஆண்"], ["Female", "பெண்"], ["Other", "பிற"]]], ["maritalStatus", "Marital status", "திருமண நிலை", "select", false, [["Single", "திருமணமாகாதவர்"], ["Married", "திருமணமானவர்"], ["Widowed", "விதவை"], ["Divorced", "விவாகரத்து பெற்றவர்"], ["Separated", "பிரிந்து வாழ்பவர்"]]], ["phcId", "PHC ID", "PHC அடையாள எண்", "text", false], ["address", "Address", "முகவரி", "textarea", false], ["phone", "Phone number", "தொலைபேசி எண்", "tel", false], ["refBy", "Referred by", "பரிந்துரைத்தவர்", "text", false], ["diagnosis", "Diagnosis", "நோயறிதல்", "text", false], ["reference", "Reference", "குறிப்பு", "text", false], ["height", "Height", "உயரம்", "text", false], ["weight", "Weight", "எடை", "text", false], ["bp", "Blood pressure", "இரத்த அழுத்தம்", "text", false], ["bmi", "BMI", "உடல் நிறை குறியீடு", "text", false], ["rasi", "Pirandha Rasi / Zodiac sign", "பிறந்த ராசி", "text", false], ["nakshatram", "Nakshatram / Birth star", "நட்சத்திரம்", "text", false]]}, {"title": "Disclaimer & consent", "ta": "விளக்கக் குறிப்பு மற்றும் ஒப்புதல்", "sub": "Please read and acknowledge before continuing.", "fields": [["disclaimerText", "This form collects personal and health information to help document your case history. Please provide information as accurately as you can. Your answers will be reviewed by the clinic for case-taking purposes. This form is not an emergency service. If you have an urgent medical concern, seek appropriate medical care. Ask the clinic if you have questions about how your information is used.", "இந்தப் படிவம் உங்கள் நோய் வரலாற்றைப் பதிவு செய்வதற்காக தனிப்பட்ட மற்றும் உடல்நலத் தகவல்களைச் சேகரிக்கிறது. முடிந்தவரை துல்லியமாகப் பதிலளிக்கவும். அவசர மருத்துவத் தேவைக்கு உடனடியாக உரிய மருத்துவ உதவியை நாடவும். உங்கள் தகவல்கள் எவ்வாறு பயன்படுத்தப்படுகின்றன என்பது குறித்து கேள்விகள் இருந்தால் கிளினிக்கிடம் கேளுங்கள்.", "notice", true], ["consent", "I have read and understood the disclaimer above.", "மேலுள்ள விளக்கக் குறிப்பைப் படித்து புரிந்துகொண்டேன்.", "checkbox", true]]}, {"title": "Patient’s own words", "ta": "நோயாளியின் சொந்த வார்த்தைகள்", "sub": "Please answer in your own words. Take your time.", "fields": [["feelingIllness", "What are your feelings about your illness?", "உங்கள் நோய் குறித்து உங்களுக்கு என்ன உணர்வு உள்ளது?", "textarea", false], ["emotionIllness", "What emotions do you experience because of the illness?", "நோயினால் என்ன உணர்ச்சிகளை அனுபவிக்கிறீர்கள்?", "textarea", false], ["reactionIllness", "How do you behave or react when the illness affects you?", "நோய் பாதிக்கும் போது நீங்கள் எவ்வாறு நடந்துகொள்கிறீர்கள் அல்லது எதிர்வினையாற்றுகிறீர்கள்?", "textarea", false], ["repeatedThoughts", "What thoughts repeatedly come to your mind about your suffering?", "உங்கள் துன்பம் குறித்து மனதில் மீண்டும் மீண்டும் வரும் எண்ணங்கள் என்ன?", "textarea", false], ["expectations", "What are your present needs and expectations from the clinician?", "தற்போது மருத்துவரிடமிருந்து நீங்கள் எதிர்பார்ப்பது என்ன?", "textarea", false], ["clinicReferral", "How did you hear about the clinic, and what brought you here?", "இந்தக் கிளினிக்கைப் பற்றி எப்படித் தெரிந்துகொண்டீர்கள்? இங்கு வரக் காரணம் என்ன?", "textarea", false], ["impact", "How has the complaint affected your daily life?", "இந்தக் குறை உங்கள் அன்றாட வாழ்க்கையை எவ்வாறு பாதித்துள்ளது?", "textarea", false], ["worries", "What worries you most about your suffering?", "உங்கள் துன்பம் குறித்து அதிகமாகக் கவலைப்படுவது என்ன?", "textarea", false]]}, {"title": "Presenting complaints", "ta": "தற்போதைய குறைகள்", "sub": "Describe each problem one by one, slowly and in detail.", "fields": [["chiefComplaint", "Tell us about each presenting complaint, one by one.", "ஒவ்வொரு தற்போதைய குறையையும் ஒன்றன்பின் ஒன்றாக விவரிக்கவும்.", "textarea", true], ["complaintSite", "Where exactly is each complaint located?", "ஒவ்வொரு குறையும் உடலில் எங்கு உள்ளது?", "textarea", false], ["sensation", "What does the sensation feel like?", "அந்த உணர்வு எப்படிப்பட்டது?", "textarea", false], ["onsetDuration", "When did each complaint start? Was the onset sudden or gradual?", "ஒவ்வொரு குறையும் எப்போது தொடங்கியது? திடீரெனவா அல்லது படிப்படியாகவா?", "textarea", false], ["frequencySeverity", "How often does it occur and how severe is it?", "எவ்வளவு அடிக்கடி ஏற்படுகிறது? தீவிரம் எவ்வளவு?", "textarea", false], ["aggravation", "What makes it worse?", "எதனால் குறை அதிகரிக்கிறது?", "textarea", false], ["amelioration", "What makes it better?", "எதனால் குறை குறைகிறது?", "textarea", false], ["concomitants", "What other symptoms occur along with it?", "இதனுடன் வேறு என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false]]}, {"title": "Complaint history & investigations", "ta": "குறை வரலாறு மற்றும் பரிசோதனைகள்", "sub": "Include relevant reports and treatment details.", "fields": [["historyPresenting", "History of presenting complaints: how did the problem develop over time?", "தற்போதைய குறைகளின் வரலாறு: காலப்போக்கில் பிரச்சினை எவ்வாறு வளர்ந்தது?", "textarea", false], ["precedingEvents", "What happened before the complaint began?", "குறை தொடங்குவதற்கு முன் என்ன நடந்தது?", "textarea", false], ["investigations", "Investigation reports, dates and important findings", "பரிசோதனை அறிக்கைகள், தேதிகள் மற்றும் முக்கிய முடிவுகள்", "textarea", false], ["treatmentHistory", "Treatments taken so far, medicines, duration, benefit or side effects", "இதுவரை எடுத்த சிகிச்சைகள், மருந்துகள், காலம், பயன் அல்லது பக்கவிளைவுகள்", "textarea", false]]}, {"title": "Thermal status & habits", "ta": "உடல் வெப்பநிலை விருப்பம் மற்றும் பழக்கங்கள்", "sub": "Describe your preferences and what affects your comfort.", "fields": [["thermal", "Thermal status: do you generally feel hot or cold? Which conditions are difficult for you?", "உடல் வெப்பநிலை: பொதுவாக வெப்பமாகவா குளிராகவா உணர்கிறீர்கள்? எந்தச் சூழல்கள் சிரமம் தருகின்றன?", "textarea", false], ["season", "Which season do you prefer or dislike? Why?", "எந்தப் பருவத்தை விரும்புகிறீர்கள் அல்லது விரும்புவதில்லை? ஏன்?", "textarea", false], ["eatingFood", "How do you prefer your food: hot, warm or cold?", "உணவை சூடாகவா, மிதமான சூட்டிலா அல்லது குளிராகவா விரும்புகிறீர்கள்?", "textarea", false], ["bathing", "Bathing preferences: water temperature, frequency and effect", "குளிக்கும் பழக்கம்: நீரின் வெப்பநிலை, அடிக்கடி குளித்தல் மற்றும் அதன் தாக்கம்", "textarea", false], ["covering", "How much covering do you need while resting or sleeping?", "ஓய்வெடுக்கும் போது அல்லது தூங்கும் போது எவ்வளவு போர்வை தேவை?", "textarea", false], ["fanning", "Do you prefer fanning or moving air? What happens without it?", "விசிறி அல்லது காற்றை விரும்புகிறீர்களா? அது இல்லாவிட்டால் என்ன ஆகும்?", "textarea", false]]}, {"title": "Appetite", "ta": "பசி", "sub": "Answer each appetite question separately.", "fields": [["appetiteUsual", "How is your appetite usually?", "பொதுவாக உங்கள் பசி எப்படி உள்ளது?", "textarea", false], ["appetiteTiming", "When do you feel hungry? At fixed times or irregularly?", "எப்போது பசி ஏற்படுகிறது? குறிப்பிட்ட நேரத்திலா அல்லது ஒழுங்கற்ற நேரங்களிலா?", "textarea", false], ["appetiteHunger", "What happens if you remain hungry for a long time?", "நீண்ட நேரம் பசியுடன் இருந்தால் என்ன ஆகிறது?", "textarea", false], ["eatingSpeed", "How fast do you eat? Do you chew slowly or eat quickly?", "எவ்வளவு வேகமாகச் சாப்பிடுகிறீர்கள்? மெதுவாக மென்று சாப்பிடுகிறீர்களா அல்லது வேகமாகவா?", "textarea", false]]}, {"title": "Thirst, desire & aversion", "ta": "தாகம், விருப்பம் மற்றும் வெறுப்பு", "sub": "Describe each pattern separately.", "fields": [["thirstAmount", "How much water do you drink in a day? Does it change by season?", "ஒரு நாளில் எவ்வளவு தண்ணீர் குடிக்கிறீர்கள்? பருவத்தின்படி மாறுகிறதா?", "textarea", false], ["thirstTiming", "When do you feel thirsty? How often and how much at a time?", "எப்போது தாகம் ஏற்படுகிறது? எவ்வளவு அடிக்கடி, ஒருமுறைக்கு எவ்வளவு குடிக்கிறீர்கள்?", "textarea", false], ["thirstTemperature", "Do you prefer cold, cool, room-temperature or warm drinks?", "குளிர்ந்த, சாதாரண வெப்பநிலை அல்லது வெந்நீர்/பானங்களில் எதை விரும்புகிறீர்கள்?", "textarea", false], ["desires", "What foods, drinks or other things do you strongly desire?", "எந்த உணவு, பானம் அல்லது பிறவற்றை மிகவும் விரும்புகிறீர்கள்?", "textarea", false], ["aversions", "What foods or drinks do you dislike or avoid? Why?", "எந்த உணவு அல்லது பானங்களை விரும்புவதில்லை அல்லது தவிர்க்கிறீர்கள்? ஏன்?", "textarea", false], ["disagreeingFood", "Which foods disagree with you or cause symptoms?", "எந்த உணவுகள் ஒத்துக்கொள்ளாமல் அறிகுறிகளை ஏற்படுத்துகின்றன?", "textarea", false]]}, {"title": "Stool", "ta": "மலம்", "sub": "Please answer the stool questions individually.", "fields": [["stoolFrequency", "How often do you pass stool? Has this changed?", "எவ்வளவு அடிக்கடி மலம் கழிக்கிறீர்கள்? இதில் மாற்றம் உள்ளதா?", "textarea", false], ["stoolCharacter", "Describe the stool: consistency, colour, amount and smell.", "மலத்தின் தன்மை, நிறம், அளவு மற்றும் மணத்தை விவரிக்கவும்.", "textarea", false], ["stoolSymptoms", "Is there pain, straining, urgency, incomplete evacuation, constipation, diarrhoea, blood or mucus?", "வலி, முக்குதல், அவசரம், முழுமையாக வெளியேறாத உணர்வு, மலச்சிக்கல், வயிற்றுப்போக்கு, இரத்தம் அல்லது சளி உள்ளதா?", "textarea", false], ["stoolBeforeAfter", "How do you feel before and after passing stool?", "மலம் கழிப்பதற்கு முன்பும் பின்பும் எப்படி உணர்கிறீர்கள்?", "textarea", false]]}, {"title": "Urine", "ta": "சிறுநீர்", "sub": "Answer each question about urination.", "fields": [["urineFrequency", "How often do you pass urine during the day and night?", "பகலிலும் இரவிலும் எவ்வளவு அடிக்கடி சிறுநீர் கழிக்கிறீர்கள்?", "textarea", false], ["urineCharacter", "Describe the colour, amount, smell and appearance of urine.", "சிறுநீரின் நிறம், அளவு, மணம் மற்றும் தோற்றத்தை விவரிக்கவும்.", "textarea", false], ["urineSymptoms", "Do you have burning, pain, urgency, difficulty starting, weak stream or leakage?", "எரிச்சல், வலி, அவசரம், தொடங்க சிரமம், பலவீனமான ஓட்டம் அல்லது கசிவு உள்ளதா?", "textarea", false], ["urineBeforeAfter", "What symptoms occur before, during or after urination?", "சிறுநீர் கழிப்பதற்கு முன், போது அல்லது பின் என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false]]}, {"title": "Sweat & body odour", "ta": "வியர்வை மற்றும் உடல் மணம்", "sub": "Describe the amount, location and circumstances.", "fields": [["sweatAmount", "How much do you sweat, and under what circumstances?", "எவ்வளவு வியர்க்கிறது? எந்தச் சூழலில் வியர்க்கிறது?", "textarea", false], ["sweatLocation", "Which body parts sweat most or least? Is it equal on both sides?", "எந்த உடற்பகுதிகளில் அதிகமாக அல்லது குறைவாக வியர்க்கிறது? இருபுறமும் சமமா?", "textarea", false], ["sweatOdourStain", "Describe the smell, stains or nature of the sweat.", "வியர்வையின் மணம், கறைகள் அல்லது தன்மையை விவரிக்கவும்.", "textarea", false], ["sweatTiming", "When does sweating occur? What happens before or after it?", "எப்போது வியர்க்கிறது? அதற்கு முன் அல்லது பின் என்ன நடக்கிறது?", "textarea", false]]}, {"title": "Other physical generals", "ta": "பிற உடல் பொதுவான அறிகுறிகள்", "sub": "Use these fields for the remaining general symptoms.", "fields": [["belchingGas", "Belching and passing gas: frequency, smell, character, and how you feel afterwards.", "ஏப்பம் மற்றும் வாயு: அடிக்கடி ஏற்படுதல், மணம், தன்மை மற்றும் வெளியேறிய பின் ஏற்படும் உணர்வு.", "textarea", false], ["sleepGeneral", "Sleep: duration, quality, waking, refreshing or unrefreshing sleep", "தூக்கம்: நேரம், தரம், விழித்தல், புத்துணர்ச்சி கிடைக்கிறதா?", "textarea", false], ["perspirationOther", "Any other perspiration-related symptom not already described", "முன்பு குறிப்பிடாத வியர்வை தொடர்பான பிற அறிகுறிகள்", "textarea", false], ["generalNotes", "Any other general symptom or bodily change", "பிற பொதுவான அறிகுறிகள் அல்லது உடல் மாற்றங்கள்", "textarea", false]]}, {"title": "Chest, heart & breathing", "ta": "மார்பு, இதயம் மற்றும் சுவாசம்", "sub": "Describe each symptom and what brings it on or relieves it.", "fields": [["chest", "Chest symptoms: pain, tightness, heaviness, location and spread", "மார்பு அறிகுறிகள்: வலி, இறுக்கம், கனத்த உணர்வு, இடம் மற்றும் பரவல்", "textarea", false], ["heart", "Heart symptoms: palpitations, irregular beats, discomfort or related symptoms", "இதய அறிகுறிகள்: படபடப்பு, ஒழுங்கற்ற துடிப்பு, அசௌகரியம் அல்லது தொடர்புடைய அறிகுறிகள்", "textarea", false], ["cough", "Cough: dry or productive, timing, triggers and what relieves it", "இருமல்: வறண்டதா அல்லது சளியுடனா, நேரம், தூண்டுதல்கள் மற்றும் குறைக்கும் காரணிகள்", "textarea", false], ["sputum", "Sputum: amount, colour, smell, consistency and time of day", "சளி: அளவு, நிறம், மணம், அடர்த்தி மற்றும் ஏற்படும் நேரம்", "textarea", false], ["throatTrachea", "Throat, larynx or trachea symptoms: soreness, irritation, constriction or difficulty", "தொண்டை, குரல்வளை அல்லது மூச்சுக்குழாய் அறிகுறிகள்: வலி, எரிச்சல், இறுக்கம் அல்லது சிரமம்", "textarea", false], ["voice", "Voice: hoarseness, weakness, loss of voice or change with use", "குரல்: கரகரப்பு, பலவீனம், குரல் இழப்பு அல்லது பயன்படுத்தும்போது மாற்றம்", "textarea", false]]}, {"title": "Menstrual history", "ta": "மாதவிடாய் வரலாறு", "sub": "Complete the questions that apply to you.", "fields": [["menarche", "At what age did menstruation begin? Were there problems at that time?", "எந்த வயதில் மாதவிடாய் தொடங்கியது? அப்போது சிரமங்கள் இருந்தனவா?", "textarea", false], ["cycle", "Describe the cycle length and regularity.", "மாதவிடாய் சுழற்சியின் இடைவெளி மற்றும் ஒழுங்கை விவரிக்கவும்.", "textarea", false], ["flow", "Describe the flow, duration, colour, clots and odour.", "இரத்தப்போக்கின் அளவு, நாட்கள், நிறம், கட்டிகள் மற்றும் மணத்தை விவரிக்கவும்.", "textarea", false], ["pads", "How many pads are used per day? Does this change during the period?", "ஒரு நாளில் எத்தனை பேட்கள் பயன்படுத்துகிறீர்கள்? மாதவிடாய் நாட்களில் மாறுகிறதா?", "textarea", false], ["beforeMenses", "What symptoms occur before menstruation?", "மாதவிடாய்க்கு முன் என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false], ["duringMenses", "What symptoms occur during menstruation?", "மாதவிடாயின் போது என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false], ["afterMenses", "What symptoms occur after menstruation?", "மாதவிடாய்க்குப் பின் என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false]]}, {"title": "Female discharge & reproductive health", "ta": "பெண்களின் வெளியேற்றம் மற்றும் இனப்பெருக்க உடல்நலம்", "sub": "Answer only what is relevant to you.", "fields": [["dischargeFlow", "Any vaginal discharge or leucorrhoea? Describe amount and frequency.", "யோனி வெளியேற்றம் அல்லது வெள்ளைப்படுதல் உள்ளதா? அளவு மற்றும் அடிக்கடி ஏற்படுவதை விவரிக்கவும்.", "textarea", false], ["dischargeCharacter", "Describe colour, odour, consistency and appearance.", "நிறம், மணம், அடர்த்தி மற்றும் தோற்றத்தை விவரிக்கவும்.", "textarea", false], ["dischargeSymptoms", "Are there associated itching, pain, irritation or other symptoms?", "அரிப்பு, வலி, எரிச்சல் அல்லது பிற அறிகுறிகள் உள்ளனவா?", "textarea", false], ["pregnancyBirth", "Pregnancy, delivery, breastfeeding, contraception or other reproductive history relevant to your case", "கர்ப்பம், பிரசவம், தாய்ப்பால், கருத்தடை அல்லது தொடர்புடைய இனப்பெருக்க வரலாறு", "textarea", false], ["breast", "Any breast symptoms or concerns?", "மார்பகத்தில் அறிகுறிகள் அல்லது கவலைகள் உள்ளனவா?", "textarea", false]]}, {"title": "Male sexual & reproductive health", "ta": "ஆண்களின் பாலியல் மற்றும் இனப்பெருக்க உடல்நலம்", "sub": "Answer privately and only where relevant.", "fields": [["sexualDesire", "How would you describe your sexual desire or libido? Has it changed?", "பாலியல் விருப்பம் எவ்வாறு உள்ளது? அதில் மாற்றம் ஏற்பட்டுள்ளதா?", "textarea", false], ["sexualLife", "Any concern about sexual life, intimacy or intercourse?", "பாலியல் வாழ்க்கை, நெருக்கம் அல்லது உடலுறவு குறித்து கவலை உள்ளதா?", "textarea", false], ["erection", "Any difficulty with erection, its duration or maintenance?", "விறைப்புத்தன்மை ஏற்படுதல் அல்லது நீடித்திருப்பதில் சிரமம் உள்ளதா?", "textarea", false], ["ejaculation", "Any concern about ejaculation, timing, pain or semen?", "விந்து வெளியேற்றம், நேரம், வலி அல்லது விந்து குறித்து கவலை உள்ளதா?", "textarea", false], ["sexualBeforeAfter", "How do you feel before and after sexual activity? Any related symptoms?", "பாலியல் செயல்பாட்டிற்கு முன்பும் பின்பும் எப்படி உணர்கிறீர்கள்? தொடர்புடைய அறிகுறிகள் உள்ளனவா?", "textarea", false], ["sexualHealthOther", "Any other sexual or reproductive health concern you wish to share?", "பகிர விரும்பும் பிற பாலியல் அல்லது இனப்பெருக்க உடல்நலக் கவலைகள் உள்ளனவா?", "textarea", false]]}, {"title": "Sleep, position & dreams", "ta": "தூக்கம், தூங்கும் நிலை மற்றும் கனவுகள்", "sub": "Describe your usual sleep and any unusual events.", "fields": [["sleepDuration", "How many hours do you sleep? What time do you go to bed and wake?", "எத்தனை மணி நேரம் தூங்குகிறீர்கள்? எப்போது தூங்கச் சென்று எப்போது எழுகிறீர்கள்?", "textarea", false], ["sleepQuality", "Do you fall asleep easily? Do you wake during the night? Is sleep refreshing?", "எளிதில் தூக்கம் வருகிறதா? இரவில் விழிக்கிறீர்களா? தூக்கம் புத்துணர்ச்சி தருகிறதா?", "textarea", false], ["sleepPosition", "Which position do you prefer? Which position can you not sleep in, and why?", "எந்த நிலையில் தூங்க விரும்புகிறீர்கள்? எந்த நிலையில் தூங்க முடியாது? ஏன்?", "textarea", false], ["sleepEvents", "Any snoring, teeth grinding, salivation, sweating, open eyes/mouth, sleepwalking, talking, weeping, moaning, jerking or frequent turning?", "குறட்டை, பற்களைக் கடித்தல், உமிழ்நீர், வியர்வை, கண்/வாய் திறந்திருத்தல், தூக்கத்தில் நடப்பது/பேசுவது/அழுவது, திடுக்கிடுதல் அல்லது புரளுதல் உள்ளதா?", "textarea", false], ["dreams", "What do you dream about? Any recurring or disturbing dreams?", "என்ன கனவுகள் வருகின்றன? மீண்டும் மீண்டும் வரும் அல்லது தொந்தரவு தரும் கனவுகள் உள்ளனவா?", "textarea", false]]}, {"title": "Mind & thoughts", "ta": "மனம் மற்றும் எண்ணங்கள்", "sub": "Mind is a required case-taking section. Describe thoughts and emotional experiences in your own words.", "fields": [["mindDescribe", "Describe your thoughts and mental state in detail.", "உங்கள் எண்ணங்களையும் மனநிலையையும் விரிவாக விவரிக்கவும்.", "textarea", true], ["mindRecurring", "What thoughts keep returning to your mind?", "மனதில் மீண்டும் மீண்டும் வரும் எண்ணங்கள் என்ன?", "textarea", false], ["mindStress", "What is the most stressful period or experience in your life? How did it affect you?", "வாழ்க்கையில் அதிக மனஅழுத்தம் தந்த காலம் அல்லது அனுபவம் எது? அது உங்களை எவ்வாறு பாதித்தது?", "textarea", false], ["mindCoping", "When distressed, what do you usually do and what helps you feel better?", "மனவேதனை ஏற்படும் போது பொதுவாக என்ன செய்கிறீர்கள்? எது நிம்மதி தருகிறது?", "textarea", false]]}, {"title": "Fear, anger, weeping & worry", "ta": "பயம், கோபம், அழுகை மற்றும் கவலை", "sub": "For each emotion, include triggers, how you express it, and two or three examples.", "fields": [["fear", "What fears do you have now or had in childhood? What triggers them? How do you express fear? Give 2–3 examples.", "தற்போது அல்லது குழந்தைப் பருவத்தில் என்ன பயங்கள் இருந்தன? எது தூண்டுகிறது? பயத்தை எவ்வாறு வெளிப்படுத்துகிறீர்கள்? 2–3 உதாரணங்கள் தரவும்.", "textarea", false], ["anger", "What makes you angry? What triggers it, how do you express it, and what happens afterwards? Give 2–3 examples.", "எது கோபத்தை ஏற்படுத்துகிறது? எது தூண்டுகிறது? கோபத்தை எவ்வாறு வெளிப்படுத்துகிறீர்கள்? பின்னர் என்ன நடக்கிறது? 2–3 உதாரணங்கள் தரவும்.", "textarea", false], ["weeping", "What makes you weep? What triggers it and how do you express it? Give 2–3 examples.", "எது அழுகையை ஏற்படுத்துகிறது? எது தூண்டுகிறது? எவ்வாறு வெளிப்படுத்துகிறீர்கள்? 2–3 உதாரணங்கள் தரவும்.", "textarea", false], ["worry", "What do you worry about most? How does worry affect your body, sleep or daily life?", "எதைப் பற்றி அதிகம் கவலைப்படுகிறீர்கள்? அது உடல், தூக்கம் அல்லது அன்றாட வாழ்க்கையை எவ்வாறு பாதிக்கிறது?", "textarea", false]]}, {"title": "Nature, disposition & life history", "ta": "இயல்பு, மனப்பாங்கு மற்றும் வாழ்க்கை வரலாறு", "sub": "Describe your traits and important life experiences.", "fields": [["natureDisposition", "Which traits describe you: affectionate, caring, playful, amorous, aggressive, mischievous, alert, quick to react, animated, restless, deceitful, curious, malicious, jealous, expressive, communicative, systematic, calculative, fastidious, organized, soft, sensitive, emotional, sentimental, disorganized, adjusting, easily influenced, adaptable or irritable? Give examples.", "அன்பானவர், அக்கறையுள்ளவர், விளையாட்டுத்தனமானவர், ஆக்ரோஷமானவர், குறும்பானவர், எச்சரிக்கையானவர், அமைதியற்றவர், ஆர்வமுள்ளவர், பொறாமை, உணர்ச்சிவசப்படுதல், ஒழுங்கு, உணர்திறன், எளிதில் பாதிக்கப்படுதல், எளிதில் ஒத்துப்போதல் அல்லது எரிச்சல் போன்ற எந்த இயல்புகள் உங்களிடம் உள்ளன? உதாரணங்களுடன் விவரிக்கவும்.", "textarea", false], ["childhood", "Describe your childhood and family environment.", "உங்கள் குழந்தைப் பருவம் மற்றும் குடும்பச் சூழலை விவரிக்கவும்.", "textarea", false], ["schoolCollege", "Describe your schooling and college experiences.", "பள்ளி மற்றும் கல்லூரி அனுபவங்களை விவரிக்கவும்.", "textarea", false], ["workplace", "Describe your workplace experiences and relationships.", "பணியிட அனுபவங்கள் மற்றும் உறவுகளை விவரிக்கவும்.", "textarea", false], ["marriage", "Describe marriage or important relationships, if applicable.", "திருமணம் அல்லது முக்கியமான உறவுகளைப் பொருந்தினால் விவரிக்கவும்.", "textarea", false]]}, {"title": "Causation & life events", "ta": "காரணங்கள் மற்றும் வாழ்க்கை நிகழ்வுகள்", "sub": "What happened around the time your problems began? Select or describe what applies.", "fields": [["causation", "Did the problem begin after rejection, neglect, being looked down on, failure in defence or competition, aggression/attack, failure in love, a break in structure or relationship, failure in performance, loss of power/responsibility, emotional or physical hurt, or shock? Describe the event and its effect.", "நிராகரிப்பு, புறக்கணிப்பு, இழிவாக நடத்துதல், தற்காப்பு/போட்டியில் தோல்வி, தாக்குதல், காதல் தோல்வி, உறவு முறிவு, செயல்திறன் தோல்வி, பொறுப்பு/அதிகாரம் இழப்பு, மன/உடல் காயம் அல்லது அதிர்ச்சிக்குப் பிறகு பிரச்சினை தொடங்கியதா? நிகழ்வையும் அதன் தாக்கத்தையும் விவரிக்கவும்.", "textarea", false], ["triggeringEvents", "What events or circumstances make the complaints return or worsen?", "எந்த நிகழ்வுகள் அல்லது சூழ்நிலைகள் குறைகளை மீண்டும் ஏற்படுத்துகின்றன அல்லது அதிகரிக்கின்றன?", "textarea", false], ["summaryComparison", "Summarise your whole problem in one or two lines, or compare it with something that describes it.", "உங்கள் முழுப் பிரச்சினையையும் ஒன்று அல்லது இரண்டு வரிகளில் சுருக்கவும் அல்லது அதனை விளக்கும் ஒன்றுடன் ஒப்பிடவும்.", "textarea", false]]}, {"title": "Childhood behaviour & birth history", "ta": "குழந்தைப் பருவ நடத்தை மற்றும் பிறப்பு வரலாறு", "sub": "Include relevant childhood behaviour and the mother's condition during pregnancy, delivery and breastfeeding.", "fields": [["childBehaviour", "As a child, were you stubborn, temperamental, disobedient, aggressive, hyperactive, destructive, courageous, possessive, competitive, jealous of siblings, unusually skilled, prone to unusual desires, boastful, stealing, lazy or sensitive? Give examples where relevant.", "குழந்தையாக இருந்தபோது பிடிவாதம், கோபம், கீழ்ப்படியாமை, ஆக்ரோஷம், மிகைச் செயல்பாடு, பொருட்களை உடைத்தல், தைரியம், உடைமை உணர்வு, போட்டி, உடன்பிறந்தோர் பொறாமை, சிறப்புத் திறன், அசாதாரண விருப்பம், தற்பெருமை, திருடுதல், சோம்பல் அல்லது உணர்திறன் இருந்ததா? பொருந்தும் இடங்களில் உதாரணங்கள் தரவும்.", "textarea", false], ["childIncident", "Describe one incident that affected you greatly during childhood.", "குழந்தைப் பருவத்தில் உங்களை மிகவும் பாதித்த ஒரு சம்பவத்தை விவரிக்கவும்.", "textarea", false], ["motherPregnancy", "Describe in detail the mother's emotional and physical state during pregnancy. Include any known dreams or major events during that period.", "கர்ப்பகாலத்தில் தாயின் உணர்ச்சி மற்றும் உடல் நிலையை விரிவாக விவரிக்கவும். தெரிந்தால் அக்காலக் கனவுகள் அல்லது முக்கிய நிகழ்வுகளையும் குறிப்பிடவும்.", "textarea", false], ["motherDelivery", "Describe the mother's emotional and physical state during delivery and any significant events around the birth.", "பிரசவத்தின் போது தாயின் உணர்ச்சி மற்றும் உடல் நிலை மற்றும் பிறப்பைச் சுற்றிய முக்கிய நிகழ்வுகளை விவரிக்கவும்.", "textarea", false], ["motherBreastfeeding", "Describe the mother's emotional and physical state during breastfeeding. Include difficulties or notable events, if known.", "தாய்ப்பால் கொடுத்த காலத்தில் தாயின் உணர்ச்சி மற்றும் உடல் நிலையை விவரிக்கவும். தெரிந்தால் சிரமங்கள் அல்லது குறிப்பிடத்தக்க நிகழ்வுகளைச் சேர்க்கவும்.", "textarea", false]]}, {"title": "Case summary & clinician notes", "ta": "வழக்கு சுருக்கம் மற்றும் மருத்துவர் குறிப்புகள்", "sub": "The clinician may complete the analysis fields after reviewing the patient's history.", "fields": [["miasm", "Miasmatic assessment", "மியாஸ்மிக் மதிப்பீடு", "textarea", false], ["analysis", "Analysis of the case", "வழக்கு பகுப்பாய்வு", "textarea", false], ["repertory", "Repertory analysis", "ரெபர்டரி பகுப்பாய்வு", "textarea", false], ["remedyDD", "Remedy and differential diagnosis", "மருந்து மற்றும் வேறுபாட்டு நோயறிதல்", "textarea", false], ["prescription", "Prescription", "மருந்துச் சீட்டு", "textarea", false], ["management", "Management advice", "மேலாண்மை ஆலோசனை", "textarea", false]]}];
+
+let current = 0, tamil = false, data = {};
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const lang = (en, ta) => tamil ? ta : en;
+
+function loadDraft() {
+  try {
+    data = JSON.parse(localStorage.getItem("pranaCaseDraftV2") || "{}");
+  } catch (e) {
+    data = {};
+  }
+}
+
+function saveDraft(show = true) {
+  collect(false);
+  try {
+    localStorage.setItem("pranaCaseDraftV2", JSON.stringify(data));
+    if (show) {
+      $("saveState").textContent = lang("Draft saved on this device", "வரைவு இந்தச் சாதனத்தில் சேமிக்கப்பட்டது");
+      setTimeout(() => { if ($("saveState")) $("saveState").textContent = ""; }, 3500);
+    }
+  } catch (e) {
+    $("saveState").textContent = lang("Could not save draft in this browser", "இந்த உலாவியில் வரைவைச் சேமிக்க முடியவில்லை");
+  }
+}
+
+function collect(save = true) {
+  document.querySelectorAll("#formBody [data-field]").forEach(el => {
+    const id = el.dataset.field;
+    data[id] = el.type === "checkbox" ? el.checked : el.value;
+  });
+  if (save) {
+    try { localStorage.setItem("pranaCaseDraftV2", JSON.stringify(data)); } catch (e) {}
+  }
+}
+
+function labelHTML(f) {
+  return `${esc(lang(f[1], f[2]))}${tamil ? `<span class="label-ta">${esc(f[1])}</span>` : ""}`;
+}
+
+function fieldHTML(f) {
+  let [id, en, ta, type, required, options] = f;
+  const value = data[id] ?? (type === "checkbox" ? false : "");
+
+  if (type === "notice") {
+    return `<div class="field full"><div class="notice">${esc(lang(en, ta))}</div></div>`;
+  }
+
+  if (type === "checkbox") {
+    return `
+      <div class="field full">
+        <div class="checkline">
+          <input data-field="${id}" id="${id}" type="checkbox" ${value ? "checked" : ""} ${required ? "required" : ""}>
+          <label for="${id}">${labelHTML(f)}${required ? ' <span class="required">*</span>' : ""}</label>
+        </div>
+      </div>
+    `;
+  }
+
+  if (type === "select") {
+    const opts = (options || []).map(([val, taVal]) => `
+      <option value="${esc(val)}" ${value === val ? "selected" : ""}>${esc(lang(val, taVal))}</option>
+    `).join("");
+    return `
+      <div class="field">
+        <label for="${id}">${labelHTML(f)}${required ? ' <span class="required">*</span>' : ""}</label>
+        <select data-field="${id}" id="${id}" ${required ? "required" : ""}>
+          <option value="">${esc(lang("Select an option…", "தேர்ந்தெடுக்கவும்…"))}</option>
+          ${opts}
+        </select>
+        ${required ? `<div class="hint">${lang("Required to continue", "தொடர கட்டாயம் நிரப்ப வேண்டும்")}</div>` : ""}
+      </div>
+    `;
+  }
+
+  let input = "";
+  if (type === "textarea") {
+    input = `<textarea data-field="${id}" id="${id}" ${required ? "required" : ""} placeholder="${esc(lang("Type your answer here…", "உங்கள் பதிலை இங்கே எழுதவும்…"))}">${esc(value)}</textarea>`;
+  } else {
+    const numAttrs = type === "number" ? 'min="0" max="130" step="1"' : "";
+    input = `<input data-field="${id}" id="${id}" type="${type}" value="${esc(value)}" ${required ? "required" : ""} ${numAttrs} placeholder="${type === "date" ? "" : esc(lang("Enter here…", "இங்கே உள்ளிடவும்…"))}">`;
+  }
+
+  const isFull = type === "textarea" || id === "address" || id === "disclaimerText";
+  return `
+    <div class="field ${isFull ? "full" : ""}">
+      <label for="${id}">${labelHTML(f)}${required ? ' <span class="required">*</span>' : ""}</label>
+      ${input}
+      ${required ? `<div class="hint">${lang("Required to continue", "தொடர கட்டாயம் நிரப்ப வேண்டும்")}</div>` : ""}
+    </div>
+  `;
+}
+
+function getDisplayValue(f, val) {
+  if (f[3] === "checkbox") return val ? lang("Acknowledged", "ஒப்புதல் அளிக்கப்பட்டது") : "";
+  if (f[3] === "select" && f[5]) {
+    const opt = f[5].find(o => o[0] === val);
+    if (opt) return lang(opt[0], opt[1]);
+  }
+  return val;
+}
+
+function renderNav() {
+  $("stepsNav").innerHTML = steps.map((s, i) => `
+    <button class="step-nav ${i === current ? "active" : ""} ${i < current ? "done" : ""}" type="button" data-step="${i}">
+      <span class="num">${i < current ? "✓" : i + 1}</span>
+      <span class="step-label">${esc(lang(s.title, s.ta))}</span>
+    </button>
+  `).join("");
+
+  document.querySelectorAll("[data-step]").forEach(b => b.onclick = () => {
+    collect();
+    current = +b.dataset.step;
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+function reviewHTML() {
+  return `
+    <div class="section-note">
+      ${lang(
+        "Please review your details carefully. If you need to make changes, click Edit on any section. Once submitted, our doctor will review your case file and reach out to you soon.",
+        "உங்கள் தகவல்களைச் சரிபார்க்கவும். மாற்றங்கள் செய்ய விரும்பினால் 'திருத்து' என்பதைத் தேர்ந்தெடுக்கவும். சமர்ப்பித்த பிறகு, எங்கள் மருத்துவர் உங்கள் பதிவை ஆய்வு செய்து விரைவில் உங்களைத் தொடர்புகொள்வார்."
+      )}
+    </div>
+    ` + steps.map((s, i) => {
+      let rows = s.fields.filter(f => f[3] !== "notice" && (f[3] === "checkbox" ? data[f[0]] === true : String(data[f[0]] ?? "").trim() !== "")).map(f => `
+        <div class="review-row">
+          <strong>${esc(lang(f[1], f[2]))}</strong>
+          <p>${esc(getDisplayValue(f, data[f[0]]))}</p>
+        </div>
+      `).join("");
+
+      return `
+        <div class="review-block">
+          <div class="review-head">
+            <span>${i + 1}. ${esc(lang(s.title, s.ta))}</span>
+            <button class="btn quietbtn" style="padding:4px 10px;font-size:11.5px;min-height:30px;" type="button" data-edit="${i}">
+              ${lang("Edit", "திருத்து")}
+            </button>
+          </div>
+          <div class="review-body">
+            ${rows || `<span class="empty">${lang("No answers entered in this section", "இப்பகுதியில் பதில்கள் உள்ளிடப்படவில்லை")}</span>`}
+          </div>
+        </div>
+      `;
+    }).join("");
+}
+
+function render() {
+  renderNav();
+  const s = steps[current];
+
+  $("stepKicker").textContent = `${lang("STEP", "படி")} ${String(current + 1).padStart(2, "0")} / ${steps.length}`;
+  $("stepTitle").textContent = lang(s.title, s.ta);
+  $("stepSubtitle").textContent = lang(s.sub, "ஒவ்வொரு கேள்விக்கும் உங்களுக்குத் தெரிந்த விவரங்களை எழுதவும்.");
+  $("progressPct").textContent = Math.round((current + 1) / steps.length * 100) + "%";
+  $("progressFill").style.width = ((current + 1) / steps.length * 100) + "%";
+  $("progressLabel").textContent = lang("Your progress", "உங்கள் முன்னேற்றம்");
+  $("progressMeta").textContent = lang(`Section ${current + 1} of ${steps.length}`, `${steps.length} பகுதிகளில் ${current + 1}வது பகுதி`);
+  $("pageTitle").textContent = lang("Let’s understand your story.", "உங்கள் கதையைப் புரிந்துகொள்வோம்.");
+  $("introText").textContent = lang("Take your time and answer in your own words. Move through one section at a time. Your answers are auto-saved in this browser while you write.", "நேரம் எடுத்துக்கொண்டு உங்கள் சொந்த வார்த்தைகளில் பதிலளிக்கவும். ஒவ்வொரு பகுதியாகத் தொடரவும். பதில்கள் இந்த உலாவியில் தானாகச் சேமிக்கப்படுகின்றன.");
+  $("brandCaption").textContent = lang("Patient case record · Dr. G. Srinivasan M.D(Hom)", "நோயாளி மருத்துவப் பதிவு · டாக்டர் ஜி. சீனிவாசன் M.D(Hom)");
+
+  if (current === steps.length - 1) {
+    $("formBody").innerHTML = reviewHTML();
+    document.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => {
+      collect();
+      current = +b.dataset.edit;
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    $("nextBtn").textContent = lang("Submit Case Record →", "வழக்கு பதிவைச் சமர்ப்பிக்கவும் →");
+    $("footNote").textContent = lang("Transmits your case record securely to Dr. Srinivasan", "மருத்துவர் சீனிவாசனிடம் உங்கள் தகவல்களைப் பாதுகாப்பாகச் சமர்ப்பிக்கிறது");
+  } else {
+    $("formBody").innerHTML = `
+      <div class="section-note">${esc(lang(s.sub, "உங்களுக்குப் பொருந்தும் கேள்விகளுக்குப் பதிலளிக்கவும்."))}</div>
+      <div class="fields">${s.fields.map(fieldHTML).join("")}</div>
+    `;
+    $("nextBtn").textContent = lang("Continue →", "தொடரவும் →");
+    $("footNote").textContent = lang("You can review all answers before final submission", "இறுதிச் சமர்ப்பிப்புக்கு முன் உங்கள் பதில்களை மதிப்பாய்வு செய்யலாம்");
+
+    document.querySelectorAll("#formBody [data-field]").forEach(el => {
+      el.addEventListener("input", () => {
+        collect();
+        $("saveState").textContent = lang("Draft saved", "வரைவு சேமிக்கப்பட்டது");
+      });
+    });
+  }
+
+  $("prevBtn").disabled = current === 0;
+  $("prevBtn").textContent = lang("← Previous", "← முந்தையது");
+  $("langBtn").textContent = tamil ? "English" : "தமிழ்";
+  $("saveBtn").textContent = lang("Save draft", "வரைவைச் சேமி");
+}
+
+function validateCurrent() {
+  const s = steps[current];
+  for (const f of s.fields) {
+    if (!f[4]) continue;
+    const v = data[f[0]];
+    const missing = f[3] === "checkbox" ? !v : !String(v ?? "").trim();
+    if (missing) {
+      const el = document.getElementById(f[0]);
+      if (el) {
+        el.focus();
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (el.reportValidity) el.reportValidity();
+      } else {
+        alert(lang("Please complete the required field.", "கட்டாயப் புலத்தை நிரப்பவும்."));
+      }
+      return false;
+    }
+  }
+  return true;
+}
+
+async function submitCaseToServer() {
+  collect();
+  const nextBtn = $("nextBtn");
+  const prevBtn = $("prevBtn");
+  const origText = nextBtn.textContent;
+  nextBtn.disabled = true;
+  prevBtn.disabled = true;
+  nextBtn.textContent = lang("Submitting…", "சமர்ப்பிக்கிறது…");
+
+  const patientName = String(data.patientName || data["Name /"] || data["s0f0"] || "").trim() || "Patient";
+  const phone = String(data.phone || data["Ph.No ./"] || data["s0f8"] || "").trim();
+  const diagnosis = String(data.diagnosis || data["Diagnosis /"] || "").trim();
+
+  const payload = {
+    formName: "Prana HomeoCare Case Record",
+    submittedAt: new Date().toISOString(),
+    language: tamil ? "ta" : "en",
+    answers: {
+      ...data,
+      patientName: patientName,
+      phone: phone,
+      diagnosis: diagnosis
+    }
+  };
+
+  try {
+    const res = await fetch("/api/cases", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(result.error || `Server returned error (${res.status})`);
+    }
+
+    try { localStorage.removeItem("pranaCaseDraftV2"); } catch (e) {}
+    renderSuccessScreen(result.id, patientName, phone);
+  } catch (err) {
+    console.error("Submission error:", err);
+    nextBtn.disabled = false;
+    prevBtn.disabled = false;
+    nextBtn.textContent = origText;
+    showSubmitErrorModal(payload, err.message);
+  }
+}
+
+function renderSuccessScreen(caseId, patientName, phone) {
+  const waMsg = encodeURIComponent(
+    `Hello Dr. Srinivasan, I have submitted my case sheet record on Prana Homeo Care. Case ID: #${caseId}. Patient Name: ${patientName}${phone ? " (Phone: " + phone + ")" : ""}.`
+  );
+  const waUrl = `https://wa.me/919962303009?text=${waMsg}`;
+
+  $("cardFoot").style.display = "none";
+  $("stepKicker").textContent = lang("SUBMISSION COMPLETE", "சமர்ப்பிப்பு முடிந்தது");
+  $("stepTitle").textContent = lang("Submitted Successfully", "வெற்றிகரமாகச் சமர்ப்பிக்கப்பட்டது");
+  $("stepSubtitle").textContent = lang("Your clinical details have been safely recorded.", "உங்கள் மருத்துவ விவரங்கள் பாதுகாப்பாகப் பதிவு செய்யப்பட்டுள்ளன.");
+
+  $("formBody").innerHTML = `
+    <div class="success-wrap">
+      <div class="success-icon-badge">✓</div>
+      <div class="success-tag">${lang("SUBMISSION CONFIRMED", "சமர்ப்பிப்பு உறுதிசெய்யப்பட்டது")}</div>
+      <h2 class="success-title">
+        ${lang("Submitted! Our doctor will reach out to you soon.", "சமர்ப்பிக்கப்பட்டது! எங்கள் மருத்துவர் விரைவில் உங்களைத் தொடர்புகொள்வார்.")}
+      </h2>
+      <p class="success-sub">
+        ${lang(
+          `Thank you, <strong>${esc(patientName)}</strong>. Your case record has been safely received by <strong>Dr. G. Srinivasan M.D(Hom)</strong> at Prana Homeo Care. Our clinical team is reviewing your symptoms and will contact you shortly.`,
+          `நன்றி, <strong>${esc(patientName)}</strong>. உங்கள் மருத்துவப் பதிவு <strong>டாக்டர் ஜி. சீனிவாசன் M.D(Hom)</strong> அவர்களிடம் பாதுகாப்பாகச் சமர்ப்பிக்கப்பட்டது. எங்கள் மருத்துவக் குழு உங்கள் அறிகுறிகளை ஆய்வு செய்து விரைவில் உங்களைத் தொடர்புகொள்வார்கள்.`
+        )}
+      </p>
+
+      <div class="ref-box">
+        <span class="ref-title">${lang("YOUR CASE REFERENCE ID", "உங்கள் வழக்கு குறிப்பு எண்")}</span>
+        <div class="ref-code">#${esc(caseId)}</div>
+        <button type="button" class="btn quietbtn" id="copyRefBtn" style="min-height:36px;font-size:12.5px;">
+          📋 ${lang("Copy Reference ID", "குறிப்பு எண்ணை நகலெடு")}
+        </button>
+      </div>
+
+      <div class="success-actions">
+        <a class="btn wa-btn" href="${waUrl}" target="_blank" rel="noopener">
+          💬 ${lang("Notify Doctor via WhatsApp (+91 99623 03009)", "வாட்ஸ்அப் மூலம் மருத்துவருக்குத் தெரிவிக்கவும்")}
+        </a>
+        <button type="button" class="btn primary" onclick="window.print()">
+          🖨️ ${lang("Print / Save Record Copy", "பதிவை அச்சிடு / சேமி")}
+        </button>
+        <button type="button" class="btn" id="downloadBackupBtn">
+          📥 ${lang("Download Case Record (JSON)", "வழக்கு பதிவைப் பதிவிறக்கு (JSON)")}
+        </button>
+        <button type="button" class="btn" id="newCaseBtn" style="grid-column:1/-1;">
+          ＋ ${lang("Submit Another Case", "மற்றொரு வழக்கைப் பதிவு செய்")}
+        </button>
+      </div>
+
+      <div class="clinic-info-card">
+        <div class="clinic-name">Prana Homeo Care</div>
+        <div class="clinic-sub">Dr. G. Srinivasan M.D(Hom) · Specialist Pediatric & Classical Constitutional Homeopathy</div>
+        <div class="clinic-addr">Plot no 121, 2/94A Jayalakshmi Nagar, Kattupakkam, Chennai 600056</div>
+        <div class="clinic-phone">📞 Helpline: +91 99623 03009 · In-clinic & Worldwide Google Meet Consultations</div>
+      </div>
+    </div>
+  `;
+
+  $("copyRefBtn").onclick = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(`#${caseId}`).then(() => {
+        $("copyRefBtn").textContent = lang("✓ Copied to Clipboard!", "✓ நகலெடுக்கப்பட்டது!");
+        setTimeout(() => { $("copyRefBtn").textContent = "📋 " + lang("Copy Reference ID", "குறிப்பு எண்ணை நகலெடு"); }, 2500);
+      });
+    }
+  };
+
+  $("downloadBackupBtn").onclick = () => {
+    const blob = new Blob([JSON.stringify({ id: caseId, patientName, answers: data }, null, 2)], { type: "application/json;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `prana-case-record-${patientName.replace(/[^a-zA-Z0-9]/g, "_")}-#${caseId}.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+
+  $("newCaseBtn").onclick = () => {
+    localStorage.removeItem("pranaCaseDraftV2");
+    window.location.reload();
+  };
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showSubmitErrorModal(payload, errorMsg) {
+  const existing = document.querySelector(".modal-overlay");
+  if (existing) existing.remove();
+
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-box">
+      <div class="modal-head">
+        <span style="font-size:24px;">⚠️</span>
+        <h3>${lang("Server Connection Notice", "சேவையக இணைப்பு அறிவிப்பு")}</h3>
+      </div>
+      <p style="font-size:14px;color:var(--ink);line-height:1.55;margin-bottom:10px;">
+        ${lang(
+          "We could not reach the backend server (" + esc(errorMsg) + "). Don’t worry — your complete case record is safely saved on this device.",
+          "சேவையகத்துடன் இணைக்க முடியவில்லை (" + esc(errorMsg) + "). கவலைப்பட வேண்டாம் — உங்கள் வழக்கு விவரங்கள் இந்தச் சாதனத்தில் பாதுகாப்பாக உள்ளன."
+        )}
+      </p>
+      <p style="font-size:12.5px;color:var(--muted);line-height:1.5;">
+        ${lang(
+          "You can download a backup JSON file of your case record right now, or retry submitting once connected to the backend.",
+          "உங்கள் பதிவின் காப்புப் பிரதியை இப்போதே பதிவிறக்கம் செய்யலாம், அல்லது சேவையக இணைப்பு கிடைத்ததும் மீண்டும் சமர்ப்பிக்கலாம்."
+        )}
+      </p>
+      <div class="modal-actions">
+        <button class="btn primary" id="modalDownloadBtn" type="button">📥 ${lang("Download Case Record (JSON)", "பதிவைப் பதிவிறக்கு (JSON)")}</button>
+        <button class="btn" id="modalRetryBtn" type="button">🔄 ${lang("Retry Submit", "மீண்டும் சமர்ப்பி")}</button>
+        <button class="btn quietbtn" id="modalCloseBtn" type="button">${lang("Close", "மூடு")}</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  $("modalDownloadBtn").onclick = () => {
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `prana-case-record-${(payload.answers.patientName || "patient").replace(/[^a-zA-Z0-9]/g, "_")}-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+
+  $("modalRetryBtn").onclick = () => {
+    modal.remove();
+    submitCaseToServer();
+  };
+
+  $("modalCloseBtn").onclick = () => modal.remove();
+}
+
+$("prevBtn").onclick = () => {
+  collect();
+  if (current > 0) {
+    current--;
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+
+$("nextBtn").onclick = () => {
+  collect();
+  if (current < steps.length - 1) {
+    if (!validateCurrent()) return;
+    current++;
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    submitCaseToServer();
+  }
+};
+
+$("langBtn").onclick = () => {
+  collect();
+  tamil = !tamil;
+  render();
+};
+
+$("saveBtn").onclick = () => saveDraft(true);
+
+// Initialize
+loadDraft();
+render();
+</script>
+</body>
+</html>
+"""
+
+if __name__ == "__main__":
+    os.makedirs(os.path.dirname(TEMPLATE_PATH), exist_ok=True)
+    with open(TEMPLATE_PATH, "w", encoding="utf-8") as f:
+        f.write(HTML_CONTENT)
+    print("Successfully wrote index.html (" + str(len(HTML_CONTENT)) + " bytes)")
