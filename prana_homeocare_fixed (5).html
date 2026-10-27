@@ -12,7 +12,17 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-<link rel="apple-touch-icon" href="favicon.png">
+<link rel="apple-touch-icon" href="pwa-icon-192.png">
+
+<!-- Progressive Web App (PWA) Manifest & Desktop Integration -->
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Prana Care">
+<meta name="application-name" content="Prana Care">
+<meta name="msapplication-TileColor" content="#073B42">
+<meta name="msapplication-TileImage" content="pwa-icon-192.png">
 
 <!-- Google Fonts: Plus Jakarta Sans & Noto Sans Tamil for World-Class Typography -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -349,6 +359,121 @@ body {
 
 .theme-toggle {
   padding: 7px 9px;
+}
+
+/* PWA Desktop Install Button & Desktop Window Controls */
+.pwa-install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(11, 92, 102, 0.08), rgba(201, 162, 74, 0.12));
+  border: 1px solid rgba(11, 92, 102, 0.28);
+  color: var(--primary);
+  font-weight: 750;
+  box-shadow: 0 1px 3px rgba(7, 59, 66, 0.05);
+}
+
+@media (max-width: 899px) {
+  .pwa-install-btn {
+    display: none;
+  }
+}
+
+.pwa-install-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+[data-theme="dark"] .pwa-install-btn {
+  background: rgba(13, 118, 104, 0.2);
+  border-color: rgba(201, 162, 74, 0.45);
+  color: #5eead4;
+}
+
+[data-theme="dark"] .pwa-install-btn:hover {
+  background: #0d7668;
+  color: #ffffff;
+}
+
+/* PWA Desktop Connectivity Banner */
+.pwa-network-banner {
+  position: sticky;
+  top: 0;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+.pwa-network-banner.offline {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.pwa-network-banner.online {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+/* PWA Toast Notification */
+.pwa-toast-notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 99999;
+  background: #073B42;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.pwa-toast-notification.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Standalone Desktop Mode Enhancements */
+@media (display-mode: standalone) {
+  .pwa-install-btn {
+    display: none !important;
+  }
+  body {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  .topbar-card {
+    border-radius: 0 0 16px 16px;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(7, 59, 66, 0.25);
+    border-radius: 9999px;
+  }
+  [data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
+  }
 }
 
 /* CONTAINER SHELL */
@@ -2378,6 +2503,17 @@ body {
         <span class="label-text" id="saveDraftLabel">Save</span>
       </button>
 
+      <!-- Install Desktop App Button (PWA) -->
+      <button class="btn-ctrl pwa-install-btn" id="pwaInstallBtn" type="button" title="Install Prana App to Desktop" aria-label="Install App">
+        <svg class="svg-icon" viewBox="0 0 24 24" style="width:14px;height:14px;">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"></line>
+          <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"></line>
+          <polyline points="9 9 12 12 15 9" fill="none" stroke="currentColor" stroke-width="2"></polyline>
+        </svg>
+        <span class="label-text">Install App</span>
+      </button>
+
       <!-- Dark / Light Mode Switcher with Vector Sun/Moon -->
       <button class="btn-ctrl theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle theme">
         <svg class="svg-icon" id="themeIcon" viewBox="0 0 24 24">
@@ -3983,6 +4119,155 @@ render();
 
 if ($("sidebarStepList")) {
   $("sidebarStepList").scrollTop = 0;
+}
+
+/* ==========================================================================
+   PROGRESSIVE WEB APP (PWA) & DESKTOP INSTALLATION ENGINE
+   ========================================================================== */
+(function initPWA() {
+  // 1. Service Worker Registration
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js")
+        .then((reg) => {
+          console.log("Prana PWA ServiceWorker registered with scope:", reg.scope);
+          reg.onupdatefound = () => {
+            const installing = reg.installing;
+            if (installing) {
+              installing.onstatechange = () => {
+                if (installing.state === "installed" && navigator.serviceWorker.controller) {
+                  showPwaToast(getLangText("App updated! Ready offline on desktop.", "பயன்பாடு புதுப்பிக்கப்பட்டது!"));
+                }
+              };
+            }
+          };
+        })
+        .catch((err) => {
+          console.warn("PWA ServiceWorker registration notice:", err);
+        });
+    });
+  }
+
+  // 2. Desktop Install Prompt Handling
+  let deferredInstallPrompt = null;
+  const installBtn = $("pwaInstallBtn");
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+
+  if (isStandalone) {
+    document.documentElement.classList.add("pwa-standalone");
+    if (installBtn) installBtn.style.display = "none";
+  }
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    if (installBtn && !isStandalone) {
+      installBtn.style.display = "inline-flex";
+    }
+  });
+
+  if (installBtn) {
+    installBtn.addEventListener("click", async () => {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const choice = await deferredInstallPrompt.userChoice;
+        if (choice.outcome === "accepted") {
+          installBtn.style.display = "none";
+          showPwaToast(getLangText("Installing Prana Care to desktop…", "டெஸ்க்டாப்பில் நிறுவப்படுகிறது…"));
+        }
+        deferredInstallPrompt = null;
+      } else {
+        showPwaDesktopHelpModal();
+      }
+    });
+  }
+
+  window.addEventListener("appinstalled", () => {
+    if (installBtn) installBtn.style.display = "none";
+    document.documentElement.classList.add("pwa-standalone");
+    showPwaToast(getLangText("Prana Care successfully installed to desktop!", "டெஸ்க்டாப்பில் வெற்றிகரமாக நிறுவப்பட்டது!"));
+  });
+
+  // 3. Online / Offline Connectivity Status for Desktop Users
+  function updateNetworkStatus() {
+    let offlineBanner = $("pwaOfflineBanner");
+    if (!navigator.onLine) {
+      if (!offlineBanner) {
+        offlineBanner = document.createElement("div");
+        offlineBanner.id = "pwaOfflineBanner";
+        offlineBanner.className = "pwa-network-banner offline";
+        offlineBanner.innerHTML = `
+          <svg viewBox="0 0 24 24" class="svg-icon" style="width:14px;height:14px;margin-right:6px;"><line x1="1" y1="1" x2="23" y2="23"></line><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path><path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+          <span>${getLangText("Working Offline • Answers safely saved to local desktop storage.", "இணைப்பு இல்லை • பதில்கள் பாதுகாப்பாகச் சேமிக்கப்பட்டுள்ளன.")}</span>
+        `;
+        document.body.prepend(offlineBanner);
+      }
+      offlineBanner.style.display = "flex";
+    } else if (offlineBanner) {
+      offlineBanner.className = "pwa-network-banner online";
+      offlineBanner.innerHTML = `
+        <svg viewBox="0 0 24 24" class="svg-icon" style="width:14px;height:14px;margin-right:6px;"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+        <span>${getLangText("Connected to Prana Clinic Server", "கிளினிக் சர்வருடன் இணைக்கப்பட்டது")}</span>
+      `;
+      setTimeout(() => {
+        if (offlineBanner && navigator.onLine) {
+          offlineBanner.style.display = "none";
+        }
+      }, 3000);
+    }
+  }
+
+  window.addEventListener("online", updateNetworkStatus);
+  window.addEventListener("offline", updateNetworkStatus);
+})();
+
+function showPwaToast(msg) {
+  let toast = $("pwaToastNotification");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "pwaToastNotification";
+    toast.className = "pwa-toast-notification";
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.classList.add("visible");
+  setTimeout(() => toast.classList.remove("visible"), 4000);
+}
+
+function showPwaDesktopHelpModal() {
+  const modal = document.createElement("div");
+  modal.className = "modal-backdrop active";
+  modal.style.zIndex = "99999";
+  modal.innerHTML = `
+    <div class="modal-box" style="max-width:480px;text-align:left;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <img src="pwa-icon-192.png" alt="Prana Icon" style="width:40px;height:40px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);" />
+          <div>
+            <h3 style="margin:0;font-size:16px;font-weight:800;color:var(--primary);">${getLangText("Install Desktop App", "டெஸ்க்டாப் பயன்பாட்டை நிறுவுக")}</h3>
+            <span style="font-size:11px;color:var(--text-muted);">Prana Homeo Care • Progressive Web App</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" style="border:none;background:transparent;cursor:pointer;font-size:18px;color:var(--text-muted);" onclick="this.closest('.modal-backdrop').remove()">✕</button>
+      </div>
+      <p style="font-size:13px;line-height:1.55;color:var(--text-main);margin-bottom:16px;">
+        ${getLangText(
+          "Install <strong>Prana Homeo Care</strong> on your computer for instantaneous loading, offline patient case recording, and native Windows/Mac taskbar access.",
+          "உடனடி பயன்பாடு, ஆஃப்லைன் சேமிப்பு மற்றும் டெஸ்க்டாப் அணுகலுக்காக <strong>பிராணா ஹோமியோ கேர்</strong> செயலியை நிறுவவும்."
+        )}
+      </p>
+      <div style="background:var(--bg-subtle);border:1px solid var(--border-medium);border-radius:12px;padding:14px;font-size:12px;line-height:1.6;color:var(--text-sub);margin-bottom:18px;">
+        <div style="font-weight:750;margin-bottom:6px;color:var(--text-main);">${getLangText("Desktop Browser Installation Steps:", "நிறுவும் முறைகள்:")}</div>
+        <div style="margin-bottom:4px;">1. ${getLangText("Look at your browser address bar (top right).", "உலாவியின் முகவரிப் பட்டியைப் பார்க்கவும் (மேல் வலது).")}</div>
+        <div style="margin-bottom:4px;">2. ${getLangText("Click the <strong>Install</strong> or monitor icon (⤓ / ⊕).", "<strong>நிறுவு</strong> (Install) ஐகானை கிளிக் செய்யவும்.")}</div>
+        <div>3. ${getLangText("Click <strong>Install</strong> to add Prana to your Desktop &amp; Start Menu.", "டெஸ்க்டாப்பில் சேர்க்க Install கிளிக் செய்யவும்.")}</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button class="btn btn-primary" style="padding:8px 18px;font-size:12px;" onclick="this.closest('.modal-backdrop').remove()">${getLangText("Got it", "சரி")}</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
 }
 </script>
 </body>

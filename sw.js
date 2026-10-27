@@ -1,40 +1,52 @@
 /**
- * PRANA HOMEO CARE — SERVICE WORKER
- * High Performance Offline Clinical PWA Cache
+ * PRANA HOMEO CARE — ADVANCED CLINICAL PWA SERVICE WORKER
+ * Ultra-Reliable Offline Shell, Smart Asset Caching & Desktop PWA Engine
  */
 
-const CACHE_NAME = 'prana-clinical-v4';
-const ASSETS_TO_CACHE = [
+const CACHE_NAME = 'prana-pwa-v5.2';
+
+const CRITICAL_APP_SHELL = [
+  './',
+  'index.html',
   'case.html',
-  'clinical-config.js',
   'manifest.json',
   'favicon.png',
-  'paediatric-care.html',
-  'cancer-palliative-care.html',
-  'assets/paediatric_child_smiling.png',
-  'assets/paediatric_child_steps.png',
-  'assets/cancer_palliative_care.jpg',
+  'favicon.ico',
+  'pwa-icon-192.png',
+  'pwa-icon-512.png',
+  'pwa-icon-maskable.png',
+  'pwa-screenshot-desktop.png',
+  'pwa-screenshot-mobile.png'
+];
+
+// Optional assets cached opportunistically
+const OPTIONAL_ASSETS = [
   'assets/prana_brand_logo.png',
+  'assets/prana_brand_logo.svg',
   'assets/prana_emblem.png',
-  'assets/panda_front_cropped.png',
+  'assets/prana_header_logo.png',
+  'clinical-config.js',
   'vendor/react.production.min.js',
   'vendor/react-dom.production.min.js',
   'vendor/tailwindcss.js',
-  'vendor/all.min.css',
-  'vendor/crypto-js.min.js',
-  'vendor/jspdf.umd.min.js'
+  'vendor/all.min.css'
 ];
 
+// 1. INSTALL: Cache Critical App Shell
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE).catch(err => {
-        console.warn('Cache addAll non-fatal warning:', err);
-      });
+      // Pre-cache critical files, ignore failures on non-existent optional assets
+      return Promise.allSettled(
+        CRITICAL_APP_SHELL.map((url) =>
+          cache.add(url).catch((err) => console.log('PWA shell cache notice:', url, err.message))
+        )
+      );
     }).then(() => self.skipWaiting())
   );
 });
 
+// 2. ACTIVATE: Purge stale versions & claim active clients
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -45,40 +57,83 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// 3. FETCH: Smart Network-First with Offline Cache Fallback
 self.addEventListener('fetch', (event) => {
-  // Pass Firebase & Supabase cloud API requests directly to network
+  const req = event.request;
+  const url = new URL(req.url);
+
+  // Skip non-GET requests (e.g. POST form submissions, API CRUD)
+  if (req.method !== 'GET') {
+    return;
+  }
+
+  // Skip backend API endpoints and cloud sync (always network)
   if (
-    event.request.url.includes('firebaseio.com') ||
-    event.request.url.includes('googleapis.com') ||
-    event.request.url.includes('supabase.co') ||
-    event.request.method !== 'GET'
+    url.pathname.startsWith('/api') ||
+    url.pathname.includes('cases.php') ||
+    url.hostname.includes('firebaseio.com') ||
+    url.hostname.includes('googleapis.com') ||
+    url.hostname.includes('supabase.co')
   ) {
     return;
   }
 
+  // A. Navigation requests (HTML pages): Network first, fallback to cached HTML
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req)
+        .then((networkRes) => {
+          if (networkRes && networkRes.status === 200) {
+            const copy = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
+          }
+          return networkRes;
+        })
+        .catch(async () => {
+          const cached = await caches.match(req);
+          if (cached) return cached;
+          const rootCached = await caches.match('./') || await caches.match('index.html') || await caches.match('case.html');
+          return rootCached;
+        })
+    );
+    return;
+  }
+
+  // B. Static Assets (Fonts, Google Fonts, Images, Scripts, CSS): Cache First with background refresh
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
+    caches.match(req).then((cachedRes) => {
+      if (cachedRes) {
+        // Opportunistic background update for cached assets
+        fetch(req).then((freshRes) => {
+          if (freshRes && freshRes.status === 200) {
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, freshRes));
+          }
+        }).catch(() => {});
+        return cachedRes;
       }
-      return fetch(event.request).then((networkResponse) => {
-        // Cache external CDN scripts (Tailwind, React, FontAwesome, etc.)
+
+      return fetch(req).then((networkRes) => {
         if (
-          networkResponse &&
-          networkResponse.status === 200 &&
-          (event.request.url.includes('cdn') ||
-           event.request.url.includes('unpkg') ||
-           event.request.url.includes('fonts.gstatic.com'))
+          networkRes &&
+          networkRes.status === 200 &&
+          (url.pathname.endsWith('.png') ||
+           url.pathname.endsWith('.jpg') ||
+           url.pathname.endsWith('.jpeg') ||
+           url.pathname.endsWith('.svg') ||
+           url.pathname.endsWith('.css') ||
+           url.pathname.endsWith('.js') ||
+           url.pathname.endsWith('.woff2') ||
+           url.hostname.includes('fonts.googleapis.com') ||
+           url.hostname.includes('fonts.gstatic.com') ||
+           url.hostname.includes('cdnjs.cloudflare.com'))
         ) {
-          const clone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          const copy = networkRes.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
         }
-        return networkResponse;
-      }).catch(() => {
-        // Fallback for case.html
-        if (event.request.mode === 'navigate') {
-          return caches.match('case.html');
-        }
+        return networkRes;
+      }).catch((err) => {
+        // Return placeholder or fallback if available
+        return cachedRes;
       });
     })
   );
