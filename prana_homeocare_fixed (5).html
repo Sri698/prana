@@ -240,48 +240,17 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
-.brand-meta h1 {
-  font-family: var(--font-heading);
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text-main);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.live-beacon {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--success);
-  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6);
-  animation: beaconPulse 2s infinite;
-}
-
-@keyframes beaconPulse {
-  0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6); }
-  70% { box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
-}
-
-.badge-pill {
-  font-size: 0.65rem;
-  font-weight: 750;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 2px 7px;
-  border-radius: var(--radius-full);
-  background: var(--primary-light);
-  color: var(--primary);
-  border: 1px solid rgba(11, 92, 102, 0.2);
-}
-
-.brand-meta p {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  font-weight: 500;
+/* Accessible Screen-Reader Heading */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 .top-actions {
@@ -2215,30 +2184,37 @@ body {
   .topbar {
     padding: 8px 12px;
     gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
   }
-  .brand-meta h1 {
-    font-size: 0.98rem;
+  .brand-logo {
+    height: 30px;
   }
-  .badge-pill {
-    display: none;
+  .top-actions {
+    flex-wrap: nowrap;
+    gap: 6px;
+    justify-content: flex-end;
   }
-  .brand-meta p {
+  .save-status-pill {
     display: none;
   }
   .top-actions .btn-ctrl span.label-text {
     display: none;
   }
-  .save-status-pill span#saveStatusText {
-    display: none;
-  }
   .lang-seg-btn {
-    padding: 4px 8px;
+    padding: 4px 7px;
     font-size: 0.72rem;
     gap: 4px;
   }
   .lang-seg-btn svg {
     width: 12px;
     height: 12px;
+  }
+  .btn-ctrl {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    padding: 0;
   }
 }
 
@@ -2250,13 +2226,32 @@ body {
     padding: 8px 10px;
   }
   .brand {
-    gap: 8px;
+    gap: 6px;
   }
   .brand-logo {
-    height: 32px;
+    height: 28px;
   }
-  .brand-meta h1 {
-    font-size: 0.92rem;
+}
+
+@media (max-width: 350px) {
+  .topbar {
+    padding: 6px 8px;
+    gap: 4px;
+  }
+  .brand-logo {
+    height: 24px;
+  }
+  .lang-seg-btn {
+    padding: 3px 5px;
+    font-size: 0.65rem;
+  }
+  .lang-seg-btn svg {
+    display: none;
+  }
+  .btn-ctrl {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
   }
   .doctor-portrait-avatar {
     width: 48px;
@@ -2345,14 +2340,7 @@ body {
           </svg>
         </div>
       </div>
-      <div class="brand-meta">
-        <h1>
-          Prana HomeoCare
-          <span class="live-beacon" title="Live Secure Session"></span>
-          <span class="badge-pill" id="brandPill">EHR Portal</span>
-        </h1>
-        <p id="brandCaption">Patient case record · Dr. G. Srinivasan M.D(Hom)</p>
-      </div>
+      <h1 class="sr-only">Prana HomeoCare — Clinical Case Record</h1>
     </div>
 
     <div class="top-actions">
