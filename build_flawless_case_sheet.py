@@ -842,7 +842,7 @@ sections_json_str = json.dumps(sections_data, ensure_ascii=False)
 translations_json_str = json.dumps(translations, ensure_ascii=False)
 subheadings_json_str = json.dumps(subheadings, ensure_ascii=False)
 
-def generate_html(logo_src):
+def generate_html(logo_src, photo_src="srinivas_dr.jpeg", nameplate_src="assets/dr_srinivasan_nameplate.png"):
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -1023,16 +1023,35 @@ button {{ cursor: pointer; touch-action: manipulation; }}
   padding: clamp(14px, 2.5vw, 32px);
 }}
 
-/* Hero section */
+/* Hero section with Doctor Profile Card */
 .hero {{
   position: relative;
   overflow: hidden;
-  background: #123e35;
+  background: linear-gradient(135deg, #103830 0%, #175446 60%, #1f6b5a 100%);
   border-radius: 20px;
-  padding: clamp(20px, 3.5vw, 40px);
+  padding: clamp(20px, 3.5vw, 36px);
   color: #fff;
-  box-shadow: 0 8px 24px rgba(15,57,47,0.12);
+  box-shadow: 0 12px 32px rgba(15,57,47,0.18);
   margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}}
+.hero::before {{
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(233,189,98,0.18) 0%, rgba(233,189,98,0) 70%);
+  pointer-events: none;
+}}
+.hero-content {{
+  flex: 1 1 520px;
+  min-width: 0;
+  z-index: 1;
 }}
 .hero-kicker {{
   display: inline-flex;
@@ -1049,37 +1068,135 @@ button {{ cursor: pointer; touch-action: manipulation; }}
   text-transform: uppercase;
 }}
 .hero h1 {{
-  font-size: clamp(24px, 3.5vw, 38px);
-  line-height: 1.15;
+  font-size: clamp(23px, 3.2vw, 36px);
+  line-height: 1.18;
   letter-spacing: -0.04em;
   max-width: 760px;
-  margin: 14px 0 10px;
+  margin: 12px 0 8px;
   font-weight: 850;
 }}
 .hero p {{
   color: #d8ebe4;
-  max-width: 720px;
-  font-size: 14px;
+  max-width: 680px;
+  font-size: 13.5px;
   line-height: 1.55;
   margin: 0;
 }}
-.hero-meta {{
+.hero-pills {{
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 18px;
+  margin-top: 14px;
 }}
-.hero-chip {{
-  border: 1px solid rgba(255,255,255,0.16);
-  background: rgba(255,255,255,0.07);
-  border-radius: 10px;
-  padding: 7px 11px;
-  color: #e8f7ef;
-  font-size: 11.5px;
-  font-weight: 600;
+.hero-pill {{
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #d4f4e5;
+  letter-spacing: 0.02em;
+}}
+.hero-doctor-card {{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 16px 20px;
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+  z-index: 1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}}
+.hero-doctor-card:hover {{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+}}
+.doctor-photo-frame {{
+  position: relative;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  padding: 3.5px;
+  background: linear-gradient(135deg, #e9bd62 0%, #fff 50%, #167c70 100%);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.32);
+  flex-shrink: 0;
+}}
+.doctor-photo {{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  background: #0d2822;
+}}
+.doctor-photo-badge {{
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #11382f;
+  color: #a7f3d0;
+  border: 1px solid rgba(167, 243, 208, 0.4);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}}
+.doc-badge-dot {{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+  display: inline-block;
+}}
+.doctor-meta {{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}}
+.doctor-nameplate-img {{
+  max-width: 170px;
+  height: auto;
+  display: block;
+  filter: brightness(1.05) contrast(1.08);
+  border-radius: 4px;
+  margin-bottom: 2px;
+}}
+.doctor-name-text {{
+  font-size: 16px;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  line-height: 1.2;
+}}
+.doctor-degree-text {{
+  font-size: 11.5px;
+  font-weight: 750;
+  color: #e9bd62;
+  letter-spacing: 0.02em;
+}}
+.doctor-spec-text {{
+  font-size: 11px;
+  font-weight: 500;
+  color: #bce4d6;
+  line-height: 1.35;
 }}
 
 /* Two column layout */
@@ -1579,10 +1696,33 @@ button {{ cursor: pointer; touch-action: manipulation; }}
 
 /* Responsive media queries */
 @media (max-width: 980px) {{
+  .hero {{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }}
+  .hero-doctor-card {{
+    align-self: flex-start;
+  }}
   .layout {{ grid-template-columns: 1fr; }}
   .side {{ position: static; max-height: none; }}
   .navlist {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }}
   .side-note {{ display: none; }}
+}}
+@media (max-width: 520px) {{
+  .hero-doctor-card {{
+    flex-direction: column;
+    text-align: center;
+    align-self: stretch;
+    align-items: center;
+  }}
+  .doctor-photo-frame {{
+    width: 96px;
+    height: 96px;
+  }}
+  .doctor-nameplate-img {{
+    margin: 0 auto 4px;
+  }}
 }}
 @media (max-width: 700px) {{
   .topinner {{ padding: 10px 12px; }}
@@ -1651,13 +1791,41 @@ button {{ cursor: pointer; touch-action: manipulation; }}
 
 <main class="wrap">
   <section class="hero">
-    <div class="hero-kicker">✦ Patient intake · Case record</div>
-    <h1 id="hero">A clearer picture of your health starts here.</h1>
-    <p>Complete each section at your own pace. Your answers are saved as a draft in this browser while you work.</p>
-    <div class="hero-meta">
-      <span class="hero-chip">◉ Guided sections</span>
-      <span class="hero-chip">⌁ Autosaved draft</span>
-      <span class="hero-chip">▦ Mobile friendly</span>
+    <div class="hero-content">
+      <div class="hero-kicker" id="heroEyebrow">✦ Clinical Case Record · Dr. G. Srinivasan M.D(Hom)</div>
+      <h1 id="heroTitle">A clearer picture of your health starts here.</h1>
+      <p id="heroIntro">Complete each section at your own pace. Each section is reviewed directly by Dr. G. Srinivasan to determine your precise constitutional remedy. Your draft saves automatically.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span id="pill1">Gold Medalist · 15+ Yrs Clinical Trust</span>
+        </span>
+        <span class="hero-pill">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span id="pill2">MD Paediatric Specialist</span>
+        </span>
+        <span class="hero-pill">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span id="pill3">Classical Constitutional Care</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Doctor Profile Card with Photo & Nameplate -->
+    <div class="hero-doctor-card">
+      <div class="doctor-photo-frame">
+        <img src="{photo_src}" onerror="if(this.src.indexOf('srinivas_dr.jpeg')!==-1&&this.src.indexOf('/static/')===-1){{this.src='/static/srinivas_dr.jpeg';}}" alt="Dr. G. Srinivasan M.D(Hom)" class="doctor-photo" loading="eager" />
+        <div class="doctor-photo-badge">
+          <span class="doc-badge-dot"></span>
+          <span id="docBadgeText">In-Clinic & Online</span>
+        </div>
+      </div>
+      <div class="doctor-meta">
+        <img src="{nameplate_src}" onerror="if(this.src.indexOf('assets/')!==-1&&this.src.indexOf('/static/')===-1){{this.src='/static/dr_srinivasan_nameplate.png';}}else{{this.style.display='none';}}" alt="Dr. G. Srinivasan MD" class="doctor-nameplate-img" />
+        <div class="doctor-name-text">Dr. G. Srinivasan</div>
+        <div class="doctor-degree-text" id="docDegreeText">M.D. (Homoeopathy) · Gold Medalist</div>
+        <div class="doctor-spec-text" id="docSpecText">Paediatric Specialist & Classical Homeopath</div>
+      </div>
     </div>
   </section>
 
@@ -1760,6 +1928,17 @@ function render() {{
   $('step').innerHTML = ui('SECTION ' + String(idx + 1).padStart(2, '0'), 'பகுதி ' + String(idx + 1).padStart(2, '0'));
   $('count').textContent = (idx + 1) + ' / ' + sections.length;
   $('bar').style.width = ((idx + 1) / sections.length * 100) + '%';
+  
+  if ($('heroEyebrow')) $('heroEyebrow').innerHTML = ui('✦ Clinical Case Record · Dr. G. Srinivasan M.D(Hom)', '✦ மருத்துவப் பதிவு · டாக்டர் ஜி. சீனிவாசன் M.D(Hom)');
+  if ($('heroTitle')) $('heroTitle').innerHTML = ui('A clearer picture of your health starts here.', 'உங்கள் உடல்நலத்தைப் பற்றிய தெளிவான பார்வை இங்கே தொடங்குகிறது.');
+  if ($('heroIntro')) $('heroIntro').innerHTML = ui('Complete each section at your own pace. Each section is reviewed directly by Dr. G. Srinivasan to determine your precise constitutional remedy. Your draft saves automatically.', 'நேரம் எடுத்துக்கொண்டு உங்கள் சொந்த வார்த்தைகளில் பதிலளிக்கவும். ஒவ்வொரு பகுதியையும் டாக்டர் ஜி. சீனிவாசன் அவர்கள் நேரடியாக ஆய்வு செய்து சரியான மருந்தைத் தீர்மானிப்பார். வரைவு தானாகச் சேமிக்கப்படுகிறது.');
+  if ($('pill1')) $('pill1').innerHTML = ui('Gold Medalist · 15+ Yrs Clinical Trust', 'தங்கப் பதக்க வெற்றியாளர் · 15+ ஆண்டுகள் நம்பிக்கை');
+  if ($('pill2')) $('pill2').innerHTML = ui('MD Paediatric Specialist', 'குழந்தைகள் நல சிறப்பு மருத்துவர் (MD)');
+  if ($('pill3')) $('pill3').innerHTML = ui('Classical Constitutional Care', 'பாரம்பரிய ஹோமியோபதி சிகிச்சை');
+  if ($('docBadgeText')) $('docBadgeText').innerHTML = ui('In-Clinic & Online', 'நேரடி & இணைய ஆலோசனை');
+  if ($('docDegreeText')) $('docDegreeText').innerHTML = ui('M.D. (Homoeopathy) · Gold Medalist', 'M.D. (ஹோமியோபதி) · தங்கப் பதக்கம்');
+  if ($('docSpecText')) $('docSpecText').innerHTML = ui('Paediatric Specialist & Classical Homeopath', 'குழந்தைகள் சிறப்பு மருத்துவர் & ஹோமியோபதி நிபுணர்');
+
   
   $('nav').innerHTML = sections.map((v, i) => `
     <button class="nav ${{i === idx ? 'active' : ''}}" data-i="${{i}}">
@@ -2049,7 +2228,7 @@ render();
 '''
 
 if __name__ == "__main__":
-    fixed_html = generate_html("logo.png")
+    fixed_html = generate_html("logo.png", photo_src="srinivas_dr.jpeg", nameplate_src="assets/dr_srinivasan_nameplate.png")
     fixed_path = os.path.join(BASE_DIR, "prana_homeocare_fixed (5).html")
     with open(fixed_path, "w", encoding="utf-8") as f:
         f.write(fixed_html)
@@ -2058,7 +2237,7 @@ if __name__ == "__main__":
     backend_templates_dir = os.path.join(BASE_DIR, "prana_homeocare_responsive_redesign", "prana_backend", "templates")
     os.makedirs(backend_templates_dir, exist_ok=True)
     index_path = os.path.join(backend_templates_dir, "index.html")
-    backend_html = generate_html("/static/logo.png")
+    backend_html = generate_html("/static/logo.png", photo_src="/static/srinivas_dr.jpeg", nameplate_src="/static/dr_srinivasan_nameplate.png")
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(backend_html)
     print(f"Generated {index_path} ({len(backend_html)} bytes)")
