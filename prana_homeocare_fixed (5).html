@@ -135,6 +135,8 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -151,6 +153,9 @@ body {
   display: flex;
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
 }
 
 /* 3-Language Mode Display Rules */
@@ -179,6 +184,8 @@ body {
   left: 0;
   right: 0;
   width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
   background: var(--bg-surface-trans);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -190,6 +197,8 @@ body {
 
 .topbar {
   max-width: 1380px;
+  width: 100%;
+  box-sizing: border-box;
   margin: 0 auto;
   padding: 12px clamp(16px, 3.5vw, 36px);
   display: flex;
@@ -377,6 +386,7 @@ body {
 .shell {
   max-width: 1380px;
   width: 100%;
+  box-sizing: border-box;
   margin: 0 auto;
   padding: 20px clamp(16px, 3.5vw, 36px) 60px;
   flex: 1;
@@ -391,6 +401,8 @@ body {
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 245, 0.88) 100%);
   border: 1px solid rgba(11, 92, 102, 0.14);
   border-radius: var(--radius-xl);
@@ -567,6 +579,8 @@ body {
   grid-template-columns: 320px minmax(0, 1fr);
   gap: 24px;
   align-items: start;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* SIDEBAR NAVIGATION */
@@ -816,6 +830,7 @@ body {
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  overflow: hidden;
 }
 
 .step-label-en {
@@ -825,6 +840,17 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   color: inherit;
+  display: block;
+  max-width: 100%;
+}
+
+.step-label-en strong {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  font-weight: 750;
 }
 
 .step-label-ta {
@@ -834,6 +860,16 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
+  display: block;
+  max-width: 100%;
+}
+
+.step-label-ta strong {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
 }
 
 .step-item-btn.active .step-label-en {
@@ -886,6 +922,8 @@ body {
   position: relative;
   scroll-margin-top: 86px;
   transition: all 0.25s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-card::before {
@@ -990,12 +1028,17 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .field {
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .field.full {
@@ -1858,7 +1901,7 @@ body {
 }
 
 /* ==========================================================================
-   RESPONSIVENESS (Down to 320px)
+   RESPONSIVENESS (Flawless down to 320px Mobile)
    ========================================================================== */
 @media (max-width: 1024px) {
   .layout {
@@ -1868,34 +1911,108 @@ body {
 }
 
 @media (max-width: 820px) {
+  .shell {
+    padding: 14px 14px calc(85px + var(--safe-bottom));
+    width: 100%;
+    box-sizing: border-box;
+  }
   .layout {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
   }
   .sidebar {
-    display: none;
+    display: none !important;
   }
   .mobile-step-dock {
     display: block;
   }
+  .form-card {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: var(--radius-lg);
+  }
+  .card-head {
+    padding: 20px 18px 14px;
+  }
+  .form-body {
+    padding: 20px 16px;
+  }
   .fields-grid {
     grid-template-columns: 1fr;
     gap: 16px;
+    width: 100%;
   }
   .card-foot {
     display: none; /* Replaced by sticky mobile bottom dock */
   }
   .clinic-docket-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch; /* Stretches 100% full width */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 18px;
+    gap: 14px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 18px;
+  }
+  .docket-brand-card {
+    width: 100%;
+    gap: 14px;
+  }
+  .doctor-portrait-avatar {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+  }
+  .docket-doctor-name {
+    font-size: 1.15rem;
+    flex-wrap: wrap;
+    gap: 6px;
   }
   .docket-quick-pills {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .docket-pill {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 6px 12px;
+    font-size: 0.74rem;
+  }
+  .topbar {
+    padding: 10px 14px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .top-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 680px) {
+  .review-data-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .lang-segmented-group .lang-label-sub {
+    display: none;
+  }
+  .lang-seg-btn {
+    padding: 4px 10px;
+    font-size: 0.74rem;
   }
 }
 
 @media (max-width: 580px) {
   .topbar {
-    padding: 10px 14px;
+    padding: 8px 12px;
+    gap: 8px;
   }
   .brand-meta h1 {
     font-size: 0.98rem;
@@ -1912,9 +2029,82 @@ body {
   .save-status-pill span#saveStatusText {
     display: none;
   }
-  .review-data-row {
-    grid-template-columns: 1fr;
+  .lang-seg-btn {
+    padding: 4px 8px;
+    font-size: 0.72rem;
     gap: 4px;
+  }
+  .lang-seg-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .shell {
+    padding: 10px 10px calc(85px + var(--safe-bottom));
+  }
+  .topbar {
+    padding: 8px 10px;
+  }
+  .brand {
+    gap: 8px;
+  }
+  .brand-logo {
+    height: 32px;
+  }
+  .brand-meta h1 {
+    font-size: 0.92rem;
+  }
+  .doctor-portrait-avatar {
+    width: 48px;
+    height: 48px;
+  }
+  .docket-doctor-name {
+    font-size: 1.05rem;
+  }
+  .docket-doctor-title {
+    font-size: 0.76rem;
+  }
+  .docket-title-ta {
+    font-size: 0.70rem;
+  }
+  .docket-pill {
+    padding: 5px 8px;
+    font-size: 0.70rem;
+  }
+  .card-head {
+    padding: 16px 14px 12px;
+  }
+  .form-body {
+    padding: 16px 12px;
+  }
+  .step-title-en {
+    font-size: 1.3rem;
+  }
+  .step-title-ta {
+    font-size: 0.96rem;
+  }
+  .subtitle-en {
+    font-size: 0.82rem;
+  }
+  .subtitle-ta {
+    font-size: 0.75rem;
+  }
+  .mobile-step-dock {
+    padding: 8px 10px calc(8px + var(--safe-bottom));
+  }
+  .mobile-dock-inner {
+    gap: 6px;
+  }
+  .mobile-step-pill-btn {
+    padding: 4px 6px;
+  }
+  .mobile-step-pill-top {
+    font-size: 0.62rem;
+  }
+  .mobile-step-pill-title {
+    font-size: 0.75rem;
   }
 }
 </style>
@@ -1954,7 +2144,7 @@ body {
             <line x1="2" y1="12" x2="22" y2="12"></line>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
           </svg>
-          <span>Both (இருமொழி)</span>
+          <span><span class="lang-label-main">Both</span><span class="lang-label-sub"> (இருமொழி)</span></span>
         </button>
         <button type="button" class="lang-seg-btn" data-lang="en" id="btnLangEn" title="English only">
           <span>English</span>
