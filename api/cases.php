@@ -95,13 +95,20 @@ if ($method === 'GET') {
 
         sendResponse(['status' => 'success', 'data' => $case]);
     } else {
-        $sql = "SELECT id, patient_name, phone, diagnosis, language, created_at, updated_at FROM prana_cases";
+        $sql = "
+            SELECT 
+                c.id, c.patient_name, c.phone, c.diagnosis, c.language, c.created_at, c.updated_at,
+                COUNT(f.id) AS followup_count,
+                MAX(f.visit_date) AS last_visit
+            FROM prana_cases c
+            LEFT JOIN prana_case_followups f ON c.id = f.case_id
+        ";
         $params = [];
         if (!empty($search)) {
-            $sql .= " WHERE patient_name LIKE :s OR phone LIKE :s OR diagnosis LIKE :s";
+            $sql .= " WHERE c.patient_name LIKE :s OR c.phone LIKE :s OR c.diagnosis LIKE :s";
             $params[':s'] = '%' . $search . '%';
         }
-        $sql .= " ORDER BY id DESC LIMIT 200";
+        $sql .= " GROUP BY c.id ORDER BY c.id DESC LIMIT 200";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
@@ -231,8 +238,30 @@ if ($method === 'PUT') {
     }
 }
 
-// 4. DELETE: REMOVE CASE (Doctor CRUD)
+// 4. DELETE: REMOVE CASE OR INDIVIDUAL FOLLOW-UP (Doctor CRUD)
 if ($method === 'DELETE') {
+    $action = $_GET['action'] ?? '';
+    
+    // 4a. Delete individual followup
+    if ($action === 'delete_followup') {
+        $fid = intval($_GET['followup_id'] ?? $_GET['id'] ?? 0);
+        if ($fid <= 0) {
+            $data = getJsonInput();
+            $fid = intval($data['followup_id'] ?? $data['id'] ?? 0);
+        }
+        if ($fid <= 0) {
+            sendResponse(['status' => 'error', 'message' => 'Follow-up ID required for deletion.'], 400);
+        }
+        try {
+            $stmt = $pdo->prepare("DELETE FROM prana_case_followups WHERE id = ?");
+            $stmt->execute([$fid]);
+            sendResponse(['status' => 'success', 'ok' => true, 'message' => 'Follow-up consultation deleted successfully.']);
+        } catch (Exception $e) {
+            sendResponse(['status' => 'error', 'message' => 'Failed to delete follow-up: ' . $e->getMessage()], 500);
+        }
+    }
+
+    // 4b. Delete entire case and associated followups
     $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
     if ($id <= 0) {
         $data = getJsonInput();
