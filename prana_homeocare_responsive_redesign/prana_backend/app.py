@@ -80,13 +80,16 @@ def index():
 def add_cors_and_security_headers(response):
     if request.path.startswith('/api/'):
         response.headers['Access-Control-Allow-Origin'] = '*'
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'SAMEORIGIN'
     return response
 
 
+# ============================================================================
+# API ENDPOINTS (For Patient Form, Mobile App & CRUD Integrations)
+# ============================================================================
 @app.route('/api/cases', methods=['POST', 'OPTIONS'])
 def submit_case():
     if request.method == 'OPTIONS':
@@ -108,15 +111,69 @@ def submit_case():
     return jsonify(ok=True, id=case_id, message='Case submitted successfully.'), 201
 
 
+@app.get('/api/cases')
+def list_cases_api():
+    q = request.args.get('q', '').strip()
+    with db() as c:
+        sql = '''
+        SELECT c.id, c.patient_name, c.phone, c.diagnosis, c.language, c.created_at, c.updated_at,
+               COUNT(f.id) AS followup_count, MAX(f.visit_date) AS last_visit_date
+        FROM cases c
+        LEFT JOIN followups f ON f.case_id = c.id
+        '''
+        if q:
+            sql += " WHERE c.patient_name LIKE ? OR c.phone LIKE ? OR c.diagnosis LIKE ?"
+            sql += " GROUP BY c.id ORDER BY c.id DESC"
+            rows = c.execute(sql, (f'%{q}%', f'%{q}%', f'%{q}%')).fetchall()
+        else:
+            sql += " GROUP BY c.id ORDER BY c.id DESC"
+            rows = c.execute(sql).fetchall()
+        return jsonify(ok=True, count=len(rows), cases=[dict(r) for r in rows])
+
+
 @app.get('/api/cases/<int:case_id>')
 def get_case_api(case_id):
     with db() as c:
-        row = c.execute('SELECT id, patient_name, phone, diagnosis, language, created_at FROM cases WHERE id=?', (case_id,)).fetchone()
+        row = c.execute('SELECT id, patient_name, phone, diagnosis, language, answers_json, created_at, updated_at FROM cases WHERE id=?', (case_id,)).fetchone()
         if not row:
             return jsonify(error='Case not found.'), 404
-        return jsonify(ok=True, case=dict(row))
+        data = dict(row)
+        try:
+            data['answers'] = json.loads(data.pop('answers_json'))
+        except Exception:
+            data['answers'] = {}
+        followups = c.execute('SELECT * FROM followups WHERE case_id=? ORDER BY visit_date DESC, id DESC', (case_id,)).fetchall()
+        data['followups'] = [dict(f) for f in followups]
+        return jsonify(ok=True, case=data)
 
 
+@app.route('/api/cases/<int:case_id>/followups', methods=['GET', 'POST', 'OPTIONS'])
+def case_followups_api(case_id):
+    if request.method == 'OPTIONS':
+        return ('', 204)
+    if request.method == 'GET':
+        with db() as c:
+            rows = c.execute('SELECT * FROM followups WHERE case_id=? ORDER BY visit_date DESC, id DESC', (case_id,)).fetchall()
+            return jsonify(ok=True, followups=[dict(r) for r in rows])
+    elif request.method == 'POST':
+        payload = request.get_json(silent=True) or request.form
+        visit_date = str(payload.get('visit_date', '')).strip() or datetime.now().date().isoformat()
+        notes = str(payload.get('notes', '')).strip()
+        prescription = str(payload.get('prescription', '')).strip()
+        advice = str(payload.get('advice', '')).strip()
+        if not any([notes, prescription, advice]):
+            return jsonify(error='At least one follow-up detail is required.'), 400
+        stamp = now_iso()
+        with db() as c:
+            cur = c.execute('INSERT INTO followups (case_id, visit_date, notes, prescription, advice, created_at) VALUES (?,?,?,?,?,?)',
+                            (case_id, visit_date, notes, prescription, advice, stamp))
+            fid = cur.lastrowid
+        return jsonify(ok=True, id=fid, message='Follow-up visit recorded.'), 201
+
+
+# ============================================================================
+# DOCTOR ADMIN AUTHENTICATION
+# ============================================================================
 @app.get('/admin/login')
 def login():
     if not ADMIN_PASSWORD:
@@ -145,15 +202,28 @@ def logout():
     return redirect(url_for('login'))
 
 
+# ============================================================================
+# DOCTOR DASHBOARD & CASE CRUD CONSOLE
+# ============================================================================
 @app.get('/admin')
 @login_required
 def admin_dashboard():
     q = request.args.get('q','').strip()
     with db() as c:
+        sql = '''
+        SELECT c.*, 
+               COUNT(f.id) AS followup_count, 
+               MAX(f.visit_date) AS last_visit_date 
+        FROM cases c 
+        LEFT JOIN followups f ON f.case_id = c.id 
+        '''
         if q:
-            rows = c.execute("SELECT * FROM cases WHERE patient_name LIKE ? OR phone LIKE ? OR diagnosis LIKE ? ORDER BY id DESC", (f'%{q}%', f'%{q}%', f'%{q}%')).fetchall()
+            sql += " WHERE c.patient_name LIKE ? OR c.phone LIKE ? OR c.diagnosis LIKE ?"
+            sql += " GROUP BY c.id ORDER BY c.id DESC"
+            rows = c.execute(sql, (f'%{q}%', f'%{q}%', f'%{q}%')).fetchall()
         else:
-            rows = c.execute('SELECT * FROM cases ORDER BY id DESC').fetchall()
+            sql += " GROUP BY c.id ORDER BY c.id DESC"
+            rows = c.execute(sql).fetchall()
     return render_template('admin.html', cases=rows, q=q)
 
 
@@ -170,7 +240,8 @@ def get_case(case_id):
 @login_required
 def case_detail(case_id):
     case, followups = get_case(case_id)
-    return render_template('case.html', case=case, answers=json.loads(case['answers_json']), followups=followups)
+    today_date = datetime.now().date().isoformat()
+    return render_template('case.html', case=case, answers=json.loads(case['answers_json']), followups=followups, today_date=today_date)
 
 
 @app.post('/admin/case/<int:case_id>/edit')
@@ -185,14 +256,23 @@ def edit_case(case_id):
         if key.startswith('answer__'):
             field = key[len('answer__'):]
             answers[field] = value
-    patient_name = str(answers.get('patientName','')).strip()
+    
+    patient_name = str(request.form.get('patient_name') or answers.get('patientName') or answers.get('patient_name') or answers.get('Name /') or case['patient_name'] or '').strip()
     if not patient_name:
         flash('Patient name cannot be empty.')
         return redirect(url_for('case_detail', case_id=case_id))
+    
+    phone = str(request.form.get('phone') or answers.get('phone') or answers.get('Ph.No ./') or case['phone'] or '').strip()
+    diagnosis = str(request.form.get('diagnosis') or answers.get('diagnosis') or answers.get('Diagnosis /') or case['diagnosis'] or '').strip()
+    
+    answers['patientName'] = patient_name
+    answers['phone'] = phone
+    answers['diagnosis'] = diagnosis
+
     with db() as c:
         c.execute('UPDATE cases SET patient_name=?, phone=?, diagnosis=?, answers_json=?, updated_at=? WHERE id=?',
-                  (patient_name, str(answers.get('phone','')), str(answers.get('diagnosis','')), json.dumps(answers, ensure_ascii=False), now_iso(), case_id))
-    flash('Case record updated.')
+                  (patient_name, phone, diagnosis, json.dumps(answers, ensure_ascii=False), now_iso(), case_id))
+    flash('Case record updated successfully.')
     return redirect(url_for('case_detail', case_id=case_id))
 
 
@@ -206,11 +286,20 @@ def add_followup(case_id):
     advice = request.form.get('advice','').strip()
     if not any([notes, prescription, advice]):
         flash('Enter at least one follow-up detail.')
-        return redirect(url_for('case_detail', case_id=case_id))
+        return redirect(url_for('case_detail', case_id=case_id) + '#followups')
     with db() as c:
         c.execute('INSERT INTO followups (case_id, visit_date, notes, prescription, advice, created_at) VALUES (?,?,?,?,?,?)',
                   (case_id, visit_date, notes, prescription, advice, now_iso()))
-    flash('Follow-up added.')
+    flash('Follow-up consultation recorded.')
+    return redirect(url_for('case_detail', case_id=case_id) + '#followups')
+
+
+@app.post('/admin/case/<int:case_id>/followup/<int:followup_id>/delete')
+@login_required
+def delete_followup(case_id, followup_id):
+    with db() as c:
+        c.execute('DELETE FROM followups WHERE id=? AND case_id=?', (followup_id, case_id))
+    flash('Follow-up record deleted.')
     return redirect(url_for('case_detail', case_id=case_id) + '#followups')
 
 

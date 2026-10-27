@@ -193,6 +193,16 @@
       color: var(--muted);
       margin-top: 2px;
     }
+    .core-demographics {
+      background: #f7fbf9;
+      border: 1.5px solid #d4e8de;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
     .fields-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -257,6 +267,22 @@
       font-size: 15px;
       color: var(--brand-dark);
     }
+    .btn-del-followup {
+      background: none;
+      border: 1px solid #f5c6cb;
+      color: #c0392b;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-del-followup:hover {
+      background: #c0392b;
+      color: #ffffff;
+      border-color: #c0392b;
+    }
     .followup-section {
       margin-top: 10px;
     }
@@ -289,14 +315,14 @@
       body {
         background: #ffffff !important;
         color: #000000 !important;
-        font-size: 12pt;
+        font-size: 11pt;
       }
       .shell {
         width: 100% !important;
         padding: 0 !important;
         margin: 0 !important;
       }
-      .header-bar, .header-actions, .btn, .back-btn, form, #add-followup-form {
+      .header-bar, .header-actions, .btn, .back-btn, form button, #add-followup-form {
         display: none !important;
       }
       .case-title-card {
@@ -313,6 +339,10 @@
         border-radius: 4px !important;
         padding: 10pt !important;
         page-break-inside: avoid;
+      }
+      .core-demographics {
+        background: none !important;
+        border: 1px solid #ddd !important;
       }
       .fields-grid {
         grid-template-columns: 1fr 1fr !important;
@@ -332,7 +362,10 @@
       display: none;
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 768px) {
+      .core-demographics {
+        grid-template-columns: 1fr;
+      }
       .fields-grid {
         grid-template-columns: 1fr;
       }
@@ -363,11 +396,12 @@
     <header class="header-bar">
       <a class="back-btn" href="{{url_for('admin_dashboard')}}">← Back to Dashboard</a>
       <div class="header-actions">
+        <a class="btn secondary" href="#followups">Follow-ups ({{followups|length}}) ↓</a>
         <button class="btn print-btn" type="button" onclick="window.print()">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           Print / Save PDF
         </button>
-        <a class="btn secondary" href="{{url_for('index')}}">Patient Intake Form ↗</a>
+        <a class="btn secondary" href="{{url_for('index')}}" target="_blank">Patient Intake Form ↗</a>
         <form method="post" action="{{url_for('delete_case', case_id=case.id)}}" style="display:inline;margin:0;" onsubmit="return confirm('Are you sure you want to permanently delete this case record?');">
           <button class="btn secondary" type="submit" style="color:#c0392b;border-color:#f5c6cb;">Delete</button>
         </form>
@@ -379,7 +413,7 @@
         <div class="kicker">Clinical Case File · Ref #{{case.id}}</div>
         <h1>{{case.patient_name}}</h1>
         <div class="case-meta">
-          Submitted: {{case.created_at}} · Last updated: {{case.updated_at}} · Language: {{case.language|upper}}
+          Submitted: {{case.created_at[:16]|replace('T',' ')}} · Last updated: {{case.updated_at[:16]|replace('T',' ')}} · Language: {{case.language|upper}}
         </div>
       </div>
       <div class="case-quick-contact">
@@ -407,7 +441,7 @@
         <div class="panel-header">
           <div>
             <h2>Patient Clinical Record</h2>
-            <p>Review submitted information, edit or append clinical details, and save updates.</p>
+            <p>Review submitted information, edit core details or section responses, and save updates.</p>
           </div>
           <button class="btn primary" type="submit">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
@@ -415,9 +449,24 @@
           </button>
         </div>
 
+        <div class="core-demographics">
+          <div>
+            <label for="f_core_name">Patient Full Name</label>
+            <input id="f_core_name" name="patient_name" value="{{case.patient_name}}" required>
+          </div>
+          <div>
+            <label for="f_core_phone">Phone / WhatsApp</label>
+            <input id="f_core_phone" name="phone" value="{{case.phone}}">
+          </div>
+          <div>
+            <label for="f_core_diagnosis">Clinical Diagnosis</label>
+            <input id="f_core_diagnosis" name="diagnosis" value="{{case.diagnosis or ''}}" placeholder="e.g. Migraine with aura">
+          </div>
+        </div>
+
         <div class="fields-grid">
           {% for key, value in answers.items() %}
-            {% if key != 'consent' and key != 'disclaimerText' %}
+            {% if key != 'consent' and key != 'disclaimerText' and key != 'patientName' and key != 'phone' and key != 'diagnosis' %}
               <div class="field-item {% if value is string and (value|length > 80 or '\n' in value) %}full-width{% endif %}">
                 <label for="f_{{key}}">{{key|replace('_',' ')|replace('  ',' ')|title}}</label>
                 {% if value is boolean %}
@@ -455,7 +504,7 @@
         <div class="fields-grid">
           <div class="field-item">
             <label for="visit_date">Visit Date</label>
-            <input id="visit_date" name="visit_date" type="date" required>
+            <input id="visit_date" name="visit_date" type="date" value="{{today_date}}" required>
           </div>
           <div class="field-item full-width">
             <label for="notes">Clinical Progress & Changes</label>
@@ -489,7 +538,12 @@
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 Visit on {{f.visit_date}}
               </strong>
-              <span style="font-size:12px;color:var(--muted)">Recorded: {{f.created_at}}</span>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:12px;color:var(--muted)">Recorded: {{f.created_at[:16]|replace('T',' ')}}</span>
+                <form method="post" action="{{url_for('delete_followup', case_id=case.id, followup_id=f.id)}}" style="margin:0;" onsubmit="return confirm('Delete this follow-up visit on {{f.visit_date}}?');">
+                  <button type="submit" class="btn-del-followup" title="Delete visit record">Delete</button>
+                </form>
+              </div>
             </div>
             {% if f.notes %}
               <div class="followup-section">

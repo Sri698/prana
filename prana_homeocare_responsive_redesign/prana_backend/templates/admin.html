@@ -50,15 +50,21 @@
       align-items: center;
       gap: 12px;
     }
-    .logo {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
+    .brand-logo-img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(17, 121, 108, 0.12));
+    }
+    .logo-fallback {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       background: linear-gradient(145deg, #168b7b, #07574e);
       display: grid;
       place-items: center;
       color: #fff;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 850;
       box-shadow: 0 8px 20px rgba(17, 121, 108, 0.22);
       flex-shrink: 0;
@@ -220,7 +226,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 720px;
+      min-width: 760px;
       background: #ffffff;
     }
     th, td {
@@ -257,6 +263,45 @@
       color: var(--ink);
       font-size: 15px;
     }
+    .pill-followup {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #eaf5f0;
+      color: #0b5c52;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid #b8decb;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .pill-followup:hover {
+      background: #0b5c52;
+      color: #ffffff;
+    }
+    .pill-followup-empty {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f3f6f5;
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px dashed var(--line);
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .pill-followup-empty:hover {
+      background: var(--mint);
+      color: var(--brand-dark);
+      border-color: var(--brand);
+    }
     .action-link {
       display: inline-flex;
       align-items: center;
@@ -268,11 +313,32 @@
       border-radius: 8px;
       background: var(--mint);
       transition: all 0.15s;
+      font-size: 13px;
+      white-space: nowrap;
     }
     .action-link:hover {
       background: var(--brand);
       color: white;
     }
+    .action-btn-del {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid #f5c6cb;
+      color: #c0392b;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .action-btn-del:hover {
+      background: #c0392b;
+      color: #ffffff;
+      border-color: #c0392b;
+    }
+
     /* Mobile Cards View for Narrow Screens */
     .mobile-cards {
       display: none;
@@ -341,7 +407,7 @@
       font-size: 12.5px;
       color: var(--muted);
     }
-    @media (max-width: 768px) {
+    @media (max-width: 820px) {
       .table-container {
         display: none;
       }
@@ -395,7 +461,8 @@
   <div class="shell">
     <header class="topbar">
       <div class="brand">
-        <div class="logo">
+        <img src="{{url_for('static', filename='logo.png')}}" alt="Prana Homeo Care Logo" class="brand-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+        <div class="logo-fallback" style="display:none;">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2v20M2 12h20"/></svg>
         </div>
         <div>
@@ -404,7 +471,7 @@
         </div>
       </div>
       <div class="header-actions">
-        <a class="btn secondary" href="{{url_for('index')}}">← Patient Intake Form</a>
+        <a class="btn primary" href="{{url_for('index')}}" target="_blank">+ New Intake Record</a>
         <form method="post" action="{{url_for('logout')}}" style="display:inline;margin:0;">
           <button class="btn secondary" type="submit">Log out ↗</button>
         </form>
@@ -457,13 +524,13 @@
           <table>
             <thead>
               <tr>
-                <th style="width:80px;">Ref ID</th>
+                <th style="width:70px;">Ref ID</th>
                 <th>Patient Name</th>
                 <th>Phone</th>
                 <th>Diagnosis</th>
+                <th>Follow-ups</th>
                 <th>Submitted</th>
-                <th>Last Updated</th>
-                <th style="text-align:right;">Action</th>
+                <th style="text-align:right;">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -479,10 +546,27 @@
                     {% endif %}
                   </td>
                   <td>{{c.diagnosis or '—'}}</td>
-                  <td style="font-size:13px;color:var(--muted);">{{c.created_at}}</td>
-                  <td style="font-size:13px;color:var(--muted);">{{c.updated_at}}</td>
+                  <td>
+                    {% if c.followup_count > 0 %}
+                      <a href="{{url_for('case_detail', case_id=c.id)}}#followups" class="pill-followup" title="Last visit: {{c.last_visit_date}}">
+                        {{c.followup_count}} {{ 'visit' if c.followup_count == 1 else 'visits' }}{% if c.last_visit_date %} · {{c.last_visit_date}}{% endif %}
+                      </a>
+                    {% else %}
+                      <a href="{{url_for('case_detail', case_id=c.id)}}#followups" class="pill-followup-empty" title="Record first follow-up">
+                        + Add Visit
+                      </a>
+                    {% endif %}
+                  </td>
+                  <td style="font-size:13px;color:var(--muted);">{{c.created_at[:16]|replace('T',' ')}}</td>
                   <td style="text-align:right;">
-                    <a class="action-link" href="{{url_for('case_detail', case_id=c.id)}}">Open Record →</a>
+                    <div style="display:inline-flex;align-items:center;gap:6px;">
+                      <a class="action-link" href="{{url_for('case_detail', case_id=c.id)}}">Open Record →</a>
+                      <form method="post" action="{{url_for('delete_case', case_id=c.id)}}" style="display:inline;margin:0;" onsubmit="return confirm('Permanently delete Case #{{c.id}} ({{c.patient_name}})? This cannot be undone.');">
+                        <button type="submit" class="action-btn-del" title="Delete record">
+                          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               {% endfor %}
@@ -490,13 +574,19 @@
           </table>
         </div>
 
-        <!-- Mobile Card View (< 768px) -->
+        <!-- Mobile Card View (< 820px) -->
         <div class="mobile-cards">
           {% for c in cases %}
             <div class="m-card">
               <div class="m-card-header">
                 <span class="pill-id">Case #{{c.id}}</span>
-                <span style="font-size:11px;color:var(--muted)">{{c.created_at[:10]}}</span>
+                {% if c.followup_count > 0 %}
+                  <a href="{{url_for('case_detail', case_id=c.id)}}#followups" class="pill-followup" style="font-size:11px;">
+                    {{c.followup_count}} {{ 'visit' if c.followup_count == 1 else 'visits' }}
+                  </a>
+                {% else %}
+                  <span style="font-size:11px;color:var(--muted)">No follow-ups</span>
+                {% endif %}
               </div>
               <div class="m-card-title">{{c.patient_name}}</div>
               <div class="m-card-detail">
@@ -514,12 +604,19 @@
                 {% endif %}
                 <span>
                   <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                  Updated: {{c.updated_at}}
+                  Updated: {{c.updated_at[:16]|replace('T',' ')}}
                 </span>
               </div>
-              <a class="btn primary" href="{{url_for('case_detail', case_id=c.id)}}" style="margin-top:6px;width:100%;">
-                Open Full Record →
-              </a>
+              <div style="display:flex;gap:8px;margin-top:6px;">
+                <a class="btn primary" href="{{url_for('case_detail', case_id=c.id)}}" style="flex:1;">
+                  Open Record →
+                </a>
+                <form method="post" action="{{url_for('delete_case', case_id=c.id)}}" onsubmit="return confirm('Permanently delete Case #{{c.id}} ({{c.patient_name}})?');" style="margin:0;">
+                  <button type="submit" class="btn secondary" style="color:#c0392b;border-color:#f5c6cb;padding:10px 14px;" title="Delete case">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                  </button>
+                </form>
+              </div>
             </div>
           {% endfor %}
         </div>
