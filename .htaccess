@@ -3,11 +3,12 @@
     RewriteBase /
     
     # PRANA CLINICAL PORTAL — FIX CASE PAGE ROUTING
-# Allow the actual HTML file to load directly
-RewriteRule ^case\.html$ - [L]
-
-# Support the clean URL /case
-RewriteRule ^case/?$ case.html [L]
+    # Prevent trailing-slash relative path breakages
+    RewriteRule ^case/$ /case [R=301,L]
+    # Allow the actual HTML file to load directly
+    RewriteRule ^case\.html$ - [L]
+    # Support the clean URL /case
+    RewriteRule ^case$ case.html [L]
     # Leave API and PHP files alone
     RewriteCond %{REQUEST_URI} \.php$
     RewriteRule ^ - [L]
