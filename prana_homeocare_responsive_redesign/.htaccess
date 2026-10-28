@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^case/?$ case.html [L]
+    RewriteRule ^admin/?$ case.html [L]
+</IfModule>
