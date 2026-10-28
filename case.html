@@ -64,6 +64,11 @@
       --text: #0f172a;
     }
 
+    /* Font Awesome Icon Fix for Tailwind Reset */
+    .fa, .fa-solid, .fas { font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free' !important; font-weight: 900 !important; font-style: normal !important; }
+    .far, .fa-regular { font-family: 'Font Awesome 6 Free', 'Font Awesome 5 Free' !important; font-weight: 400 !important; font-style: normal !important; }
+    .fab, .fa-brands { font-family: 'Font Awesome 6 Brands', 'Font Awesome 5 Brands' !important; font-weight: 400 !important; font-style: normal !important; }
+
     /* Proper Mobile App UI Standards */
     body {
       -webkit-tap-highlight-color: transparent;
@@ -3265,11 +3270,22 @@ const AppointmentsAdmin = ({ db, setView, setActivePatientId, setRegModal }) => 
                     </div>
                     <button
                       onClick={loadCases}
-                      className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
+                      className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer"
                       title="Refresh"
                     >
                       <i className="fa-solid fa-rotate-right text-xs"></i>
                     </button>
+                    <a
+                      href="prana_homeocare_fixed (5).html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer"
+                      title="Open live patient intake form in a new tab"
+                    >
+                      <i className="fa-solid fa-pen-to-square text-xs"></i>
+                      <span className="hidden sm:inline">Fill New Case</span>
+                      <i className="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
                   </>
                 )}
               </div>
@@ -3608,19 +3624,21 @@ const PortalSelect = ({ setView, setClinic }) => {
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2 md:gap-5">
-                  <button type="button" onClick={() => { setClinic("KATTUPAKKAM"); setView("HOME"); }} className="group flex min-h-[148px] w-full items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#0b6570] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6570] focus-visible:ring-offset-2 sm:min-h-[172px] sm:gap-5 sm:p-6">
+                  {/* 1. Patient Management */}
+                  <button type="button" onClick={() => { setClinic("KATTUPAKKAM"); setView("HOME"); }} className="group flex min-h-[148px] w-full items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#0b6570] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0b6570] focus-visible:ring-offset-2 sm:min-h-[172px] sm:gap-5 sm:p-6 cursor-pointer">
                     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#edf7f7] text-[#087078] sm:h-14 sm:w-14">
                       <i className="fa-solid fa-user-doctor text-xl" aria-hidden="true"></i>
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-[#087078]">Clinical</span>
+                      <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-[#087078]">Clinical EHR</span>
                       <span className="mt-1 block text-lg font-bold tracking-tight text-slate-900 sm:text-xl">Patient Management</span>
                       <span className="mt-2 block text-xs leading-5 text-slate-500 sm:text-sm">Patient records, case taking, repertory and prescriptions.</span>
                     </span>
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition group-hover:border-[#087078] group-hover:bg-[#087078] group-hover:text-white"><i className="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></span>
                   </button>
 
-                  <button type="button" onClick={() => { setClinic("KATTUPAKKAM"); setView("ONLINE_CASES"); }} className="group flex min-h-[148px] w-full items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-emerald-600 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:min-h-[172px] sm:gap-5 sm:p-6 md:col-span-2">
+                  {/* 2. Online Patient Cases */}
+                  <button type="button" onClick={() => { setClinic("KATTUPAKKAM"); setView("ONLINE_CASES"); }} className="group flex min-h-[148px] w-full items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-emerald-600 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 sm:min-h-[172px] sm:gap-5 sm:p-6 cursor-pointer">
                     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 sm:h-14 sm:w-14">
                       <i className="fa-solid fa-file-waveform text-xl" aria-hidden="true"></i>
                     </span>
@@ -3632,17 +3650,31 @@ const PortalSelect = ({ setView, setClinic }) => {
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition group-hover:border-emerald-600 group-hover:bg-emerald-600 group-hover:text-white"><i className="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></span>
                   </button>
 
-                  <button type="button" onClick={() => { setClinic("KATTUPAKKAM"); setView("APPOINTMENTS"); }} className="group flex min-h-[148px] w-full items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#b58d37] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b58d37] focus-visible:ring-offset-2 sm:min-h-[172px] sm:gap-5 sm:p-6">
+                  {/* 3. Admin Dashboard (Appointments & Booking) */}
+                  <button type="button" onClick={() => { setClinic("KATTUPAKKAM"); setView("APPOINTMENTS"); }} className="group flex min-h-[148px] w-full items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-[#b58d37] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#b58d37] focus-visible:ring-offset-2 sm:min-h-[172px] sm:gap-5 sm:p-6 cursor-pointer">
                     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#fbf6e9] text-[#9a7429] sm:h-14 sm:w-14">
                       <i className="fa-regular fa-calendar-check text-xl" aria-hidden="true"></i>
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-[#9a7429]">Administration</span>
                       <span className="mt-1 block text-lg font-bold tracking-tight text-slate-900 sm:text-xl">Admin Dashboard</span>
-                      <span className="mt-2 block text-xs leading-5 text-slate-500 sm:text-sm">Website bookings, clinic schedules and holidays.</span>
+                      <span className="mt-2 block text-xs leading-5 text-slate-500 sm:text-sm">Website bookings, clinic schedules, slots and holidays.</span>
                     </span>
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition group-hover:border-[#b58d37] group-hover:bg-[#b58d37] group-hover:text-white"><i className="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i></span>
                   </button>
+
+                  {/* 4. Fill New Case Sheet (Live Intake Form) */}
+                  <a href="prana_homeocare_fixed (5).html" target="_blank" rel="noopener noreferrer" className="group flex min-h-[148px] w-full items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:border-teal-600 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 focus-visible:ring-offset-2 sm:min-h-[172px] sm:gap-5 sm:p-6 cursor-pointer">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal-50 text-teal-700 sm:h-14 sm:w-14">
+                      <i className="fa-solid fa-pen-to-square text-xl" aria-hidden="true"></i>
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-teal-700">Live Case Sheet</span>
+                      <span className="mt-1 block text-lg font-bold tracking-tight text-slate-900 sm:text-xl">Fill New Case Form</span>
+                      <span className="mt-2 block text-xs leading-5 text-slate-500 sm:text-sm">Open the 23-section bilingual intake sheet for live patient case taking.</span>
+                    </span>
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition group-hover:border-teal-600 group-hover:bg-teal-600 group-hover:text-white"><i className="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i></span>
+                  </a>
                 </div>
               </section>
 
@@ -3651,7 +3683,7 @@ const PortalSelect = ({ setView, setClinic }) => {
                   <p className="text-xs font-semibold text-slate-600">Prana Homeo Care</p>
                   <p className="mt-1 text-[11px] text-slate-400">Clinical records · Clinic administration</p>
                 </div>
-                <button type="button" onClick={() => setView("LOGIN")} className="inline-flex min-h-10 items-center justify-center gap-2 self-start rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 active:scale-[.99] sm:self-auto">
+                <button type="button" onClick={() => { try { localStorage.removeItem("prana_auth"); } catch(e){} setView("LOGIN"); }} className="inline-flex min-h-10 items-center justify-center gap-2 self-start rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 active:scale-[.99] sm:self-auto cursor-pointer">
                   <i className="fa-solid fa-arrow-right-from-bracket text-[11px]" aria-hidden="true"></i>
                   Sign out
                 </button>
@@ -3722,8 +3754,17 @@ const [pharmacyModal, setPharmacyModal] = useState({
           }
         });
 
-        // Simply show the login screen by default since Firebase is disabled
-        setView("LOGIN");
+        // Check if doctor is already signed in or URL requested specific view
+        const savedAuth = typeof localStorage !== 'undefined' ? localStorage.getItem('prana_auth') : null;
+        const urlParams = new URLSearchParams(window.location.search);
+        const reqView = urlParams.get('view');
+        
+        if (savedAuth === 'true' || reqView) {
+          setClinic("KATTUPAKKAM");
+          setView(reqView || "PORTAL_SELECT");
+        } else {
+          setView("LOGIN");
+        }
         setAuthChecking(false);
       }, []);
 
@@ -7574,6 +7615,7 @@ const initialData = pharmacyModal.editData || {
             (cleanEmail === 'admin' || cleanEmail === 'doctor' || cleanEmail === 'clinic@email.com') &&
             (cleanPass === 'prana2026' || cleanPass === 'password123')
           ) {
+            try { localStorage.setItem('prana_auth', 'true'); } catch (e) {}
             setClinic("KATTUPAKKAM");
             setView("PORTAL_SELECT");
             setLoading(false);
