@@ -7432,58 +7432,36 @@ function renderSuccessScreen(caseId, patientName, phone) {
 
 
 
-      <div class="ref-code-card">
-
-        <span class="ref-code-label">${getLangText("YOUR CASE REFERENCE ID", "வழக்கு குறிப்பு எண்")}</span>
-
-        <div class="ref-code-value">#${esc(caseId)}</div>
-
-        <button type="button" class="btn" id="copyRefBtn" style="min-height:38px;padding:6px 14px;font-size:0.82rem;">
-
+      <div class="ref-code-card" style="background: linear-gradient(135deg, rgba(11, 92, 102, 0.08) 0%, rgba(201, 162, 74, 0.12) 100%); border: 1.5px solid var(--border-medium); border-radius: var(--radius-lg); padding: 22px; margin: 24px 0; text-align: center;">
+        <span class="ref-code-label" style="font-weight: 800; color: var(--text-muted); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;">
+          ${getLangText("YOUR CASE REFERENCE ID", "உங்கள் மருத்துவக் குறிப்பு எண்")}
+        </span>
+        <div class="ref-code-value" style="font-size: 2.4rem; font-weight: 900; color: var(--primary); font-family: var(--font-heading); margin: 6px 0 14px;">
+          #${esc(caseId)}
+        </div>
+        <button type="button" class="btn" id="copyRefBtn" style="min-height: 42px; padding: 8px 22px; font-size: 0.88rem; font-weight: 700; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; gap: 8px; margin: 0 auto;">
           <svg class="svg-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-
           <span id="copyRefLabel">${getLangText("Copy Reference ID", "குறிப்பு எண்ணை நகலெடு")}</span>
-
         </button>
-
       </div>
 
-
-
-      <div class="success-actions-grid">
-
-        <a class="btn btn-whatsapp" href="${waUrl}" target="_blank" rel="noopener">
-
-          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
-
-          <span>${getLangText("Notify Doctor via WhatsApp (+91 99623 03009)", "வாட்ஸ்அப் மூலம் மருத்துவருக்குத் தெரிவிக்கவும்")}</span>
-
+      <div class="success-actions-grid" style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+        <a class="btn btn-whatsapp" href="${waUrl}" target="_blank" rel="noopener" style="min-height: 52px; border-radius: var(--radius-md); font-weight: 800; font-size: 0.98rem; justify-content: center; box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 10px;">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width: 22px; height: 22px;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+          <span>${getLangText("Notify Doctor via WhatsApp (+91 98842 23007)", "மருத்துவரை வாட்ஸ்அப்பில் தொடர்பு கொள்ளவும்")}</span>
         </a>
 
-        <button type="button" class="btn primary" onclick="window.print();">
+        <div style="display: flex; gap: 12px; width: 100%;">
+          <button type="button" class="btn" onclick="window.print();" style="flex: 1; min-height: 44px; border-radius: var(--radius-md); font-weight: 700; font-size: 0.88rem; justify-content: center; display: inline-flex; align-items: center; gap: 8px;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>${getLangText("Print / Save Record PDF", "பதிவை அச்சிடுக / PDF")}</span>
+          </button>
 
-          <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-
-          <span>${getLangText("Print / Save Record PDF", "பதிவை அச்சிடு / PDF சேமி")}</span>
-
-        </button>
-
-        <button type="button" class="btn" id="downloadBackupBtn">
-
-          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-
-          <span>${getLangText("Download Case File (JSON)", "பதிவிறக்கு (JSON)")}</span>
-
-        </button>
-
-        <button type="button" class="btn" id="newCaseBtn" style="grid-column:1/-1;">
-
-          <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-
-          <span>${getLangText("Submit Another Case", "மற்றொரு வழக்கு பதிவு")}</span>
-
-        </button>
-
+          <button type="button" class="btn" id="newCaseBtn" style="flex: 1; min-height: 44px; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 600; justify-content: center; display: inline-flex; align-items: center; gap: 8px;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            <span>${getLangText("Submit Another Case", "புதிய பதிவு")}</span>
+          </button>
+        </div>
       </div>
 
 
@@ -7524,11 +7502,7 @@ function renderSuccessScreen(caseId, patientName, phone) {
 
 
 
-  $("downloadBackupBtn").onclick = () => {
-
-    downloadCaseJSON(caseId, patientName, data);
-
-  };
+  const dlBtn = $("downloadBackupBtn"); if (dlBtn) { dlBtn.onclick = () => downloadCaseJSON(caseId, patientName, data); };
 
 
 
