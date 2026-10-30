@@ -3107,11 +3107,17 @@ const OnlineCasesAdmin = ({ setView }) => {
   };
 
   const getApiEndpoint = () => {
+    if (typeof window !== 'undefined' && window.location && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+      return window.location.origin + '/api/cases.php';
+    }
     const base = typeof RESOLVED_SERVER_BASE !== 'undefined' ? RESOLVED_SERVER_BASE : 'https://pranahomeocare.in';
     return base + '/api/cases.php';
   };
 
   const getFormUrl = () => {
+    if (typeof window !== 'undefined' && window.location && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+      return window.location.origin + '/new_case/case.html';
+    }
     const base = typeof RESOLVED_SERVER_BASE !== 'undefined' ? RESOLVED_SERVER_BASE : 'https://pranahomeocare.in';
     return base + '/new_case/case.html';
   };
