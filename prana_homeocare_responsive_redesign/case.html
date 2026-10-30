@@ -62,12 +62,12 @@
   </script>
   <!-- React 18, Tailwind, Icons & Tools with Local Vendor Priority & Robust Fallbacks -->
   <link rel="stylesheet" href="/vendor/all.min.css" onerror="this.onerror=null;this.href='vendor/all.min.css'" />
-  <script src="/vendor/tailwindcss.js" onerror="this.onerror=null;this.src='vendor/tailwindcss.js';this.onerror=null;this.src='https://cdn.tailwindcss.com'"></script>
-  <script src="/vendor/react.production.min.js" onerror="this.onerror=null;this.src='vendor/react.production.min.js';this.onerror=null;this.src='https://unpkg.com/react@18/umd/react.production.min.js'"></script>
-  <script src="/vendor/react-dom.production.min.js" onerror="this.onerror=null;this.src='vendor/react-dom.production.min.js';this.onerror=null;this.src='https://unpkg.com/react-dom@18/umd/react-dom.production.min.js'"></script>
+  <script src="https://cdn.tailwindcss.com" onerror="this.onerror=null;this.src='vendor/tailwindcss.js';this.onerror=null;this.src='https://cdn.tailwindcss.com'"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" onerror="this.onerror=null;this.src='vendor/react.production.min.js';this.onerror=null;this.src='https://unpkg.com/react@18/umd/react.production.min.js'"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" onerror="this.onerror=null;this.src='vendor/react-dom.production.min.js';this.onerror=null;this.src='https://unpkg.com/react-dom@18/umd/react-dom.production.min.js'"></script>
   <script src="https://unpkg.com/@babel/standalone@7.24.7/babel.min.js"></script>
-  <script src="/vendor/crypto-js.min.js" onerror="this.onerror=null;this.src='vendor/crypto-js.min.js';this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js'"></script>
-  <script src="/vendor/jspdf.umd.min.js" onerror="this.onerror=null;this.src='vendor/jspdf.umd.min.js';this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" onerror="this.onerror=null;this.src='vendor/crypto-js.min.js';this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js'"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" onerror="this.onerror=null;this.src='vendor/jspdf.umd.min.js';this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'"></script>
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="apple-touch-icon" href="pwa-icon-192.png" />
@@ -3072,557 +3072,1323 @@ const AppointmentsAdmin = ({ db, setView, setActivePatientId, setRegModal }) => 
       // ============================================================
       // ONLINE PATIENT CASE RECORDS & INTAKE ADMIN (CRUD & Follow-ups)
       // ============================================================
-      const OnlineCasesAdmin = ({ setView }) => {
-        const [cases, setCases] = React.useState([]);
-        const [loading, setLoading] = React.useState(true);
-        const [search, setSearch] = React.useState("");
-        const [selectedCase, setSelectedCase] = React.useState(null);
-        const [editMode, setEditMode] = React.useState(false);
-        const [editAnswers, setEditAnswers] = React.useState({});
-        const [saving, setSaving] = React.useState(false);
-        const [alertMsg, setAlertMsg] = React.useState(null);
-        const [followupForm, setFollowupForm] = React.useState({
-          visit_date: new Date().toISOString().slice(0, 10),
-          notes: "",
-          prescription: "",
-          advice: ""
-        });
-        const [savingFollowup, setSavingFollowup] = React.useState(false);
-
-        const loadCases = async () => {
-          setLoading(true);
-          try {
-            const res = await fetch(`${API_BASE}/cases.php`);
-            const json = await res.json();
-            if (json && json.data) {
-              setCases(json.data);
-            }
-          } catch (e) {
-            console.warn("Could not load cases:", e);
-          } finally {
-            setLoading(false);
-          }
-        };
-
-        React.useEffect(() => {
-          loadCases();
-        }, []);
-
-        const openCaseDetail = async (caseItem) => {
-          setLoading(true);
-          try {
-            const res = await fetch(`${API_BASE}/cases.php?id=${caseItem.id}`);
-            const json = await res.json();
-            if (json && json.data) {
-              setSelectedCase(json.data);
-              setEditAnswers(json.data.answers || {});
-              setEditMode(false);
-            }
-          } catch (e) {
-            setAlertMsg("Failed to load case details.");
-          } finally {
-            setLoading(false);
-          }
-        };
-
-        const handleSaveUpdates = async () => {
-          if (!selectedCase) return;
-          setSaving(true);
-          try {
-            const res = await fetch(`${API_BASE}/cases.php`, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                id: selectedCase.id,
-                patient_name: editAnswers.patientName || selectedCase.patient_name,
-                phone: editAnswers.phone || selectedCase.phone,
-                diagnosis: editAnswers.diagnosis || selectedCase.diagnosis,
-                answers: editAnswers
-              })
-            });
-            const json = await res.json();
-            if (json && json.ok) {
-              setAlertMsg("Clinical case record updated successfully!");
-              setEditMode(false);
-              openCaseDetail(selectedCase);
-              loadCases();
-            } else {
-              setAlertMsg("Failed: " + (json.message || "Unknown error"));
-            }
-          } catch (e) {
-            setAlertMsg("Network error saving case updates.");
-          } finally {
-            setSaving(false);
-          }
-        };
-
-        const handleDeleteCase = async (id) => {
-          if (!window.confirm("Are you sure you want to permanently delete this case submission?")) return;
-          try {
-            const res = await fetch(`${API_BASE}/cases.php?id=${id}`, { method: "DELETE" });
-            const json = await res.json();
-            if (json && json.ok) {
-              setAlertMsg("Case record deleted.");
-              if (selectedCase && selectedCase.id === id) setSelectedCase(null);
-              loadCases();
-            }
-          } catch (e) {
-            setAlertMsg("Failed to delete case.");
-          }
-        };
-
-        const handleAddFollowup = async (e) => {
-          e.preventDefault();
-          if (!selectedCase) return;
-          if (!followupForm.notes && !followupForm.prescription && !followupForm.advice) {
-            alert("Please provide at least one note, prescription, or advice.");
-            return;
-          }
-          setSavingFollowup(true);
-          try {
-            const res = await fetch(`${API_BASE}/cases.php?action=add_followup`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                case_id: selectedCase.id,
-                visit_date: followupForm.visit_date,
-                notes: followupForm.notes,
-                prescription: followupForm.prescription,
-                advice: followupForm.advice
-              })
-            });
-            const json = await res.json();
-            if (json && json.ok) {
-              setAlertMsg("Follow-up & prescription added!");
-              setFollowupForm({
-                visit_date: new Date().toISOString().slice(0, 10),
-                notes: "",
-                prescription: "",
-                advice: ""
-              });
-              openCaseDetail(selectedCase);
-            }
-          } catch (e) {
-            alert("Error recording follow-up.");
-          } finally {
-            setSavingFollowup(false);
-          }
-        };
-
-        const handleDeleteFollowup = async (followupId) => {
-          if (!window.confirm("Are you sure you want to delete this follow-up review?")) return;
-          try {
-            const res = await fetch(`${API_BASE}/cases.php?action=delete_followup&followup_id=${followupId}`, { method: "DELETE" });
-            const json = await res.json();
-            if (json && json.ok) {
-              setAlertMsg("Follow-up deleted.");
-              openCaseDetail(selectedCase);
-              loadCases();
-            } else {
-              setAlertMsg("Failed to delete follow-up.");
-            }
-          } catch (e) {
-            setAlertMsg("Error deleting follow-up.");
-          }
-        };
-
-        const filteredCases = cases.filter(c => {
-          const q = search.toLowerCase();
-          return !q || (c.patient_name || "").toLowerCase().includes(q) || (c.phone || "").includes(q) || (c.diagnosis || "").toLowerCase().includes(q);
-        });
-
-        return (
-          <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-6">
-            {/* Top Toolbar */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => selectedCase ? setSelectedCase(null) : setView("PORTAL_SELECT")}
-                  className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
-                  title="Back"
-                >
-                  <i className="fa-solid fa-arrow-left text-sm"></i>
-                </button>
-                <div>
-                  <h1 className="text-xl md:text-2xl font-black text-[#073B42] flex items-center gap-2">
-                    <i className="fa-solid fa-file-waveform text-emerald-600"></i>
-                    <span>{selectedCase ? `Case #${selectedCase.id} · ${selectedCase.patient_name}` : "Online Patient Intake Cases"}</span>
-                  </h1>
-                  <p className="text-xs text-slate-500 font-medium">
-                    {selectedCase ? `Submitted: ${selectedCase.created_at} · Language: ${selectedCase.language || "Bilingual"}` : "Patient submitted digital case-taking forms, rubrics, prescriptions & follow-ups"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                {selectedCase ? (
-                  <>
-                    <button
-                      onClick={() => setEditMode(!editMode)}
-                      className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${editMode ? "bg-amber-100 text-amber-900 border border-amber-300" : "bg-slate-100 hover:bg-slate-200 text-slate-700"}`}
-                    >
-                      <i className="fa-solid fa-pen-to-square"></i>
-                      <span>{editMode ? "Cancel Editing" : "Edit Section Details (CRUD)"}</span>
-                    </button>
-                    {editMode && (
-                      <button
-                        onClick={handleSaveUpdates}
-                        disabled={saving}
-                        className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-2 shadow-sm"
-                      >
-                        <i className="fa-solid fa-floppy-disk"></i>
-                        <span>{saving ? "Saving…" : "Save Updates"}</span>
-                      </button>
-                    )}
-                    <button
-                      onClick={() => window.print()}
-                      className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold transition flex items-center gap-2 shadow-sm"
-                    >
-                      <i className="fa-solid fa-print"></i>
-                      <span>Print PDF</span>
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <div className="relative">
-                      <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                      <input
-                        type="text"
-                        value={search}
-                        onChange={e => setSearch(e.target.value)}
-                        placeholder="Search patient, phone…"
-                        className="pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-600 outline-none w-48 md:w-64"
-                      />
-                    </div>
-                    <button
-                      onClick={loadCases}
-                      className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer"
-                      title="Refresh"
-                    >
-                      <i className="fa-solid fa-rotate-right text-xs"></i>
-                    </button>
-                    <a
-                      href="prana_homeocare_fixed (5).html"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer"
-                      title="Open live patient intake form in a new tab"
-                    >
-                      <i className="fa-solid fa-pen-to-square text-xs"></i>
-                      <span className="hidden sm:inline">Fill New Case</span>
-                      <i className="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                    </a>
-                  </>
-                )}
-              </div>
-            </div>
-
-            {/* Alert Message Toast */}
-            {alertMsg && (
-              <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-between">
-                <span>{alertMsg}</span>
-                <button onClick={() => setAlertMsg(null)} className="text-emerald-600 hover:text-emerald-900">✕</button>
-              </div>
-            )}
-
-            {/* DETAIL VIEW */}
-            {selectedCase ? (
-              <div className="space-y-6">
-                {/* Patient Header Card */}
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div>
-                    <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">
-                      CASE #{selectedCase.id}
-                    </span>
-                    <h2 className="text-2xl font-black text-slate-900 mt-2">{selectedCase.patient_name}</h2>
-                    <p className="text-xs text-slate-500 mt-1">
-                      {selectedCase.phone ? `Phone: ${selectedCase.phone}` : "No phone provided"} · Diagnosis: {selectedCase.diagnosis || "Under Evaluation"}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {selectedCase.phone && (
-                      <>
-                        <a
-                          href={`tel:${selectedCase.phone}`}
-                          className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5"
-                        >
-                          <i className="fa-solid fa-phone text-teal-600"></i>
-                          <span>Call</span>
-                        </a>
-                        <a
-                          href={`https://wa.me/${selectedCase.phone.replace(/[^0-9]/g, "")}?text=Hello%20${encodeURIComponent(selectedCase.patient_name)},%20this%20is%20Dr.%20G.%20Srinivasan%20from%20Prana%20Homeo%20Care%20regarding%20your%20submitted%20clinical%20case%20record%20#${selectedCase.id}.`}
-                          target="_blank"
-                          rel="noopener"
-                          className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm"
-                        >
-                          <i className="fa-brands fa-whatsapp text-white"></i>
-                          <span>WhatsApp</span>
-                        </a>
-                      </>
-                    )}
-                    <button
-                      onClick={() => handleDeleteCase(selectedCase.id)}
-                      className="px-3.5 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold flex items-center gap-1.5"
-                    >
-                      <i className="fa-solid fa-trash-can"></i>
-                      <span>Delete</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* 23 Clinical Intake Sections */}
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <h3 className="text-base font-black text-[#073B42] flex items-center gap-2">
-                      <i className="fa-solid fa-clipboard-list text-teal-600"></i>
-                      <span>Complete 23-Section Clinical Intake Record</span>
-                    </h3>
-                    <span className="text-xs text-slate-500 font-bold">
-                      {Object.keys(selectedCase.answers || {}).length} fields recorded
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                    {Object.entries(selectedCase.answers || {}).map(([key, val]) => {
-                      if (key === "consent" || key === "disclaimerText") return null;
-                      const isLong = typeof val === "string" && (val.length > 70 || val.includes("\n"));
-                      const isBool = typeof val === "boolean";
-                      const label = key.replace(/_/g, " ").replace(/([A-Z])/g, " $1").trim();
-
-                      return (
-                        <div key={key} className={`p-3 rounded-xl bg-slate-50 border border-slate-200/80 ${isLong ? "md:col-span-2" : ""}`}>
-                          <label className="block text-[11px] font-black uppercase tracking-wider text-slate-500 mb-1">
-                            {label}
-                          </label>
-                          {editMode ? (
-                            isLong ? (
-                              <textarea
-                                value={editAnswers[key] ?? ""}
-                                onChange={e => setEditAnswers({ ...editAnswers, [key]: e.target.value })}
-                                className="w-full text-xs p-2 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none min-h-[60px]"
-                              />
-                            ) : (
-                              <input
-                                type="text"
-                                value={editAnswers[key] ?? ""}
-                                onChange={e => setEditAnswers({ ...editAnswers, [key]: e.target.value })}
-                                className="w-full text-xs p-2 rounded-lg border border-slate-300 bg-white focus:border-teal-600 outline-none"
-                              />
-                            )
-                          ) : (
-                            <div className="text-xs text-slate-800 font-medium whitespace-pre-wrap leading-relaxed">
-                              {isBool ? (val ? "Yes / Confirmed ✓" : "No") : (String(val || "—"))}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {editMode && (
-                    <div className="pt-4 flex justify-end">
-                      <button
-                        onClick={handleSaveUpdates}
-                        disabled={saving}
-                        className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition flex items-center gap-2 shadow-sm"
-                      >
-                        <i className="fa-solid fa-floppy-disk"></i>
-                        <span>{saving ? "Saving…" : "Save Clinical Updates (CRUD)"}</span>
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Follow-up & Prescriptions Panel */}
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
-                  <div className="border-b border-slate-100 pb-3">
-                    <span className="text-[10px] font-black tracking-widest uppercase text-teal-700">CLINICAL CONTINUITY</span>
-                    <h3 className="text-lg font-black text-slate-900 mt-1">Prescription & Follow-up Reviews</h3>
-                    <p className="text-xs text-slate-500">Record remedies, potencies, dosages, patient response, and follow-up consultation dates.</p>
-                  </div>
-
-                  {/* Add Follow-up Form */}
-                  <form onSubmit={handleAddFollowup} className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div>
-                        <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Visit Date *</label>
-                        <input
-                          type="date"
-                          required
-                          value={followupForm.visit_date}
-                          onChange={e => setFollowupForm({ ...followupForm, visit_date: e.target.value })}
-                          className="w-full text-xs p-2 rounded-lg border border-slate-300 bg-white outline-none"
-                        />
-                      </div>
-                      <div className="md:col-span-2">
-                        <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Prescription, Remedy & Potency</label>
-                        <input
-                          type="text"
-                          placeholder="e.g. Lycopodium 200C - 1 dose weekly, Pulsatilla 30C SOS..."
-                          value={followupForm.prescription}
-                          onChange={e => setFollowupForm({ ...followupForm, prescription: e.target.value })}
-                          className="w-full text-xs p-2 rounded-lg border border-slate-300 bg-white outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Clinical Progress & Changes</label>
-                      <textarea
-                        rows="2"
-                        placeholder="Patient response, changes in symptoms, modalities, mental state..."
-                        value={followupForm.notes}
-                        onChange={e => setFollowupForm({ ...followupForm, notes: e.target.value })}
-                        className="w-full text-xs p-2 rounded-lg border border-slate-300 bg-white outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">Dietary & Lifestyle Advice / Next Review</label>
-                      <input
-                        type="text"
-                        placeholder="Diet restrictions, review after 3 weeks..."
-                        value={followupForm.advice}
-                        onChange={e => setFollowupForm({ ...followupForm, advice: e.target.value })}
-                        className="w-full text-xs p-2 rounded-lg border border-slate-300 bg-white outline-none"
-                      />
-                    </div>
-
-                    <div className="flex justify-end">
-                      <button
-                        type="submit"
-                        disabled={savingFollowup}
-                        className="px-5 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition flex items-center gap-2 shadow-sm"
-                      >
-                        <i className="fa-solid fa-plus"></i>
-                        <span>{savingFollowup ? "Saving…" : "Record Follow-up Consultation"}</span>
-                      </button>
-                    </div>
-                  </form>
-
-                  {/* Follow-up Timeline */}
-                  <div className="space-y-3">
-                    <h4 className="text-xs font-black uppercase tracking-wider text-slate-600">
-                      Follow-up History ({selectedCase.followups ? selectedCase.followups.length : 0} visits)
-                    </h4>
-                    {selectedCase.followups && selectedCase.followups.length > 0 ? (
-                      selectedCase.followups.map(f => (
-                        <div key={f.id} className="p-4 rounded-xl bg-white border border-slate-200 space-y-2 shadow-xs">
-                          <div className="flex items-center justify-between text-xs font-bold text-teal-800 border-b border-slate-100 pb-1.5">
-                            <span className="flex items-center gap-1.5">
-                              <i className="fa-regular fa-calendar-check text-teal-600"></i>
-                              <span>Visit on {f.visit_date}</span>
-                            </span>
-                            <div className="flex items-center gap-2">
-                              <span className="text-[10px] text-slate-400 font-normal">Recorded: {f.created_at}</span>
-                              <button
-                                onClick={() => handleDeleteFollowup(f.id)}
-                                title="Delete this follow-up review"
-                                className="text-slate-400 hover:text-red-600 transition p-1"
-                              >
-                                <i className="fa-solid fa-trash-can text-xs"></i>
-                              </button>
-                            </div>
-                          </div>
-                          {f.prescription && (
-                            <div className="text-xs bg-teal-50/60 p-2.5 rounded-lg border-l-4 border-teal-600">
-                              <span className="font-bold text-teal-900 block mb-0.5">Prescription:</span>
-                              <span className="text-slate-800">{f.prescription}</span>
-                            </div>
-                          )}
-                          {f.notes && (
-                            <div className="text-xs text-slate-700">
-                              <span className="font-bold text-slate-900 block mb-0.5">Clinical Progress:</span>
-                              <span>{f.notes}</span>
-                            </div>
-                          )}
-                          {f.advice && (
-                            <div className="text-xs text-slate-600">
-                              <span className="font-bold text-slate-900 block mb-0.5">Advice / Review:</span>
-                              <span>{f.advice}</span>
-                            </div>
-                          )}
-                        </div>
-                      ))
-                    ) : (
-                      <div className="text-center py-6 text-xs text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
-                        No follow-up visits recorded yet. Use the form above to add the patient's next clinical review.
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              /* CASES LIST */
-              <div className="space-y-4">
-                {loading ? (
-                  <div className="text-center py-16 text-slate-400 text-sm font-medium">
-                    <i className="fa-solid fa-spinner fa-spin text-xl text-teal-600 mb-2"></i>
-                    <div>Loading patient case records…</div>
-                  </div>
-                ) : filteredCases.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredCases.map(c => (
-                      <div
-                        key={c.id}
-                        className="bg-white p-5 rounded-2xl border border-slate-200 hover:border-teal-600 transition shadow-xs flex flex-col justify-between"
-                      >
-                        <div>
-                          <div className="flex items-center justify-between text-xs mb-2">
-                            <div className="flex items-center gap-1.5 flex-wrap">
-                              <span className="font-black text-[10px] uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                                Case #{c.id}
-                              </span>
-                              {c.followup_count > 0 && (
-                                <span className="font-bold text-[9px] uppercase px-1.5 py-0.5 rounded-full bg-teal-100 text-teal-800">
-                                  {c.followup_count} {c.followup_count == 1 ? 'Review' : 'Reviews'}
-                                </span>
-                              )}
-                            </div>
-                            <span className="text-[11px] text-slate-400 font-medium">
-                              {c.created_at ? c.created_at.slice(0, 10) : ""}
-                            </span>
-                          </div>
-                          <h3 className="text-base font-black text-slate-900">{c.patient_name}</h3>
-                          <div className="text-xs text-slate-500 mt-1 space-y-0.5">
-                            {c.phone && <div>📞 {c.phone}</div>}
-                            <div>📋 {c.diagnosis || "General Consultation"}</div>
-                          </div>
-                        </div>
-
-                        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                          <button
-                            onClick={() => openCaseDetail(c)}
-                            className="flex-1 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 text-xs font-bold transition text-center"
-                          >
-                            Open Detailed View →
-                          </button>
-                          <button
-                            onClick={() => handleDeleteCase(c.id)}
-                            className="p-2 rounded-xl bg-slate-50 hover:bg-red-50 text-slate-400 hover:text-red-600 transition text-xs"
-                            title="Delete"
-                          >
-                            <i className="fa-solid fa-trash-can"></i>
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 text-slate-500 text-sm">
-                    <i className="fa-solid fa-inbox text-3xl text-slate-300 mb-2"></i>
-                    <p className="font-bold">No online case submissions found</p>
-                    <p className="text-xs text-slate-400 mt-1">When patients complete the case-taking link, their submissions appear here.</p>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        );
-      };
-
-
-const PortalSelect = ({ setView, setClinic }) => {
+      
+const OnlineCasesAdmin = ({ setView }) => {
+  const [cases, setCases] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+  const [search, setSearch] = React.useState("");
+  const [selectedCase, setSelectedCase] = React.useState(null);
+  const [activeTab, setActiveTab] = React.useState("DATA"); // 'DATA' | 'FOLLOWUPS'
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [editForm, setEditForm] = React.useState({ patient_name: '', phone: '', diagnosis: '', complaints: '', notes: '' });
+  const [savingEdit, setSavingEdit] = React.useState(false);
+
+  // Follow-up form state
+  const [showNewFollowup, setShowNewFollowup] = React.useState(false);
+  const [savingFollowup, setSavingFollowup] = React.useState(false);
+  const [newFollowup, setNewFollowup] = React.useState({
+    visit_date: new Date().toISOString().split('T')[0],
+    notes: '',
+    advice: '',
+    medicines: [
+      { name: '', potency: '30C', dose: '4 pills twice daily before food', duration: '15 days' }
+    ]
+  });
+
+  // Modal & Toast state
+  const [toast, setToast] = React.useState(null);
+  const [confirmDeleteCase, setConfirmDeleteCase] = React.useState(null);
+  const [confirmDeleteFollowup, setConfirmDeleteFollowup] = React.useState(null);
+
+  const showToast = (text, type = 'success') => {
+    setToast({ text, type });
+    setTimeout(() => setToast(null), 3500);
+  };
+
+  const getApiEndpoint = () => {
+    const base = typeof RESOLVED_SERVER_BASE !== 'undefined' ? RESOLVED_SERVER_BASE : 'https://pranahomeocare.in';
+    return base + '/api/cases.php';
+  };
+
+  const getFormUrl = () => {
+    const base = typeof RESOLVED_SERVER_BASE !== 'undefined' ? RESOLVED_SERVER_BASE : 'https://pranahomeocare.in';
+    return base + '/new_case/case.html';
+  };
+
+  // Fetch all cases
+  const loadCases = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const endpoint = getApiEndpoint();
+      const res = await fetch(endpoint);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      if (json && json.status === 'success' && Array.isArray(json.data)) {
+        setCases(json.data);
+      } else {
+        setCases([]);
+      }
+    } catch (err) {
+      console.warn('Live API fetch error, checking local store:', err);
+      // Fallback: local storage cases
+      try {
+        const local = JSON.parse(localStorage.getItem('prana_offline_cases') || '[]');
+        setCases(local);
+      } catch (e) {
+        setCases([]);
+      }
+      setError('Could not connect to online server. Showing cached or local records.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch single case full details (including followups)
+  const openCaseDossier = async (caseSummary) => {
+    setLoading(true);
+    setActiveTab("DATA");
+    setIsEditing(false);
+    setShowNewFollowup(false);
+    try {
+      const endpoint = getApiEndpoint() + '?id=' + caseSummary.id;
+      const res = await fetch(endpoint);
+      if (res.ok) {
+        const json = await res.json();
+        if (json.status === 'success' && json.data) {
+          const fullData = json.data;
+          setSelectedCase(fullData);
+          initEditForm(fullData);
+          return;
+        }
+      }
+      // If single GET fails, fallback to caseSummary
+      setSelectedCase(caseSummary);
+      initEditForm(caseSummary);
+    } catch (err) {
+      console.warn('Error fetching case detail:', err);
+      setSelectedCase(caseSummary);
+      initEditForm(caseSummary);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const initEditForm = (c) => {
+    const ans = c.answers || {};
+    setEditForm({
+      patient_name: c.patient_name || ans.patientName || ans['Name /'] || '',
+      phone: c.phone || ans.phone || ans['Ph.No ./'] || '',
+      diagnosis: c.diagnosis || ans.diagnosis || '',
+      complaints: ans.chiefComplaint || ans.complaints || '',
+      notes: ans.doctorNotes || ''
+    });
+  };
+
+  React.useEffect(() => {
+    loadCases();
+  }, []);
+
+  // CRUD: Save edited case
+  const handleSaveEdit = async () => {
+    if (!selectedCase) return;
+    setSavingEdit(true);
+    try {
+      const updatedAnswers = {
+        ...(selectedCase.answers || {}),
+        patientName: editForm.patient_name,
+        phone: editForm.phone,
+        diagnosis: editForm.diagnosis,
+        chiefComplaint: editForm.complaints,
+        doctorNotes: editForm.notes
+      };
+
+      const payload = {
+        id: selectedCase.id,
+        patient_name: editForm.patient_name,
+        phone: editForm.phone,
+        diagnosis: editForm.diagnosis,
+        answers: updatedAnswers
+      };
+
+      const res = await fetch(getApiEndpoint(), {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error('Update failed with HTTP ' + res.status);
+      const json = await res.json();
+      if (json.status === 'success') {
+        const updated = {
+          ...selectedCase,
+          patient_name: editForm.patient_name,
+          phone: editForm.phone,
+          diagnosis: editForm.diagnosis,
+          answers: updatedAnswers
+        };
+        setSelectedCase(updated);
+        setCases(prev => prev.map(item => item.id === selectedCase.id ? { ...item, patient_name: editForm.patient_name, phone: editForm.phone, diagnosis: editForm.diagnosis } : item));
+        setIsEditing(false);
+        showToast('Case record updated successfully!');
+      } else {
+        throw new Error(json.message || 'Update failed');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Error saving case updates: ' + err.message, 'error');
+    } finally {
+      setSavingEdit(false);
+    }
+  };
+
+  // CRUD: Delete Case
+  const handleDeleteCase = async () => {
+    if (!confirmDeleteCase) return;
+    const id = confirmDeleteCase.id;
+    try {
+      const res = await fetch(getApiEndpoint() + '?id=' + id, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Delete failed HTTP ' + res.status);
+      setCases(prev => prev.filter(c => c.id !== id));
+      if (selectedCase && selectedCase.id === id) {
+        setSelectedCase(null);
+      }
+      setConfirmDeleteCase(null);
+      showToast('Case #' + id + ' permanently deleted.');
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to delete case: ' + err.message, 'error');
+    }
+  };
+
+  // Follow-up: Add Medicine Row
+  const addMedicineRow = () => {
+    setNewFollowup(prev => ({
+      ...prev,
+      medicines: [
+        ...prev.medicines,
+        { name: '', potency: '200C', dose: '4 pills twice daily', duration: '15 days' }
+      ]
+    }));
+  };
+
+  const removeMedicineRow = (index) => {
+    setNewFollowup(prev => ({
+      ...prev,
+      medicines: prev.medicines.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateMedicineField = (index, field, value) => {
+    setNewFollowup(prev => {
+      const copy = [...prev.medicines];
+      copy[index] = { ...copy[index], [field]: value };
+      return { ...prev, medicines: copy };
+    });
+  };
+
+  // Follow-up: Submit New Followup & Prescription
+  const handleSaveFollowup = async () => {
+    if (!selectedCase) return;
+    if (!newFollowup.notes && newFollowup.medicines.every(m => !m.name.trim()) && !newFollowup.advice) {
+      showToast('Please enter progress notes or prescribed medicine.', 'error');
+      return;
+    }
+
+    setSavingFollowup(true);
+    try {
+      const validMeds = newFollowup.medicines.filter(m => m.name.trim());
+      const prescriptionText = validMeds.map((m, i) => 
+        (i + 1) + '. ' + m.name.trim() + ' ' + (m.potency || '30C') + ' — ' + (m.dose || '') + ' (' + (m.duration || '') + ')'
+      ).join('\n');
+
+      const payload = {
+        action: 'add_followup',
+        case_id: selectedCase.id,
+        visit_date: newFollowup.visit_date || new Date().toISOString().split('T')[0],
+        notes: newFollowup.notes.trim(),
+        prescription: prescriptionText,
+        advice: newFollowup.advice.trim()
+      };
+
+      const res = await fetch(getApiEndpoint() + '?action=add_followup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      if (json.status === 'success' || json.ok) {
+        const newEntry = {
+          id: json.id || Date.now(),
+          case_id: selectedCase.id,
+          visit_date: payload.visit_date,
+          notes: payload.notes,
+          prescription: payload.prescription,
+          advice: payload.advice,
+          created_at: new Date().toISOString()
+        };
+
+        const updatedFollowups = [newEntry, ...(selectedCase.followups || [])];
+        setSelectedCase(prev => ({ ...prev, followups: updatedFollowups }));
+        setCases(prev => prev.map(item => item.id === selectedCase.id ? { ...item, followup_count: updatedFollowups.length, last_visit: payload.visit_date } : item));
+
+        // Reset form
+        setNewFollowup({
+          visit_date: new Date().toISOString().split('T')[0],
+          notes: '',
+          advice: '',
+          medicines: [{ name: '', potency: '30C', dose: '4 pills twice daily before food', duration: '15 days' }]
+        });
+        setShowNewFollowup(false);
+        showToast('Follow-up consultation & prescription generated successfully!');
+      } else {
+        throw new Error(json.message || 'Failed to save');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Error saving follow-up: ' + err.message, 'error');
+    } finally {
+      setSavingFollowup(false);
+    }
+  };
+
+  // Follow-up: Delete
+  const handleDeleteFollowup = async () => {
+    if (!confirmDeleteFollowup) return;
+    try {
+      const res = await fetch(getApiEndpoint() + '?action=delete_followup&followup_id=' + confirmDeleteFollowup.id, {
+        method: 'DELETE'
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const updated = (selectedCase.followups || []).filter(f => f.id !== confirmDeleteFollowup.id);
+      setSelectedCase(prev => ({ ...prev, followups: updated }));
+      setConfirmDeleteFollowup(null);
+      showToast('Follow-up record removed.');
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to delete follow-up: ' + err.message, 'error');
+    }
+  };
+
+  // WhatsApp Dispatch Helper
+  const sendWhatsAppRx = (followup) => {
+    if (!selectedCase) return;
+    const phone = (selectedCase.phone || '').replace(/[^0-9]/g, '');
+    const cleanPhone = phone.length === 10 ? '91' + phone : phone;
+
+    const patientName = selectedCase.patient_name || 'Patient';
+    const visitDate = followup.visit_date || 'Today';
+
+    let msg = '*PRANA HOMEO CARE — CLINICAL PRESCRIPTION*\n';
+    msg += 'Dr. G. Srinivasan, M.D. (Hom)\n';
+    msg += 'Patient: *' + patientName + '* | Date: ' + visitDate + '\n';
+    msg += '-------------------------------------\n';
+    if (followup.prescription) {
+      msg += '*PRESCRIBED REMEDIES:*\n' + followup.prescription + '\n\n';
+    }
+    if (followup.advice) {
+      msg += '*CLINICAL ADVICE & REGIMEN:*\n' + followup.advice + '\n\n';
+    }
+    msg += '-------------------------------------\n';
+    msg += 'For enquiries or medicine delivery: +91 98842 23007\n';
+    msg += 'Plot no 121, 2/94A Jayalakshmi Nagar, Kattupakkam, Chennai 600056';
+
+    const url = 'https://api.whatsapp.com/send?phone=' + cleanPhone + '&text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
+  };
+
+  // WhatsApp Intake Link Dispatch
+  const shareIntakeFormWhatsApp = () => {
+    const link = getFormUrl();
+    const msg = '*PRANA HOMEO CARE — CLINICAL CASE INTAKE*\n\n' +
+      'Dear Patient,\n' +
+      'Kindly fill out your detailed 23-section clinical case record before your homoeopathic consultation with Dr. G. Srinivasan M.D.(Hom):\n\n' +
+      link + '\n\n' +
+      'Your symptoms, modalities, and medical history will be analyzed directly in our clinical doctor portal.';
+    const url = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
+  };
+
+  const copyIntakeLink = () => {
+    const link = getFormUrl();
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(link);
+      showToast('Case intake link copied to clipboard!');
+    } else {
+      prompt('Copy intake link:', link);
+    }
+  };
+
+  // Filter cases by search
+  const filteredCases = cases.filter(c => {
+    const q = search.toLowerCase().trim();
+    if (!q) return true;
+    const name = (c.patient_name || '').toLowerCase();
+    const phone = (c.phone || '').toLowerCase();
+    const diag = (c.diagnosis || '').toLowerCase();
+    return name.includes(q) || phone.includes(q) || diag.includes(q);
+  });
+
+  return (
+    <div className="min-h-screen bg-[#f4f8f8] text-slate-800 pb-20">
+      {/* Toast Alert */}
+      {toast && (
+        <div className="fixed top-5 right-5 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl backdrop-blur bg-slate-900/95 text-white border border-teal-500/40 text-sm animate-bounce">
+          <i className={'fa-solid ' + (toast.type === 'error' ? 'fa-triangle-exclamation text-rose-400' : 'fa-circle-check text-emerald-400')}></i>
+          <span>{toast.text}</span>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {(confirmDeleteCase || confirmDeleteFollowup) && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center text-xl">
+              <i className="fa-solid fa-trash-can"></i>
+            </div>
+            <h3 className="text-lg font-bold text-slate-900">
+              {confirmDeleteCase ? 'Delete Clinical Case Record?' : 'Delete Follow-up Consultation?'}
+            </h3>
+            <p className="text-sm text-slate-600">
+              {confirmDeleteCase
+                ? 'Are you sure you want to delete case #' + confirmDeleteCase.id + ' (' + confirmDeleteCase.patient_name + ')? This will permanently remove the intake answers and all associated follow-ups.'
+                : 'Are you sure you want to remove this follow-up visit record?'}
+            </p>
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => { setConfirmDeleteCase(null); setConfirmDeleteFollowup(null); }}
+                className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDeleteCase ? handleDeleteCase : handleDeleteFollowup}
+                className="px-5 py-2 rounded-xl text-sm font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md transition"
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================================ */}
+      {/* VIEW 1: CASE LIST SCROLLER (when selectedCase is null)       */}
+      {/* ============================================================ */}
+      {!selectedCase && (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+          {/* Top Executive Header */}
+          <div className="bg-gradient-to-r from-[#0b5c66] via-[#073b42] to-[#052a30] rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-teal-300 text-xs font-bold tracking-wider uppercase mb-3">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Clinical Doctor Suite
+                </div>
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
+                  Online Case Sheets
+                </h1>
+                <p className="text-teal-100/80 text-sm sm:text-base mt-1 max-w-2xl">
+                  Live intake submissions from the 23-section clinical portal. Review patient symptoms, generate homoeopathic prescriptions & track follow-up progress.
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={copyIntakeLink}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-semibold transition backdrop-blur shadow-sm active:scale-95"
+                  title="Copy patient intake link"
+                >
+                  <i className="fa-solid fa-link text-teal-300"></i>
+                  <span>Copy Form Link</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={shareIntakeFormWhatsApp}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold transition shadow-lg shadow-emerald-900/30 active:scale-95"
+                  title="Send case form to patient via WhatsApp"
+                >
+                  <i className="fa-brands fa-whatsapp text-base"></i>
+                  <span>Send Link via WhatsApp</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={loadCases}
+                  className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-semibold transition backdrop-blur active:scale-95"
+                  title="Refresh cases list"
+                >
+                  <i className={'fa-solid fa-arrows-rotate ' + (loading ? 'animate-spin' : '')}></i>
+                  <span className="hidden sm:inline">Refresh</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Search, Filter & Quick Stats Bar */}
+          <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="relative w-full sm:w-96">
+              <i className="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by patient name, phone, or diagnosis..."
+                className="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 focus:ring-2 focus:ring-teal-600/10 outline-none transition"
+              />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                >
+                  <i className="fa-solid fa-circle-xmark"></i>
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-600 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-teal-50 border border-teal-100 text-teal-800 font-bold">
+                <i className="fa-solid fa-folder-open text-teal-600"></i>
+                <span>{filteredCases.length} Cases</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-100 text-amber-800 font-bold">
+                <i className="fa-solid fa-clock-rotate-left text-amber-600"></i>
+                <span>{cases.reduce((acc, c) => acc + (parseInt(c.followup_count || 0)), 0)} Follow-ups</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Cases Cards Scroller Grid */}
+          {loading && cases.length === 0 ? (
+            <div className="bg-white rounded-2xl p-16 text-center border border-slate-200 shadow-sm space-y-3">
+              <div className="w-12 h-12 rounded-full border-4 border-teal-600 border-t-transparent animate-spin mx-auto"></div>
+              <p className="text-slate-500 font-medium">Fetching online case submissions...</p>
+            </div>
+          ) : filteredCases.length === 0 ? (
+            <div className="bg-white rounded-2xl p-12 sm:p-16 text-center border border-slate-200 shadow-sm space-y-4">
+              <div className="w-16 h-16 rounded-full bg-teal-50 text-teal-600 flex items-center justify-center text-2xl mx-auto shadow-inner">
+                <i className="fa-solid fa-notes-medical"></i>
+              </div>
+              <div className="max-w-md mx-auto space-y-1">
+                <h3 className="text-lg font-bold text-slate-900">No Case Records Found</h3>
+                <p className="text-sm text-slate-500">
+                  {search
+                    ? 'No cases matched your search query "' + search + '". Try clearing the search filter.'
+                    : 'Share your clinical intake form link with patients to receive their full 23-section medical case submissions here.'}
+                </p>
+              </div>
+              <div className="pt-2 flex justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={copyIntakeLink}
+                  className="px-4 py-2.5 rounded-xl bg-teal-600 text-white text-xs sm:text-sm font-bold hover:bg-teal-700 shadow-md transition"
+                >
+                  <i className="fa-solid fa-link mr-2"></i>
+                  Copy Intake Form Link
+                </button>
+                <button
+                  type="button"
+                  onClick={shareIntakeFormWhatsApp}
+                  className="px-4 py-2.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-bold hover:bg-emerald-700 shadow-md transition"
+                >
+                  <i className="fa-brands fa-whatsapp mr-2"></i>
+                  WhatsApp to Patient
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {filteredCases.map((c) => {
+                const initials = (c.patient_name || 'P')
+                  .split(' ')
+                  .map(w => w[0])
+                  .filter(Boolean)
+                  .slice(0, 2)
+                  .join('')
+                  .toUpperCase();
+                const followupsCount = parseInt(c.followup_count || 0);
+                const regDate = c.created_at ? new Date(c.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recent';
+
+                return (
+                  <div
+                    key={c.id}
+                    className="bg-white rounded-2xl border border-slate-200/90 hover:border-teal-400 p-5 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between group space-y-4"
+                  >
+                    {/* Top Row: Avatar + Name + Delete */}
+                    <div>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0b5c66] to-[#073b42] text-white flex items-center justify-center font-extrabold text-base shadow-md shrink-0">
+                            {initials}
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h3 className="font-extrabold text-slate-900 group-hover:text-teal-700 transition leading-snug line-clamp-1">
+                                {c.patient_name || 'Unnamed Case'}
+                              </h3>
+                            </div>
+                            <p className="text-xs text-slate-500 font-mono">
+                              #CASE-{String(c.id).padStart(4, '0')}
+                            </p>
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={(e) => { e.stopPropagation(); setConfirmDeleteCase(c); }}
+                          className="w-8 h-8 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition flex items-center justify-center shrink-0"
+                          title="Delete case record"
+                        >
+                          <i className="fa-solid fa-trash-can text-xs"></i>
+                        </button>
+                      </div>
+
+                      {/* Phone & Diagnosis Badges */}
+                      <div className="mt-3.5 space-y-2">
+                        {c.phone ? (
+                          <div className="flex items-center justify-between text-xs text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
+                            <span className="font-mono font-medium flex items-center gap-1.5">
+                              <i className="fa-solid fa-phone text-slate-400 text-[11px]"></i>
+                              {c.phone}
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                              <a
+                                href={'tel:' + c.phone}
+                                className="w-6 h-6 rounded-md bg-white text-slate-700 hover:text-teal-600 border border-slate-200 flex items-center justify-center transition"
+                                title="Call"
+                              >
+                                <i className="fa-solid fa-phone-flip text-[10px]"></i>
+                              </a>
+                              <a
+                                href={'https://api.whatsapp.com/send?phone=' + c.phone.replace(/[^0-9]/g, '')}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="w-6 h-6 rounded-md bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white border border-emerald-200 flex items-center justify-center transition"
+                                title="WhatsApp"
+                              >
+                                <i className="fa-brands fa-whatsapp text-xs"></i>
+                              </a>
+                            </div>
+                          </div>
+                        ) : null}
+
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-teal-50 text-teal-800 text-[11px] font-bold border border-teal-100">
+                            <i className="fa-solid fa-stethoscope text-[10px]"></i>
+                            {c.diagnosis || 'Clinical Review Pending'}
+                          </span>
+                          {followupsCount > 0 ? (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-amber-50 text-amber-800 text-[11px] font-bold border border-amber-100">
+                              <i className="fa-solid fa-rotate text-[10px]"></i>
+                              {followupsCount} Follow-up{followupsCount > 1 ? 's' : ''}
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-blue-50 text-blue-800 text-[11px] font-bold border border-blue-100">
+                              <i className="fa-solid fa-sparkles text-[10px]"></i>
+                              New Intake
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom Action Footer */}
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+                      <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                        <i className="fa-regular fa-calendar"></i>
+                        {regDate}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => openCaseDossier(c)}
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0b5c66] hover:bg-[#073b42] text-white text-xs font-bold shadow-sm transition active:scale-95"
+                      >
+                        <span>Open Dossier</span>
+                        <i className="fa-solid fa-arrow-right text-[11px]"></i>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ============================================================ */}
+      {/* VIEW 2: CLINICAL DOSSIER PAGE (when selectedCase is active)  */}
+      {/* ============================================================ */}
+      {selectedCase && (
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+          {/* Top Bar: Back Button + Quick Actions */}
+          <div className="flex flex-wrap items-center justify-between gap-3 bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80">
+            <button
+              type="button"
+              onClick={() => setSelectedCase(null)}
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold transition active:scale-95"
+            >
+              <i className="fa-solid fa-chevron-left text-xs"></i>
+              <span>Back to All Cases</span>
+            </button>
+
+            <div className="flex items-center gap-2">
+              {activeTab === 'DATA' && !isEditing && (
+                <button
+                  type="button"
+                  onClick={() => setIsEditing(true)}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs sm:text-sm font-bold transition active:scale-95"
+                >
+                  <i className="fa-solid fa-pen-to-square"></i>
+                  <span>Edit Record</span>
+                </button>
+              )}
+
+              {activeTab === 'DATA' && isEditing && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setIsEditing(false)}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-semibold transition"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSaveEdit}
+                    disabled={savingEdit}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold shadow-md transition active:scale-95 disabled:opacity-50"
+                  >
+                    <i className={'fa-solid ' + (savingEdit ? 'fa-spinner animate-spin' : 'fa-check')}></i>
+                    <span>Save Changes</span>
+                  </button>
+                </>
+              )}
+
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold transition"
+                title="Print clinical case record"
+              >
+                <i className="fa-solid fa-print"></i>
+                <span className="hidden sm:inline">Print</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setConfirmDeleteCase(selectedCase)}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 text-xs sm:text-sm font-bold transition"
+                title="Delete this case"
+              >
+                <i className="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+
+          {/* Patient Hero Dossier Card */}
+          <div className="bg-gradient-to-r from-[#0b5c66] to-[#073b42] rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="flex items-center gap-5">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/10 backdrop-blur border border-white/20 text-white flex items-center justify-center font-black text-2xl sm:text-3xl shadow-inner shrink-0">
+                  {(selectedCase.patient_name || 'P').substring(0, 2).toUpperCase()}
+                </div>
+                <div className="space-y-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h2 className="text-2xl sm:text-3xl font-black tracking-tight">
+                      {selectedCase.patient_name || 'Clinical Case Record'}
+                    </h2>
+                    <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-teal-200 text-xs font-mono font-bold">
+                      #CASE-{String(selectedCase.id).padStart(4, '0')}
+                    </span>
+                  </div>
+                  <p className="text-teal-100/90 text-xs sm:text-sm flex flex-wrap items-center gap-3 font-medium">
+                    {selectedCase.answers?.age && <span>Age: {selectedCase.answers.age}</span>}
+                    {selectedCase.answers?.gender && <span>• Gender: {selectedCase.answers.gender}</span>}
+                    {selectedCase.phone && (
+                      <span className="font-mono flex items-center gap-1">
+                        • <i className="fa-solid fa-phone text-xs"></i> {selectedCase.phone}
+                      </span>
+                    )}
+                  </p>
+                </div>
+              </div>
+
+              {/* Quick WhatsApp & Call Badges */}
+              {selectedCase.phone && (
+                <div className="flex items-center gap-2">
+                  <a
+                    href={'https://api.whatsapp.com/send?phone=' + selectedCase.phone.replace(/[^0-9]/g, '')}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white text-xs sm:text-sm font-bold shadow-lg transition active:scale-95"
+                  >
+                    <i className="fa-brands fa-whatsapp text-base"></i>
+                    <span>Message Patient</span>
+                  </a>
+                  <a
+                    href={'tel:' + selectedCase.phone}
+                    className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-bold transition active:scale-95"
+                  >
+                    <i className="fa-solid fa-phone"></i>
+                    <span>Call</span>
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {/* Diagnosis Banner */}
+            <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm text-teal-100">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-teal-300 uppercase tracking-wider text-[11px]">Provisional Diagnosis:</span>
+                <span className="font-bold text-white bg-white/15 px-3 py-1 rounded-lg backdrop-blur">
+                  {selectedCase.diagnosis || 'Pending Clinical Assessment'}
+                </span>
+              </div>
+              <div className="text-teal-200/70 text-xs">
+                Intake Submitted: {selectedCase.created_at ? new Date(selectedCase.created_at).toLocaleString('en-IN') : 'Recent'}
+              </div>
+            </div>
+          </div>
+
+          {/* TWO PRIMARY DOSSIER BUTTONS / TABS */}
+          <div className="flex items-center gap-2 p-1.5 bg-slate-200/80 rounded-2xl w-full sm:w-fit">
+            <button
+              type="button"
+              onClick={() => { setActiveTab('DATA'); setIsEditing(false); }}
+              className={'flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ' + 
+                (activeTab === 'DATA' ? 'bg-white text-teal-900 shadow-md' : 'text-slate-600 hover:text-slate-900')}
+            >
+              <i className="fa-solid fa-clipboard-list text-teal-600"></i>
+              <span>Patient Data</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => { setActiveTab('FOLLOWUPS'); setIsEditing(false); }}
+              className={'flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ' + 
+                (activeTab === 'FOLLOWUPS' ? 'bg-white text-teal-900 shadow-md' : 'text-slate-600 hover:text-slate-900')}
+            >
+              <i className="fa-solid fa-rotate text-teal-600"></i>
+              <span>Follow-ups & Prescriptions</span>
+              <span className={'px-2 py-0.5 rounded-full text-[10px] font-black ' + (activeTab === 'FOLLOWUPS' ? 'bg-teal-100 text-teal-800' : 'bg-slate-300 text-slate-700')}>
+                {(selectedCase.followups || []).length}
+              </span>
+            </button>
+          </div>
+
+          {/* ============================================================ */}
+          {/* TAB 1: PATIENT DATA (23 Sections + CRUD Edit Mode)           */}
+          {/* ============================================================ */}
+          {activeTab === 'DATA' && (
+            <div className="space-y-6">
+              {/* EDIT MODE (Doctor CRUD) */}
+              {isEditing ? (
+                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                  <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
+                        <i className="fa-solid fa-pen-nib"></i>
+                      </div>
+                      <div>
+                        <h3 className="font-extrabold text-slate-900">Edit Clinical Case Record</h3>
+                        <p className="text-xs text-slate-500">Doctor CRUD control: update identity, diagnosis, symptoms & clinical notes</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Patient Full Name</label>
+                      <input
+                        type="text"
+                        value={editForm.patient_name}
+                        onChange={(e) => setEditForm({ ...editForm, patient_name: e.target.value })}
+                        className="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Phone Number</label>
+                      <input
+                        type="text"
+                        value={editForm.phone}
+                        onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+                        className="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 outline-none"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Clinical Diagnosis</label>
+                      <input
+                        type="text"
+                        value={editForm.diagnosis}
+                        onChange={(e) => setEditForm({ ...editForm, diagnosis: e.target.value })}
+                        placeholder="e.g. Allergic Rhinitis with Hypertrophied Adenoids"
+                        className="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 outline-none"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Chief Complaints & Modalities</label>
+                      <textarea
+                        rows={4}
+                        value={editForm.complaints}
+                        onChange={(e) => setEditForm({ ...editForm, complaints: e.target.value })}
+                        placeholder="Chief complaints, sensation, location, modalities..."
+                        className="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 outline-none resize-none"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Doctor Confidential Clinical Notes</label>
+                      <textarea
+                        rows={3}
+                        value={editForm.notes}
+                        onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })}
+                        placeholder="Miasmatic diagnosis, repertory rubric notes, constitutional tendencies..."
+                        className="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 outline-none resize-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button
+                      type="button"
+                      onClick={() => setIsEditing(false)}
+                      className="px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSaveEdit}
+                      disabled={savingEdit}
+                      className="px-6 py-2.5 rounded-xl text-sm font-bold bg-[#0b5c66] hover:bg-[#073b42] text-white shadow-lg transition active:scale-95 disabled:opacity-50"
+                    >
+                      <i className={'fa-solid ' + (savingEdit ? 'fa-spinner animate-spin' : 'fa-check') + ' mr-2'}></i>
+                      Save Updates to Server
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* VIEW MODE: Structured Clinical Sections */
+                <div className="space-y-6">
+                  {/* Chief Complaints Card */}
+                  <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/90 space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
+                        <i className="fa-solid fa-notes-medical"></i>
+                      </div>
+                      <h3 className="text-lg font-black text-slate-900">Chief Complaints & Onset</h3>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-teal-50/60 border border-teal-100 text-slate-800 text-sm whitespace-pre-line leading-relaxed">
+                      {selectedCase.answers?.chiefComplaint ||
+                        selectedCase.answers?.complaints ||
+                        selectedCase.answers?.s1f0 ||
+                        selectedCase.answers?.['Chief Complaint / முக்கிய குறைபாடு'] ||
+                        'No specific complaint summary recorded.'}
+                    </div>
+
+                    {selectedCase.answers?.doctorNotes && (
+                      <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 text-amber-900 text-xs sm:text-sm">
+                        <strong className="block font-bold mb-1 uppercase tracking-wider text-[11px]">Doctor Confidential Clinical Notes:</strong>
+                        <p className="whitespace-pre-line">{selectedCase.answers.doctorNotes}</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* All 23 Intake Answers Displayed Cleanly */}
+                  <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/90 space-y-6">
+                    <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
+                          <i className="fa-solid fa-file-waveform"></i>
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-black text-slate-900">Detailed Patient Intake Answers</h3>
+                          <p className="text-xs text-slate-500">All submitted fields from the 23 clinical case sections</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {selectedCase.answers && Object.keys(selectedCase.answers).length > 0 ? (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {Object.entries(selectedCase.answers)
+                          .filter(([key, val]) => {
+                            if (!val || val === '' || key === 'doctorNotes') return false;
+                            if (typeof val === 'object' && Object.keys(val).length === 0) return false;
+                            return true;
+                          })
+                          .map(([key, val], idx) => {
+                            const formattedKey = key
+                              .replace(/^s[0-9]+f[0-9]+_?/, '')
+                              .replace(/([A-Z])/g, ' $1')
+                              .replace(/[_/]/g, ' ')
+                              .trim();
+
+                            let displayVal = val;
+                            if (Array.isArray(val)) {
+                              displayVal = val.join(', ');
+                            } else if (typeof val === 'object') {
+                              displayVal = JSON.stringify(val);
+                            }
+
+                            return (
+                              <div
+                                key={key || idx}
+                                className="p-4 rounded-2xl bg-slate-50 hover:bg-teal-50/40 border border-slate-200/80 transition space-y-1.5"
+                              >
+                                <span className="text-[11px] font-bold text-teal-800 uppercase tracking-wider block">
+                                  {formattedKey}
+                                </span>
+                                <div className="text-sm text-slate-800 font-medium whitespace-pre-wrap leading-relaxed">
+                                  {String(displayVal)}
+                                </div>
+                              </div>
+                            );
+                          })}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 text-slate-400 text-sm">
+                        No additional structured answers provided in this submission.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ============================================================ */}
+          {/* TAB 2: FOLLOW-UPS & PRESCRIPTIONS (CRUD + Builder)           */}
+          {/* ============================================================ */}
+          {activeTab === 'FOLLOWUPS' && (
+            <div className="space-y-6">
+              {/* Doctor Follow-up Action Bar */}
+              <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-black text-slate-900">Consultation Timeline</h3>
+                  <p className="text-xs text-slate-500">Record patient progression, modalities, advice, and homoeopathic prescriptions</p>
+                </div>
+
+                {!showNewFollowup && (
+                  <button
+                    type="button"
+                    onClick={() => setShowNewFollowup(true)}
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-[#0b5c66] hover:bg-[#073b42] text-white text-xs sm:text-sm font-extrabold shadow-lg shadow-teal-900/20 transition active:scale-95"
+                  >
+                    <i className="fa-solid fa-plus text-sm"></i>
+                    <span>New Follow-up Consultation</span>
+                  </button>
+                )}
+              </div>
+
+              {/* NEW FOLLOW-UP & PRESCRIPTION BUILDER CARD */}
+              {showNewFollowup && (
+                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-teal-500/30 space-y-6 animate-fadeIn">
+                  <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold text-lg shadow-md">
+                        <i className="fa-solid fa-prescription"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-black text-slate-900">New Follow-up & Prescription</h3>
+                        <p className="text-xs text-slate-500">Analyze patient response to previous remedy and prescribe next course</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowNewFollowup(false)}
+                      className="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center transition"
+                    >
+                      <i className="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
+
+                  <div className="space-y-4">
+                    {/* Visit Date */}
+                    <div className="w-full sm:w-64">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Consultation Date</label>
+                      <input
+                        type="date"
+                        value={newFollowup.visit_date}
+                        onChange={(e) => setNewFollowup({ ...newFollowup, visit_date: e.target.value })}
+                        className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 outline-none font-semibold text-slate-800"
+                      />
+                    </div>
+
+                    {/* What Happened / Progress Notes */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        What Happened / Progress Notes (Patient Evolution)
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={newFollowup.notes}
+                        onChange={(e) => setNewFollowup({ ...newFollowup, notes: e.target.value })}
+                        placeholder="How did the patient respond? Changes in complaints, aggravations, ameliorations, new symptoms, energy, sleep..."
+                        className="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 outline-none resize-none"
+                      />
+                    </div>
+
+                    {/* Prescribed Homoeopathic Medicines Builder */}
+                    <div className="space-y-3 pt-2">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-xs font-bold text-teal-900 uppercase tracking-wider">
+                          <i className="fa-solid fa-pills mr-1.5 text-teal-600"></i>
+                          Homoeopathic Prescription
+                        </label>
+                        <button
+                          type="button"
+                          onClick={addMedicineRow}
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-800 text-xs font-bold transition"
+                        >
+                          <i className="fa-solid fa-plus text-[10px]"></i>
+                          <span>Add Remedy</span>
+                        </button>
+                      </div>
+
+                      <div className="space-y-2.5">
+                        {newFollowup.medicines.map((med, idx) => (
+                          <div
+                            key={idx}
+                            className="p-3 sm:p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center gap-3"
+                          >
+                            <span className="text-xs font-bold text-slate-400 w-6 text-center shrink-0">
+                              #{idx + 1}
+                            </span>
+
+                            {/* Remedy Name */}
+                            <div className="flex-1 w-full sm:w-auto">
+                              <input
+                                type="text"
+                                value={med.name}
+                                onChange={(e) => updateMedicineField(idx, 'name', e.target.value)}
+                                placeholder="Remedy (e.g. Arsenicum Alb, Pulsatilla, Lyco...)"
+                                className="w-full px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl focus:border-teal-600 outline-none font-bold text-slate-900"
+                              />
+                            </div>
+
+                            {/* Potency Dropdown */}
+                            <div className="w-full sm:w-32">
+                              <select
+                                value={med.potency}
+                                onChange={(e) => updateMedicineField(idx, 'potency', e.target.value)}
+                                className="w-full px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl focus:border-teal-600 outline-none font-semibold text-slate-800"
+                              >
+                                <option value="30C">30C</option>
+                                <option value="200C">200C</option>
+                                <option value="1M">1M</option>
+                                <option value="10M">10M</option>
+                                <option value="50M">50M</option>
+                                <option value="CM">CM</option>
+                                <option value="Q (Mother Tincture)">Q (Mother Tincture)</option>
+                                <option value="LM 0/1">LM 0/1</option>
+                                <option value="LM 0/2">LM 0/2</option>
+                                <option value="LM 0/3">LM 0/3</option>
+                                <option value="LM 0/6">LM 0/6</option>
+                                <option value="3X">3X</option>
+                                <option value="6X">6X</option>
+                                <option value="12X">12X</option>
+                              </select>
+                            </div>
+
+                            {/* Dose & Instructions */}
+                            <div className="flex-1 w-full sm:w-auto">
+                              <input
+                                type="text"
+                                value={med.dose}
+                                onChange={(e) => updateMedicineField(idx, 'dose', e.target.value)}
+                                placeholder="Dose (e.g. 4 pills twice daily, 2 drops OD...)"
+                                className="w-full px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl focus:border-teal-600 outline-none text-slate-800"
+                              />
+                            </div>
+
+                            {/* Duration */}
+                            <div className="w-full sm:w-28">
+                              <input
+                                type="text"
+                                value={med.duration}
+                                onChange={(e) => updateMedicineField(idx, 'duration', e.target.value)}
+                                placeholder="15 days"
+                                className="w-full px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl focus:border-teal-600 outline-none text-slate-800"
+                              />
+                            </div>
+
+                            {/* Remove Row Button */}
+                            {newFollowup.medicines.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeMedicineRow(idx)}
+                                className="w-8 h-8 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition shrink-0"
+                                title="Remove medicine"
+                              >
+                                <i className="fa-solid fa-trash-can text-xs"></i>
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Clinical Advice / Regimen */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                        Clinical Advice & Lifestyle Regimen
+                      </label>
+                      <input
+                        type="text"
+                        value={newFollowup.advice}
+                        onChange={(e) => setNewFollowup({ ...newFollowup, advice: e.target.value })}
+                        placeholder="Diet restrictions (avoid raw onion/garlic, coffee, camphor), steam inhalation, plenty of fluids..."
+                        className="w-full px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-teal-600 outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Form Action Buttons */}
+                  <div className="flex flex-wrap items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button
+                      type="button"
+                      onClick={() => setShowNewFollowup(false)}
+                      className="px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSaveFollowup}
+                      disabled={savingFollowup}
+                      className="px-6 py-2.5 rounded-xl text-sm font-bold bg-[#0b5c66] hover:bg-[#073b42] text-white shadow-lg transition active:scale-95 disabled:opacity-50"
+                    >
+                      <i className={'fa-solid ' + (savingFollowup ? 'fa-spinner animate-spin' : 'fa-check') + ' mr-2'}></i>
+                      Generate Prescription & Save Follow-up
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* FOLLOW-UP HISTORY CARDS */}
+              {selectedCase.followups && selectedCase.followups.length > 0 ? (
+                <div className="space-y-4">
+                  {selectedCase.followups.map((f, idx) => {
+                    const count = (selectedCase.followups.length - idx);
+                    const vDate = f.visit_date ? new Date(f.visit_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Consultation';
+
+                    return (
+                      <div
+                        key={f.id || idx}
+                        className="bg-white rounded-3xl p-6 sm:p-7 shadow-sm hover:shadow-md border border-slate-200/90 transition space-y-4"
+                      >
+                        {/* Header: Date + Count + Actions */}
+                        <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                          <div className="flex items-center gap-3">
+                            <span className="w-8 h-8 rounded-xl bg-teal-50 text-teal-800 flex items-center justify-center font-black text-xs">
+                              #{count}
+                            </span>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-extrabold text-slate-900 text-sm sm:text-base">
+                                  Follow-up Visit
+                                </span>
+                                <span className="px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800 text-xs font-bold">
+                                  {vDate}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => sendWhatsAppRx(f)}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold transition active:scale-95"
+                              title="Send prescription via WhatsApp"
+                            >
+                              <i className="fa-brands fa-whatsapp text-sm"></i>
+                              <span>Send WhatsApp Rx</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => setConfirmDeleteFollowup(f)}
+                              className="w-8 h-8 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition"
+                              title="Delete follow-up"
+                            >
+                              <i className="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Progress / What Happened */}
+                        {f.notes && (
+                          <div className="space-y-1">
+                            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                              What Happened / Progress Review:
+                            </span>
+                            <p className="text-sm text-slate-800 whitespace-pre-line leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100 font-medium">
+                              {f.notes}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Prescription Display */}
+                        {f.prescription && (
+                          <div className="space-y-1.5">
+                            <span className="text-[11px] font-bold text-teal-800 uppercase tracking-wider flex items-center gap-1.5">
+                              <i className="fa-solid fa-pills text-teal-600"></i>
+                              Homoeopathic Prescription:
+                            </span>
+                            <div className="p-4 rounded-2xl bg-teal-50/70 border border-teal-200 text-teal-950 text-sm font-semibold whitespace-pre-line leading-relaxed">
+                              {f.prescription}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Clinical Advice */}
+                        {f.advice && (
+                          <div className="text-xs text-slate-600 flex items-start gap-2 pt-1">
+                            <i className="fa-solid fa-circle-info text-teal-600 mt-0.5 shrink-0"></i>
+                            <span><strong>Regimen:</strong> {f.advice}</span>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 shadow-sm space-y-3">
+                  <div className="w-14 h-14 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl mx-auto">
+                    <i className="fa-solid fa-clipboard-check"></i>
+                  </div>
+                  <h4 className="font-bold text-slate-800 text-base">No Follow-ups Recorded Yet</h4>
+                  <p className="text-xs text-slate-500 max-w-sm mx-auto">
+                    Click the "New Follow-up Consultation" button above to record the patient's progress and generate a clinical prescription.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+      const PortalSelect = ({ setView, setClinic }) => {
         return (
           <div className="fixed inset-0 z-[100] overflow-y-auto bg-white text-slate-800 font-sans selection:bg-teal-100 selection:text-[#073B42]">
             <main className="mx-auto flex min-h-full w-full max-w-5xl flex-col px-5 pb-5 pt-[max(34px,calc(env(safe-area-inset-top)+22px))] sm:px-8 sm:pb-7 sm:pt-8">
