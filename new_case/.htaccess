@@ -1,6 +1,0 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /new_case/
-    RewriteRule ^case/?$ index.html [L]
-    RewriteRule ^new_case/?$ index.html [L]
-</IfModule>
