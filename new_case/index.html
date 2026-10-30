@@ -1,0 +1,7977 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+
+<meta name="theme-color" content="#0d7668" media="(prefers-color-scheme: light)">
+
+<meta name="theme-color" content="#0b131a" media="(prefers-color-scheme: dark)">
+
+<meta name="description" content="Prana Homeo Care — Comprehensive Clinical Case Record portal. Dr. G. Srinivasan M.D(Hom). Multilingual: English, Tamil, and Bilingual.">
+
+<title>Prana HomeoCare — Clinical Case Record</title>
+
+
+
+<!-- Favicons & App Icons -->
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+
+<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<link rel="apple-touch-icon" href="favicon.png">
+
+
+
+<!-- Google Fonts: Plus Jakarta Sans & Noto Sans Tamil for World-Class Typography -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Noto+Sans+Tamil:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+<style>
+
+/* ==========================================================================
+
+   PRANA HOMEO CARE — AWARD-WINNING CLINICAL DESIGN SYSTEM
+
+   Deep Emerald, Royal Gold & Tactile Porcelain Suite
+
+   ========================================================================== */
+
+:root {
+
+  --primary: #0b5c66;
+
+  --primary-hover: #073b42;
+
+  --primary-active: #052a30;
+
+  --primary-light: #eef6f5;
+
+  --primary-glow: rgba(11, 92, 102, 0.28);
+
+  --primary-ring: rgba(11, 92, 102, 0.16);
+
+  
+
+  --accent-gold: #c9a24a;
+
+  --accent-gold-hover: #b58d37;
+
+  --accent-gold-light: #fbf7ee;
+
+  --accent-gold-glow: rgba(201, 162, 74, 0.30);
+
+
+
+  --bg-page: #f4f8f8;
+
+  --bg-surface: #ffffff;
+
+  --bg-surface-trans: rgba(255, 255, 255, 0.88);
+
+  --bg-card: #ffffff;
+
+  --bg-subtle: #f0f6f5;
+
+  --bg-input: #ffffff;
+
+
+
+  --text-main: #091d20;
+
+  --text-sub: #1e3c40;
+
+  --text-muted: #5a7b80;
+
+  --text-inverse: #ffffff;
+
+
+
+  --border-subtle: rgba(7, 59, 66, 0.09);
+
+  --border-medium: rgba(7, 59, 66, 0.16);
+
+  --border-focus: #0b5c66;
+
+
+
+  --chip-bg: #edf7f5;
+
+  --chip-text: #073b42;
+
+  --chip-border: #c2e2dc;
+
+  --chip-hover: #d6eee8;
+
+
+
+  --danger: #dc2626;
+
+  --danger-light: #fef2f2;
+
+  --success: #16a34a;
+
+  --success-light: #f0fdf4;
+
+
+
+  --radius-xs: 6px;
+
+  --radius-sm: 10px;
+
+  --radius-md: 14px;
+
+  --radius-lg: 20px;
+
+  --radius-xl: 26px;
+
+  --radius-full: 9999px;
+
+
+
+  --shadow-xs: 0 1px 2px rgba(7, 59, 66, 0.04);
+
+  --shadow-sm: 0 2px 8px rgba(7, 59, 66, 0.05);
+
+  --shadow-md: 0 8px 24px -4px rgba(7, 59, 66, 0.08), 0 2px 6px -1px rgba(7, 59, 66, 0.04);
+
+  --shadow-lg: 0 20px 48px -10px rgba(7, 59, 66, 0.12), 0 4px 16px -2px rgba(7, 59, 66, 0.05);
+
+  --shadow-card: 0 1px 3px rgba(7, 59, 66, 0.04), 0 16px 40px -8px rgba(7, 59, 66, 0.08), 0 0 0 1px rgba(7, 59, 66, 0.07);
+
+
+
+  --font-base: 'Plus Jakarta Sans', 'Noto Sans Tamil', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+
+  --font-tamil: 'Noto Sans Tamil', 'Plus Jakarta Sans', sans-serif;
+
+
+
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  --safe-top: env(safe-area-inset-top, 0px);
+
+}
+
+
+
+[data-theme="dark"] {
+
+  --primary: #199e8c;
+
+  --primary-hover: #1fc1ab;
+
+  --primary-active: #2ae0c7;
+
+  --primary-light: #0d2521;
+
+  --primary-glow: rgba(25, 158, 140, 0.35);
+
+  --primary-ring: rgba(25, 158, 140, 0.28);
+
+
+
+  --accent-gold: #dfa836;
+
+  --accent-gold-hover: #efba4c;
+
+  --accent-gold-light: #2b2310;
+
+  --accent-gold-glow: rgba(223, 168, 54, 0.35);
+
+
+
+  --bg-page: #08100f;
+
+  --bg-surface: #0f1d1b;
+
+  --bg-surface-trans: rgba(15, 29, 27, 0.90);
+
+  --bg-card: #0f1d1b;
+
+  --bg-subtle: #142724;
+
+  --bg-input: #122220;
+
+
+
+  --text-main: #f0f7f5;
+
+  --text-sub: #b1cdc6;
+
+  --text-muted: #7e9f98;
+
+  --text-inverse: #08100f;
+
+
+
+  --border-subtle: rgba(25, 158, 140, 0.22);
+
+  --border-medium: #1f3d38;
+
+  --border-focus: #199e8c;
+
+
+
+  --chip-bg: #142a26;
+
+  --chip-text: #6ee7d5;
+
+  --chip-border: #1d433d;
+
+  --chip-hover: #1c3b35;
+
+
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+
+  --shadow-lg: 0 20px 48px -10px rgba(0, 0, 0, 0.8);
+
+  --shadow-card: 0 0 0 1px rgba(25, 158, 140, 0.2), 0 16px 40px -8px rgba(0, 0, 0, 0.7);
+
+}
+
+
+
+*, *::before, *::after {
+
+  box-sizing: border-box;
+
+  margin: 0;
+
+  padding: 0;
+
+}
+
+
+
+html {
+
+  -webkit-text-size-adjust: 100%;
+
+  scroll-behavior: smooth;
+
+  font-size: 16px;
+
+  overflow-x: hidden;
+
+  max-width: 100vw;
+
+}
+
+
+
+body {
+
+  font-family: var(--font-base);
+
+  background-color: var(--bg-page);
+
+  background-image: 
+
+    radial-gradient(ellipse at 15% 0%, rgba(11, 92, 102, 0.10) 0%, transparent 55%),
+
+    radial-gradient(ellipse at 85% 10%, rgba(201, 162, 74, 0.08) 0%, transparent 50%),
+
+    radial-gradient(ellipse at 50% 100%, rgba(7, 59, 66, 0.06) 0%, transparent 60%);
+
+  background-attachment: fixed;
+
+  color: var(--text-main);
+
+  line-height: 1.5;
+
+  min-height: 100vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  -webkit-font-smoothing: antialiased;
+
+  overflow-x: hidden;
+
+  max-width: 100vw;
+
+  width: 100%;
+
+}
+
+
+
+/* 3-Language Mode Display Rules */
+
+[data-lang-mode="both"] .lang-bilingual-sub { display: block; }
+
+[data-lang-mode="en"] .lang-bilingual-sub { display: none !important; }
+
+[data-lang-mode="ta"] .lang-bilingual-sub { display: none !important; }
+
+
+
+/* SVG Icon Helper */
+
+.svg-icon {
+
+  display: inline-block;
+
+  width: 16px;
+
+  height: 16px;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  fill: none;
+
+  vertical-align: middle;
+
+  flex-shrink: 0;
+
+}
+
+
+
+/* TOP NAVIGATION BAR */
+
+.topbar-wrapper {
+
+  position: sticky;
+
+  top: 0;
+
+  left: 0;
+
+  right: 0;
+
+  width: 100%;
+
+  max-width: 100vw;
+
+  box-sizing: border-box;
+
+  background: var(--bg-surface-trans);
+
+  backdrop-filter: blur(24px) saturate(180%);
+
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+
+  border-bottom: 1px solid var(--border-subtle);
+
+  box-shadow: 0 4px 20px -2px rgba(7, 59, 66, 0.04);
+
+  z-index: 100;
+
+  transition: all 0.25s ease;
+
+}
+
+
+
+.topbar {
+
+  max-width: 1380px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  margin: 0 auto;
+
+  padding: 12px clamp(16px, 3.5vw, 36px);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 16px;
+
+}
+
+
+
+.brand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  text-decoration: none;
+
+}
+
+
+
+.brand-logo-wrap {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  position: relative;
+
+}
+
+
+
+.brand-logo {
+
+  height: 40px;
+
+  width: auto;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 2px 6px rgba(11, 92, 102, 0.15));
+
+}
+
+
+
+.logo-fallback {
+
+  width: 40px;
+
+  height: 40px;
+
+  border-radius: var(--radius-sm);
+
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+
+  color: #ffffff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-shadow: var(--shadow-sm);
+
+}
+
+
+
+/* Accessible Screen-Reader Heading */
+
+.sr-only {
+
+  position: absolute !important;
+
+  width: 1px !important;
+
+  height: 1px !important;
+
+  padding: 0 !important;
+
+  margin: -1px !important;
+
+  overflow: hidden !important;
+
+  clip: rect(0, 0, 0, 0) !important;
+
+  white-space: nowrap !important;
+
+  border: 0 !important;
+
+}
+
+
+
+.top-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+}
+
+
+
+/* 3-Language Segmented Switcher */
+
+.lang-segmented-group {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  background: rgba(11, 92, 102, 0.08);
+
+  padding: 3px;
+
+  border-radius: var(--radius-full);
+
+  border: 1px solid rgba(11, 92, 102, 0.12);
+
+}
+
+
+
+.lang-seg-btn {
+
+  border: none;
+
+  background: transparent;
+
+  color: var(--text-sub);
+
+  font-size: 0.76rem;
+
+  font-weight: 650;
+
+  padding: 5px 12px;
+
+  border-radius: var(--radius-full);
+
+  cursor: pointer;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  white-space: nowrap;
+
+}
+
+
+
+.lang-seg-btn:hover {
+
+  color: var(--primary);
+
+}
+
+
+
+.lang-seg-btn.active {
+
+  background: var(--bg-surface);
+
+  color: var(--primary);
+
+  font-weight: 800;
+
+  box-shadow: 0 2px 8px rgba(7, 59, 66, 0.12), 0 1px 2px rgba(7, 59, 66, 0.06);
+
+}
+
+
+
+/* Auto-save Pill */
+
+.save-status-pill {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 12px;
+
+  border-radius: var(--radius-full);
+
+  font-size: 0.74rem;
+
+  font-weight: 650;
+
+  background: var(--bg-surface);
+
+  border: 1px solid var(--border-medium);
+
+  color: var(--text-muted);
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+.save-status-pill.saved {
+
+  color: var(--success);
+
+  border-color: rgba(22, 163, 74, 0.3);
+
+  background: var(--success-light);
+
+}
+
+
+
+.indicator-dot {
+
+  width: 7px;
+
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+
+}
+
+
+
+.btn-ctrl {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 7px 13px;
+
+  border-radius: var(--radius-md);
+
+  border: 1px solid var(--border-medium);
+
+  background: var(--bg-surface);
+
+  color: var(--text-sub);
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+
+
+.btn-ctrl:hover {
+
+  background: var(--bg-subtle);
+
+  color: var(--primary);
+
+  border-color: var(--primary);
+
+  transform: translateY(-1px);
+
+}
+
+
+
+.theme-toggle {
+
+  padding: 7px 9px;
+
+}
+
+
+
+/* CONTAINER SHELL */
+
+.shell {
+
+  max-width: 1380px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  margin: 0 auto;
+
+  padding: 20px clamp(16px, 3.5vw, 36px) 60px;
+
+  flex: 1;
+
+}
+
+
+
+/* ==========================================================================
+
+   EXECUTIVE CLINICAL IDENTITY BAR (Compact, Prestigious Header)
+
+   ========================================================================== */
+
+.clinic-docket-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 245, 0.88) 100%);
+
+  border: 1px solid rgba(11, 92, 102, 0.14);
+
+  border-radius: var(--radius-xl);
+
+  padding: 16px 24px;
+
+  margin-bottom: 24px;
+
+  box-shadow: 0 10px 30px -10px rgba(7, 59, 66, 0.08), 0 1px 3px rgba(7, 59, 66, 0.04);
+
+}
+
+
+
+[data-theme="dark"] .clinic-docket-header {
+
+  background: linear-gradient(135deg, rgba(15, 29, 27, 0.95) 0%, rgba(20, 39, 36, 0.88) 100%);
+
+  border-color: rgba(25, 158, 140, 0.2);
+
+}
+
+
+
+.docket-brand-card {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+}
+
+
+
+.doctor-portrait-avatar {
+
+  width: 64px;
+
+  height: 64px;
+
+  border-radius: 50%;
+
+  position: relative;
+
+  flex-shrink: 0;
+
+  border: 2.5px solid var(--accent-gold);
+
+  box-shadow: 0 4px 14px rgba(7, 59, 66, 0.15);
+
+  background: #ffffff;
+
+}
+
+
+
+.doctor-photo {
+
+  width: 100%;
+
+  height: 100%;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  object-position: top;
+
+}
+
+
+
+.doctor-photo-fallback {
+
+  width: 100%;
+
+  height: 100%;
+
+  border-radius: 50%;
+
+  background: var(--primary-light);
+
+  color: var(--primary);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+.avatar-verified-badge {
+
+  position: absolute;
+
+  bottom: -2px;
+
+  right: -2px;
+
+  width: 20px;
+
+  height: 20px;
+
+  border-radius: 50%;
+
+  background: var(--success);
+
+  border: 2px solid #ffffff;
+
+  display: grid;
+
+  place-items: center;
+
+  color: #ffffff;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+}
+
+
+
+.avatar-verified-badge svg {
+
+  width: 11px;
+
+  height: 11px;
+
+  stroke-width: 3;
+
+}
+
+
+
+.docket-eyebrow {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-bottom: 2px;
+
+}
+
+
+
+.docket-tag {
+
+  font-family: var(--font-heading);
+
+  font-size: 0.66rem;
+
+  font-weight: 850;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: var(--primary);
+
+}
+
+
+
+.docket-bullet {
+
+  font-size: 0.7rem;
+
+  color: var(--accent-gold);
+
+}
+
+
+
+.docket-subtag {
+
+  font-size: 0.66rem;
+
+  font-weight: 750;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+
+  color: var(--accent-gold-hover);
+
+}
+
+
+
+.docket-doctor-name {
+
+  font-family: var(--font-heading);
+
+  font-size: 1.25rem;
+
+  font-weight: 850;
+
+  color: var(--text-main);
+
+  letter-spacing: -0.02em;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+}
+
+
+
+.docket-degree {
+
+  font-size: 0.78rem;
+
+  font-weight: 750;
+
+  color: var(--accent-gold-hover);
+
+  background: var(--accent-gold-light);
+
+  padding: 2px 8px;
+
+  border-radius: var(--radius-full);
+
+  border: 1px solid rgba(201, 162, 74, 0.3);
+
+}
+
+
+
+.docket-doctor-title {
+
+  font-size: 0.82rem;
+
+  color: var(--text-sub);
+
+  font-weight: 500;
+
+  margin-top: 1px;
+
+}
+
+
+
+.docket-title-ta {
+
+  display: block;
+
+  font-size: 0.76rem;
+
+  color: var(--primary);
+
+  font-weight: 500;
+
+  margin-top: 1px;
+
+}
+
+
+
+.docket-quick-pills {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+
+}
+
+
+
+.docket-pill {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 7px 14px;
+
+  border-radius: var(--radius-full);
+
+  background: rgba(255, 255, 255, 0.85);
+
+  border: 1px solid rgba(11, 92, 102, 0.14);
+
+  font-size: 0.78rem;
+
+  font-weight: 650;
+
+  color: var(--primary);
+
+  box-shadow: 0 1px 3px rgba(7, 59, 66, 0.04);
+
+}
+
+
+
+[data-theme="dark"] .docket-pill {
+
+  background: rgba(15, 29, 27, 0.85);
+
+  border-color: rgba(25, 158, 140, 0.25);
+
+  color: #6ee7d5;
+
+}
+
+
+
+.docket-pill svg {
+
+  width: 14px;
+
+  height: 14px;
+
+  stroke: var(--accent-gold);
+
+}
+
+
+
+/* ==========================================================================
+
+   TWO-COLUMN CLINICAL LAYOUT
+
+   ========================================================================== */
+
+.layout {
+
+  display: grid;
+
+  grid-template-columns: 320px minmax(0, 1fr);
+
+  gap: 24px;
+
+  align-items: start;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+}
+
+
+
+/* SIDEBAR NAVIGATION */
+
+.sidebar {
+
+  background: var(--bg-surface);
+
+  border: 1px solid var(--border-subtle);
+
+  border-radius: var(--radius-xl);
+
+  padding: 20px;
+
+  box-shadow: var(--shadow-card);
+
+  position: sticky;
+
+  top: 76px;
+
+  max-height: calc(100vh - 96px);
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
+
+}
+
+
+
+.sidebar-header {
+
+  padding-bottom: 14px;
+
+  border-bottom: 1px solid var(--border-subtle);
+
+  margin-bottom: 12px;
+
+}
+
+
+
+.progress-row {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 8px;
+
+}
+
+
+
+.progress-title {
+
+  font-size: 0.8rem;
+
+  font-weight: 750;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.05em;
+
+  color: var(--text-muted);
+
+}
+
+
+
+.progress-pct {
+
+  font-family: var(--font-heading);
+
+  font-size: 1.05rem;
+
+  font-weight: 850;
+
+  color: var(--primary);
+
+}
+
+
+
+.progress-track {
+
+  width: 100%;
+
+  height: 7px;
+
+  background: var(--bg-subtle);
+
+  border-radius: var(--radius-full);
+
+  overflow: hidden;
+
+  position: relative;
+
+}
+
+
+
+.progress-fill {
+
+  height: 100%;
+
+  width: 0%;
+
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent-gold) 100%);
+
+  border-radius: var(--radius-full);
+
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+
+
+.progress-meta-row {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 0.74rem;
+
+  color: var(--text-muted);
+
+  margin-top: 6px;
+
+  font-weight: 550;
+
+}
+
+
+
+/* Step Search Input */
+
+.step-search-wrap {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  margin-bottom: 12px;
+
+}
+
+
+
+.step-search-icon {
+
+  position: absolute;
+
+  left: 12px;
+
+  width: 15px;
+
+  height: 15px;
+
+  color: var(--text-muted);
+
+  pointer-events: none;
+
+}
+
+
+
+.step-search-input {
+
+  width: 100%;
+
+  padding: 8px 32px 8px 34px;
+
+  font-size: 0.82rem;
+
+  border-radius: var(--radius-md);
+
+  border: 1px solid var(--border-medium);
+
+  background: var(--bg-input);
+
+  color: var(--text-main);
+
+  outline: none;
+
+  font-family: inherit;
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+.step-search-input:focus {
+
+  border-color: var(--primary);
+
+  background: var(--bg-surface);
+
+  box-shadow: 0 0 0 3px var(--primary-ring);
+
+}
+
+
+
+.search-clear-btn {
+
+  position: absolute;
+
+  right: 8px;
+
+  background: transparent;
+
+  border: none;
+
+  color: var(--text-muted);
+
+  cursor: pointer;
+
+  padding: 4px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: var(--radius-full);
+
+}
+
+
+
+.search-clear-btn:hover {
+
+  color: var(--danger);
+
+  background: var(--danger-light);
+
+}
+
+
+
+/* Step List & Chapters */
+
+.step-list-wrap {
+
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding-right: 4px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+}
+
+
+
+.step-list-wrap::-webkit-scrollbar {
+
+  width: 5px;
+
+}
+
+.step-list-wrap::-webkit-scrollbar-thumb {
+
+  background: var(--border-medium);
+
+  border-radius: var(--radius-full);
+
+}
+
+
+
+.chapter-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+}
+
+
+
+.chapter-label {
+
+  font-family: var(--font-heading);
+
+  font-size: 0.68rem;
+
+  font-weight: 850;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.1em;
+
+  color: var(--primary);
+
+  padding: 6px 10px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  background: linear-gradient(90deg, var(--primary-light) 0%, transparent 100%);
+
+  border-radius: var(--radius-sm);
+
+  margin-bottom: 2px;
+
+}
+
+
+
+.chapter-label svg {
+
+  width: 14px;
+
+  height: 14px;
+
+  color: var(--primary);
+
+}
+
+
+
+.chap-ta-sub {
+
+  font-size: 0.64rem;
+
+  color: var(--text-muted);
+
+  font-weight: 600;
+
+  text-transform: none;
+
+}
+
+
+
+/* Step Item Buttons */
+
+.step-item-btn {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  width: 100%;
+
+  text-align: left;
+
+  padding: 9px 12px;
+
+  border-radius: var(--radius-md);
+
+  color: var(--text-sub);
+
+  background: transparent;
+
+  border: 1px solid transparent;
+
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: relative;
+
+  cursor: pointer;
+
+}
+
+
+
+.step-item-btn:hover {
+
+  background: var(--bg-subtle);
+
+  color: var(--primary);
+
+  transform: translateX(3px);
+
+}
+
+
+
+.step-item-btn.active {
+
+  background: linear-gradient(135deg, #073b42 0%, #0b5c66 100%);
+
+  color: #ffffff;
+
+  border-color: rgba(201, 162, 74, 0.35);
+
+  box-shadow: 0 6px 18px -2px rgba(7, 59, 66, 0.35);
+
+  font-weight: 750;
+
+  transform: translateX(4px);
+
+}
+
+
+
+[data-theme="dark"] .step-item-btn.active {
+
+  background: linear-gradient(135deg, #094b54 0%, #117685 100%);
+
+}
+
+
+
+.step-num-badge {
+
+  width: 24px;
+
+  height: 24px;
+
+  border-radius: 8px;
+
+  background: var(--bg-subtle);
+
+  border: 1px solid var(--border-medium);
+
+  font-size: 0.72rem;
+
+  font-weight: 800;
+
+  display: grid;
+
+  place-items: center;
+
+  flex-shrink: 0;
+
+  color: var(--text-sub);
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+.step-item-btn.active .step-num-badge {
+
+  background: var(--accent-gold);
+
+  color: #ffffff;
+
+  border-color: transparent;
+
+  font-weight: 850;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+.step-item-btn.done .step-num-badge {
+
+  background: var(--success);
+
+  color: #ffffff;
+
+  border-color: var(--success);
+
+}
+
+
+
+.step-label-wrap {
+
+  display: flex;
+
+  flex-direction: column;
+
+  flex: 1;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+}
+
+
+
+.step-label-en {
+
+  font-size: 0.83rem;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  color: inherit;
+
+  display: block;
+
+  max-width: 100%;
+
+}
+
+
+
+.step-label-en strong {
+
+  display: inline-block;
+
+  max-width: 100%;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  vertical-align: bottom;
+
+  font-weight: 750;
+
+}
+
+
+
+.step-label-ta {
+
+  font-size: 0.71rem;
+
+  color: var(--text-muted);
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  font-weight: 500;
+
+  display: block;
+
+  max-width: 100%;
+
+}
+
+
+
+.step-label-ta strong {
+
+  display: inline-block;
+
+  max-width: 100%;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  vertical-align: bottom;
+
+}
+
+
+
+.step-item-btn.active .step-label-en {
+
+  color: #ffffff;
+
+}
+
+
+
+.step-item-btn.active .step-label-ta {
+
+  color: rgba(255, 255, 255, 0.82);
+
+}
+
+
+
+.step-item-status-icon {
+
+  width: 14px;
+
+  height: 14px;
+
+  opacity: 0;
+
+  color: var(--success);
+
+  transition: opacity 0.2s ease;
+
+}
+
+
+
+.step-item-btn.done .step-item-status-icon {
+
+  opacity: 1;
+
+}
+
+
+
+.step-item-btn.active.done .step-item-status-icon {
+
+  color: #ffffff;
+
+}
+
+
+
+.sidebar-footer {
+
+  padding-top: 12px;
+
+  border-top: 1px solid var(--border-subtle);
+
+  margin-top: 10px;
+
+  display: flex;
+
+  gap: 8px;
+
+}
+
+
+
+.sidebar-footer .btn-ctrl {
+
+  flex: 1;
+
+  font-size: 0.75rem;
+
+  padding: 6px 10px;
+
+}
+
+
+
+/* ==========================================================================
+
+   FORM CARD (The Main Patient Experience)
+
+   ========================================================================== */
+
+.form-card {
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border-subtle);
+
+  border-radius: var(--radius-xl);
+
+  box-shadow: var(--shadow-card);
+
+  overflow: hidden;
+
+  position: relative;
+
+  scroll-margin-top: 86px;
+
+  transition: all 0.25s ease;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+}
+
+
+
+.form-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  right: 0;
+
+  height: 3.5px;
+
+  background: linear-gradient(90deg, #0b5c66 0%, #c9a24a 50%, #0b5c66 100%);
+
+  z-index: 2;
+
+}
+
+
+
+/* Card Header */
+
+.card-head {
+
+  padding: 24px 32px 20px;
+
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbf9 100%);
+
+  border-bottom: 1px solid rgba(11, 92, 102, 0.09);
+
+  position: relative;
+
+}
+
+
+
+[data-theme="dark"] .card-head {
+
+  background: linear-gradient(180deg, #0f1d1b 0%, #132522 100%);
+
+  border-color: rgba(25, 158, 140, 0.15);
+
+}
+
+
+
+.card-head-kicker-row {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 8px;
+
+}
+
+
+
+.step-kicker-badge {
+
+  font-family: var(--font-heading);
+
+  font-size: 0.72rem;
+
+  font-weight: 850;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: var(--primary);
+
+  background: rgba(11, 92, 102, 0.10);
+
+  border: 1px solid rgba(11, 92, 102, 0.22);
+
+  padding: 4px 12px;
+
+  border-radius: var(--radius-full);
+
+}
+
+
+
+.step-est-time {
+
+  font-size: 0.75rem;
+
+  color: var(--text-muted);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  font-weight: 600;
+
+}
+
+
+
+.step-title-en {
+
+  font-family: var(--font-heading);
+
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+
+  font-weight: 850;
+
+  color: var(--text-main);
+
+  letter-spacing: -0.025em;
+
+  line-height: 1.25;
+
+}
+
+
+
+.step-title-ta {
+
+  font-family: var(--font-tamil);
+
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+
+  font-weight: 600;
+
+  color: var(--primary);
+
+  margin-top: 3px;
+
+  line-height: 1.35;
+
+}
+
+
+
+.subtitle-en {
+
+  font-size: 0.88rem;
+
+  color: #46656a;
+
+  margin-top: 6px;
+
+  line-height: 1.5;
+
+}
+
+
+
+[data-theme="dark"] .subtitle-en {
+
+  color: #b1cdc6;
+
+}
+
+
+
+.subtitle-ta {
+
+  font-family: var(--font-tamil);
+
+  font-size: 0.82rem;
+
+  color: var(--text-muted);
+
+  margin-top: 2px;
+
+  line-height: 1.45;
+
+}
+
+
+
+/* ==========================================================================
+
+   FORM BODY & INPUT FIELDS (Award-Winning Tactile Design)
+
+   ========================================================================== */
+
+.form-body {
+
+  padding: clamp(22px, 3.5vw, 36px);
+
+}
+
+
+
+.fields-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 22px 20px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+}
+
+
+
+.field {
+
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  box-sizing: border-box;
+
+}
+
+
+
+.field.full {
+
+  grid-column: 1 / -1;
+
+}
+
+
+
+.field-label {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin-bottom: 8px;
+
+}
+
+
+
+.label-header {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+}
+
+
+
+.label-text-en {
+
+  font-size: 0.88rem;
+
+  font-weight: 750;
+
+  color: var(--text-main);
+
+  letter-spacing: -0.01em;
+
+}
+
+
+
+.label-text-ta {
+
+  font-size: 0.77rem;
+
+  color: var(--primary);
+
+  font-weight: 550;
+
+}
+
+
+
+.required-star {
+
+  color: var(--danger);
+
+  font-weight: 900;
+
+  margin-left: 2px;
+
+}
+
+
+
+.btn-today {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  padding: 3px 8px;
+
+  font-size: 0.72rem;
+
+  font-weight: 700;
+
+  color: var(--primary);
+
+  background: var(--primary-light);
+
+  border: 1px solid rgba(11, 92, 102, 0.2);
+
+  border-radius: var(--radius-full);
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+.btn-today:hover {
+
+  background: var(--primary);
+
+  color: #ffffff;
+
+}
+
+
+
+/* TACTILE INPUT CONTAINERS WITH VECTOR ICONS */
+
+.input-wrap {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1.5px solid rgba(7, 59, 66, 0.16);
+
+  border-radius: 14px;
+
+  box-shadow: 0 1px 3px rgba(7, 59, 66, 0.04);
+
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+
+
+[data-theme="dark"] .input-wrap {
+
+  background: #122220;
+
+  border-color: rgba(25, 158, 140, 0.25);
+
+}
+
+
+
+.input-wrap:hover {
+
+  border-color: rgba(11, 92, 102, 0.38);
+
+  box-shadow: 0 2px 8px rgba(7, 59, 66, 0.06);
+
+}
+
+
+
+.input-wrap:focus-within {
+
+  border-color: var(--primary);
+
+  background: #ffffff;
+
+  box-shadow: 0 0 0 4px rgba(11, 92, 102, 0.16), 0 8px 24px -4px rgba(7, 59, 66, 0.12);
+
+}
+
+
+
+[data-theme="dark"] .input-wrap:focus-within {
+
+  background: #122220;
+
+  box-shadow: 0 0 0 4px rgba(25, 158, 140, 0.28), 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+
+}
+
+
+
+.input-lead-icon {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding-left: 14px;
+
+  color: #5a7b80;
+
+  flex-shrink: 0;
+
+  transition: color 0.2s ease;
+
+}
+
+
+
+.input-lead-icon svg {
+
+  width: 17px;
+
+  height: 17px;
+
+  stroke-width: 2.2;
+
+}
+
+
+
+.input-wrap:focus-within .input-lead-icon {
+
+  color: var(--primary);
+
+}
+
+
+
+.input-wrap input {
+
+  width: 100%;
+
+  height: 48px;
+
+  background: transparent;
+
+  border: none;
+
+  padding: 0 16px;
+
+  font-size: 0.94rem;
+
+  font-weight: 550;
+
+  color: var(--text-main);
+
+  font-family: inherit;
+
+  outline: none;
+
+}
+
+
+
+.input-wrap.has-lead-icon input {
+
+  padding-left: 10px;
+
+}
+
+
+
+/* SELECT WRAPPER WITH VECTOR CHEVRON */
+
+.select-wrap {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1.5px solid rgba(7, 59, 66, 0.16);
+
+  border-radius: 14px;
+
+  box-shadow: 0 1px 3px rgba(7, 59, 66, 0.04);
+
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+
+
+[data-theme="dark"] .select-wrap {
+
+  background: #122220;
+
+  border-color: rgba(25, 158, 140, 0.25);
+
+}
+
+
+
+.select-wrap:hover {
+
+  border-color: rgba(11, 92, 102, 0.38);
+
+  box-shadow: 0 2px 8px rgba(7, 59, 66, 0.06);
+
+}
+
+
+
+.select-wrap:focus-within {
+
+  border-color: var(--primary);
+
+  box-shadow: 0 0 0 4px rgba(11, 92, 102, 0.16), 0 8px 24px -4px rgba(7, 59, 66, 0.12);
+
+}
+
+
+
+.select-wrap select {
+
+  width: 100%;
+
+  height: 48px;
+
+  background: transparent;
+
+  border: none;
+
+  padding: 0 40px 0 16px;
+
+  font-size: 0.94rem;
+
+  font-weight: 550;
+
+  color: var(--text-main);
+
+  font-family: inherit;
+
+  outline: none;
+
+  cursor: pointer;
+
+  -webkit-appearance: none;
+
+  appearance: none;
+
+}
+
+
+
+.select-caret {
+
+  position: absolute;
+
+  right: 14px;
+
+  pointer-events: none;
+
+  color: #5a7b80;
+
+  display: inline-flex;
+
+  align-items: center;
+
+}
+
+
+
+.select-caret svg {
+
+  width: 18px;
+
+  height: 18px;
+
+  stroke-width: 2.5;
+
+}
+
+
+
+/* TEXTAREA SUITE */
+
+.textarea-wrap {
+
+  position: relative;
+
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1.5px solid rgba(7, 59, 66, 0.16);
+
+  border-radius: 16px;
+
+  box-shadow: 0 1px 3px rgba(7, 59, 66, 0.04);
+
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+
+
+[data-theme="dark"] .textarea-wrap {
+
+  background: #122220;
+
+  border-color: rgba(25, 158, 140, 0.25);
+
+}
+
+
+
+.textarea-wrap:hover {
+
+  border-color: rgba(11, 92, 102, 0.38);
+
+  box-shadow: 0 2px 8px rgba(7, 59, 66, 0.06);
+
+}
+
+
+
+.textarea-wrap:focus-within {
+
+  border-color: var(--primary);
+
+  box-shadow: 0 0 0 4px rgba(11, 92, 102, 0.16), 0 8px 24px -4px rgba(7, 59, 66, 0.12);
+
+}
+
+
+
+[data-theme="dark"] .textarea-wrap:focus-within {
+
+  box-shadow: 0 0 0 4px rgba(25, 158, 140, 0.28), 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+
+}
+
+
+
+.textarea-wrap textarea {
+
+  width: 100%;
+
+  min-height: 120px;
+
+  background: transparent;
+
+  border: none;
+
+  padding: 14px 18px;
+
+  font-size: 0.94rem;
+
+  font-weight: 500;
+
+  color: var(--text-main);
+
+  font-family: inherit;
+
+  outline: none;
+
+  resize: vertical;
+
+  line-height: 1.6;
+
+}
+
+
+
+/* SMART SYMPTOM SUGGESTION CHIPS */
+
+.quick-chips {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-top: 10px;
+
+}
+
+
+
+.chip-tag {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 14px;
+
+  border-radius: var(--radius-full);
+
+  background: #edf7f5;
+
+  border: 1px solid #c2e2dc;
+
+  color: #073b42;
+
+  font-size: 0.78rem;
+
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  box-shadow: 0 1px 2px rgba(7, 59, 66, 0.04);
+
+}
+
+
+
+[data-theme="dark"] .chip-tag {
+
+  background: #142a26;
+
+  border-color: #1d433d;
+
+  color: #6ee7d5;
+
+}
+
+
+
+.chip-tag:hover {
+
+  background: #d6eee8;
+
+  border-color: var(--primary);
+
+  color: var(--primary);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 4px 12px rgba(11, 92, 102, 0.15);
+
+}
+
+
+
+.chip-tag:active {
+
+  transform: scale(0.96);
+
+}
+
+
+
+/* NOTICE / CONSENT BOX */
+
+.notice-box {
+
+  background: linear-gradient(135deg, #eef7f5 0%, #f4fbf9 100%);
+
+  border: 1px solid rgba(11, 92, 102, 0.2);
+
+  border-left: 4px solid var(--primary);
+
+  border-radius: var(--radius-md);
+
+  padding: 16px 20px;
+
+}
+
+
+
+[data-theme="dark"] .notice-box {
+
+  background: linear-gradient(135deg, #0e2421 0%, #132a26 100%);
+
+  border-color: rgba(25, 158, 140, 0.25);
+
+  border-left-color: var(--primary);
+
+}
+
+
+
+/* CHECKBOX CARDS */
+
+.checkbox-card {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 16px 18px;
+
+  border-radius: var(--radius-md);
+
+  background: #ffffff;
+
+  border: 1.5px solid rgba(7, 59, 66, 0.16);
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+[data-theme="dark"] .checkbox-card {
+
+  background: #122220;
+
+  border-color: rgba(25, 158, 140, 0.25);
+
+}
+
+
+
+.checkbox-card:hover {
+
+  border-color: var(--primary);
+
+  background: var(--bg-subtle);
+
+}
+
+
+
+.checkbox-card input[type="checkbox"] {
+
+  width: 18px;
+
+  height: 18px;
+
+  accent-color: var(--primary);
+
+  margin-top: 2px;
+
+  cursor: pointer;
+
+}
+
+
+
+/* ==========================================================================
+
+   CARD NAVIGATION FOOTER
+
+   ========================================================================== */
+
+.card-foot {
+
+  padding: 18px 32px;
+
+  background: linear-gradient(180deg, #f7fbf9 0%, #ffffff 100%);
+
+  border-top: 1px solid rgba(11, 92, 102, 0.09);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 16px;
+
+  flex-wrap: wrap;
+
+}
+
+
+
+[data-theme="dark"] .card-foot {
+
+  background: linear-gradient(180deg, #132522 0%, #0f1d1b 100%);
+
+  border-color: rgba(25, 158, 140, 0.15);
+
+}
+
+
+
+.foot-helper-text {
+
+  font-size: 0.8rem;
+
+  color: var(--text-muted);
+
+  font-weight: 550;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+}
+
+
+
+.btn {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  font-family: inherit;
+
+  cursor: pointer;
+
+  border-radius: var(--radius-md);
+
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+  text-decoration: none;
+
+}
+
+
+
+/* Primary Button Suite (Desktop & Mobile) */
+
+.btn.primary,
+
+#nextBtn,
+
+#mobileNextBtn {
+
+  background: linear-gradient(135deg, #0b5c66 0%, #073b42 100%);
+
+  color: #ffffff;
+
+  border: 1.5px solid rgba(201, 162, 74, 0.45);
+
+  box-shadow: 0 4px 16px -2px rgba(11, 92, 102, 0.42), 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  font-weight: 800;
+
+  border-radius: var(--radius-md);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+  white-space: nowrap;
+
+}
+
+
+
+[data-theme="dark"] .btn.primary,
+
+[data-theme="dark"] #nextBtn,
+
+[data-theme="dark"] #mobileNextBtn {
+
+  background: linear-gradient(135deg, #0f7685 0%, #073b42 100%);
+
+  border-color: rgba(223, 168, 54, 0.45);
+
+  box-shadow: 0 4px 16px -2px rgba(25, 158, 140, 0.40);
+
+}
+
+
+
+.btn.primary:hover:not(:disabled),
+
+#nextBtn:hover:not(:disabled),
+
+#mobileNextBtn:hover:not(:disabled) {
+
+  background: linear-gradient(135deg, #0f7685 0%, #094b54 100%);
+
+  border-color: var(--accent-gold);
+
+  transform: translateY(-1.5px);
+
+  box-shadow: 0 8px 24px -2px rgba(11, 92, 102, 0.55);
+
+}
+
+
+
+.btn.primary:active:not(:disabled),
+
+#nextBtn:active:not(:disabled),
+
+#mobileNextBtn:active:not(:disabled) {
+
+  transform: scale(0.97);
+
+}
+
+
+
+.btn.primary:disabled,
+
+#nextBtn:disabled,
+
+#mobileNextBtn:disabled,
+
+#prevBtn:disabled,
+
+#mobilePrevBtn:disabled {
+
+  opacity: 0.35;
+
+  cursor: not-allowed;
+
+  pointer-events: none;
+
+  box-shadow: none !important;
+
+  transform: none !important;
+
+}
+
+
+
+/* Submit State (Step 24) */
+
+.btn.primary.is-submit,
+
+#nextBtn.is-submit,
+
+#mobileNextBtn.is-submit {
+
+  background: linear-gradient(135deg, #15803d 0%, #0b5c66 100%);
+
+  border-color: #4ade80;
+
+  box-shadow: 0 4px 18px rgba(22, 163, 74, 0.45);
+
+}
+
+
+
+.btn.primary.is-submit:hover:not(:disabled),
+
+#nextBtn.is-submit:hover:not(:disabled),
+
+#mobileNextBtn.is-submit:hover:not(:disabled) {
+
+  background: linear-gradient(135deg, #16a34a 0%, #073b42 100%);
+
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.60);
+
+}
+
+
+
+#nextBtn {
+
+  min-height: 50px;
+
+  padding: 0 32px;
+
+  font-size: 0.95rem;
+
+}
+
+
+
+#nextBtn svg,
+
+#mobileNextBtn svg {
+
+  transition: transform 0.2s ease;
+
+}
+
+
+
+#nextBtn:hover:not(:disabled) svg,
+
+#mobileNextBtn:hover:not(:disabled) svg {
+
+  transform: translateX(4px);
+
+}
+
+
+
+#prevBtn {
+
+  min-height: 50px;
+
+  padding: 0 22px;
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
+  background: #ffffff;
+
+  color: var(--text-sub);
+
+  border: 1.5px solid rgba(7, 59, 66, 0.16);
+
+  box-shadow: 0 1px 3px rgba(7, 59, 66, 0.04);
+
+}
+
+
+
+[data-theme="dark"] #prevBtn {
+
+  background: #122220;
+
+  border-color: rgba(25, 158, 140, 0.25);
+
+  color: #b1cdc6;
+
+}
+
+
+
+#prevBtn:hover:not(:disabled) {
+
+  background: var(--bg-subtle);
+
+  border-color: rgba(11, 92, 102, 0.35);
+
+  color: var(--primary);
+
+  transform: translateY(-1px);
+
+}
+
+
+
+/* ==========================================================================
+
+   EXECUTIVE MOBILE STICKY BOTTOM DOCK
+
+   ========================================================================== */
+
+.mobile-step-dock {
+
+  display: none;
+
+  position: fixed;
+
+  bottom: 0;
+
+  left: 0;
+
+  right: 0;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  background: var(--bg-surface-trans);
+
+  backdrop-filter: blur(24px) saturate(180%);
+
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+
+  border-top: 1px solid rgba(11, 92, 102, 0.14);
+
+  padding: 10px 14px calc(10px + var(--safe-bottom));
+
+  box-shadow: 0 -10px 32px rgba(7, 59, 66, 0.12), 0 -1px 3px rgba(7, 59, 66, 0.04);
+
+  z-index: 95;
+
+  transition: all 0.25s ease;
+
+}
+
+
+
+[data-theme="dark"] .mobile-step-dock {
+
+  background: rgba(15, 29, 27, 0.94);
+
+  border-top-color: rgba(25, 158, 140, 0.22);
+
+  box-shadow: 0 -10px 32px rgba(0, 0, 0, 0.6);
+
+}
+
+
+
+.mobile-dock-progress {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  height: 3px;
+
+  width: 0%;
+
+  background: linear-gradient(90deg, #0b5c66 0%, #c9a24a 50%, #16a34a 100%);
+
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  box-shadow: 0 0 8px rgba(11, 92, 102, 0.4);
+
+}
+
+
+
+.mobile-dock-inner {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  max-width: 600px;
+
+  margin: 0 auto;
+
+}
+
+
+
+/* Tactile Mobile Previous Button */
+
+#mobilePrevBtn {
+
+  width: 48px;
+
+  height: 48px;
+
+  min-width: 48px;
+
+  border-radius: var(--radius-md);
+
+  background: var(--bg-surface);
+
+  border: 1.5px solid var(--border-medium);
+
+  color: var(--text-main);
+
+  box-shadow: 0 2px 6px rgba(7, 59, 66, 0.06);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 0;
+
+  cursor: pointer;
+
+  flex-shrink: 0;
+
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+
+
+[data-theme="dark"] #mobilePrevBtn {
+
+  background: #122220;
+
+  border-color: rgba(25, 158, 140, 0.25);
+
+  color: #b1cdc6;
+
+}
+
+
+
+#mobilePrevBtn:hover:not(:disabled) {
+
+  background: var(--primary-light);
+
+  color: var(--primary);
+
+  border-color: var(--primary);
+
+  transform: translateY(-1.5px);
+
+  box-shadow: 0 4px 12px rgba(11, 92, 102, 0.15);
+
+}
+
+
+
+#mobilePrevBtn:active:not(:disabled) {
+
+  transform: scale(0.95);
+
+}
+
+
+
+#mobilePrevBtn svg {
+
+  width: 18px;
+
+  height: 18px;
+
+  stroke-width: 2.5;
+
+  stroke: currentColor;
+
+}
+
+
+
+/* Center Interactive Clinical Status Capsule */
+
+.mobile-step-pill-btn {
+
+  flex: 1;
+
+  min-height: 48px;
+
+  height: 48px;
+
+  background: linear-gradient(135deg, rgba(238, 246, 245, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%);
+
+  border: 1.5px solid rgba(11, 92, 102, 0.18);
+
+  border-radius: var(--radius-md);
+
+  padding: 6px 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 8px rgba(7, 59, 66, 0.05);
+
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+  min-width: 0;
+
+  text-decoration: none;
+
+}
+
+
+
+[data-theme="dark"] .mobile-step-pill-btn {
+
+  background: linear-gradient(135deg, #142724 0%, #0f1d1b 100%);
+
+  border-color: rgba(25, 158, 140, 0.28);
+
+}
+
+
+
+.mobile-step-pill-btn:hover {
+
+  border-color: var(--primary);
+
+  background: var(--bg-surface);
+
+  transform: translateY(-1.5px);
+
+  box-shadow: 0 6px 16px rgba(11, 92, 102, 0.14);
+
+}
+
+
+
+.mobile-step-pill-btn:active {
+
+  transform: scale(0.98);
+
+}
+
+
+
+.mobile-pill-text-col {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  min-width: 0;
+
+  flex: 1;
+
+  text-align: left;
+
+}
+
+
+
+.mobile-step-pill-top {
+
+  font-family: var(--font-heading);
+
+  font-size: 0.65rem;
+
+  font-weight: 850;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: var(--primary);
+
+  line-height: 1.2;
+
+}
+
+
+
+[data-theme="dark"] .mobile-step-pill-top {
+
+  color: #6ee7d5;
+
+}
+
+
+
+.mobile-step-pill-title {
+
+  font-size: 0.84rem;
+
+  font-weight: 750;
+
+  color: var(--text-main);
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  width: 100%;
+
+  line-height: 1.3;
+
+}
+
+
+
+.mobile-pill-chevron {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 24px;
+
+  height: 24px;
+
+  border-radius: var(--radius-xs);
+
+  background: rgba(11, 92, 102, 0.08);
+
+  color: var(--primary);
+
+  flex-shrink: 0;
+
+  margin-left: 6px;
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+[data-theme="dark"] .mobile-pill-chevron {
+
+  background: rgba(25, 158, 140, 0.18);
+
+  color: #6ee7d5;
+
+}
+
+
+
+.mobile-step-pill-btn:hover .mobile-pill-chevron {
+
+  background: var(--primary);
+
+  color: #ffffff;
+
+  transform: translateY(-2px);
+
+}
+
+
+
+/* Primary Mobile Next Button */
+
+#mobileNextBtn {
+
+  min-height: 48px;
+
+  height: 48px;
+
+  padding: 0 20px;
+
+  font-size: 0.90rem;
+
+  letter-spacing: -0.01em;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+}
+
+
+
+#mobileNextBtn svg {
+
+  width: 16px;
+
+  height: 16px;
+
+  stroke-width: 2.5;
+
+}
+
+
+
+/* ==========================================================================
+
+   MOBILE DRAWER SHEET
+
+   ========================================================================== */
+
+.drawer-backdrop {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(7, 59, 66, 0.6);
+
+  backdrop-filter: blur(6px);
+
+  z-index: 200;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: opacity 0.25s ease;
+
+  display: flex;
+
+  align-items: flex-end;
+
+}
+
+
+
+.drawer-backdrop.open {
+
+  opacity: 1;
+
+  pointer-events: auto;
+
+}
+
+
+
+.drawer-sheet {
+
+  width: 100%;
+
+  max-height: 85vh;
+
+  background: var(--bg-surface);
+
+  border-radius: 24px 24px 0 0;
+
+  padding: 16px 20px calc(20px + var(--safe-bottom));
+
+  box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.2);
+
+  display: flex;
+
+  flex-direction: column;
+
+  transform: translateY(100%);
+
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+
+
+.drawer-backdrop.open .drawer-sheet {
+
+  transform: translateY(0);
+
+}
+
+
+
+.drawer-handle {
+
+  width: 44px;
+
+  height: 5px;
+
+  border-radius: var(--radius-full);
+
+  background: var(--border-medium);
+
+  margin: 0 auto 14px;
+
+}
+
+
+
+.drawer-head {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 12px;
+
+}
+
+
+
+.drawer-close-btn {
+
+  background: var(--bg-subtle);
+
+  border: 1px solid var(--border-medium);
+
+  width: 32px;
+
+  height: 32px;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  display: grid;
+
+  place-items: center;
+
+  color: var(--text-sub);
+
+}
+
+
+
+.drawer-body {
+
+  overflow-y: auto;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+}
+
+
+
+/* ==========================================================================
+
+   MODAL SUITE (Confirmations, Success, Alert)
+
+   ========================================================================== */
+
+.modal-overlay {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(7, 59, 66, 0.65);
+
+  backdrop-filter: blur(8px);
+
+  z-index: 300;
+
+  display: grid;
+
+  place-items: center;
+
+  padding: 16px;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: opacity 0.25s ease;
+
+}
+
+
+
+.modal-overlay.open {
+
+  opacity: 1;
+
+  pointer-events: auto;
+
+}
+
+
+
+.modal-box {
+
+  background: var(--bg-surface);
+
+  border-radius: var(--radius-xl);
+
+  border: 1px solid var(--border-subtle);
+
+  box-shadow: var(--shadow-lg);
+
+  max-width: 520px;
+
+  width: 100%;
+
+  padding: 28px 24px;
+
+  position: relative;
+
+  transform: scale(0.95);
+
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+
+
+.modal-overlay.open .modal-box {
+
+  transform: scale(1);
+
+}
+
+
+
+.modal-head {
+
+  text-align: center;
+
+  margin-bottom: 18px;
+
+}
+
+
+
+.modal-icon-wrap {
+
+  width: 56px;
+
+  height: 56px;
+
+  border-radius: 50%;
+
+  background: var(--primary-light);
+
+  color: var(--primary);
+
+  display: grid;
+
+  place-items: center;
+
+  margin: 0 auto 12px;
+
+  border: 2px solid rgba(11, 92, 102, 0.2);
+
+}
+
+
+
+.modal-icon-wrap svg {
+
+  width: 28px;
+
+  height: 28px;
+
+}
+
+
+
+.modal-head h3 {
+
+  font-family: var(--font-heading);
+
+  font-size: 1.35rem;
+
+  font-weight: 850;
+
+  color: var(--text-main);
+
+}
+
+
+
+.modal-body {
+
+  font-size: 0.9rem;
+
+  color: var(--text-sub);
+
+  line-height: 1.55;
+
+  margin-bottom: 22px;
+
+  text-align: center;
+
+}
+
+
+
+.modal-actions {
+
+  display: flex;
+
+  gap: 12px;
+
+  justify-content: center;
+
+}
+
+
+
+/* ==========================================================================
+
+   REVIEW CASE DOSSIER (Step 24)
+
+   ========================================================================== */
+
+.review-stats-bar,
+
+.review-stats-card {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+
+  gap: 14px;
+
+  background: linear-gradient(135deg, var(--primary-light) 0%, rgba(201, 162, 74, 0.09) 100%);
+
+  border: 1px solid rgba(11, 92, 102, 0.16);
+
+  border-radius: var(--radius-lg);
+
+  padding: 18px 22px;
+
+  margin-bottom: 24px;
+
+  box-shadow: 0 2px 8px rgba(7, 59, 66, 0.04);
+
+}
+
+
+
+[data-theme="dark"] .review-stats-bar,
+
+[data-theme="dark"] .review-stats-card {
+
+  background: linear-gradient(135deg, #102623 0%, #152219 100%);
+
+  border-color: rgba(25, 158, 140, 0.25);
+
+}
+
+
+
+.review-stat-card,
+
+.review-stat-item {
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+
+.review-stat-val {
+
+  font-family: var(--font-heading);
+
+  font-size: 1.45rem;
+
+  font-weight: 850;
+
+  color: var(--primary);
+
+  line-height: 1.2;
+
+}
+
+
+
+[data-theme="dark"] .review-stat-val {
+
+  color: #6ee7d5;
+
+}
+
+
+
+.review-stat-label {
+
+  font-size: 0.74rem;
+
+  color: var(--text-muted);
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.04em;
+
+  margin-top: 3px;
+
+}
+
+
+
+.review-section-block {
+
+  background: var(--bg-surface);
+
+  border: 1px solid var(--border-medium);
+
+  border-radius: var(--radius-lg);
+
+  margin-bottom: 16px;
+
+  overflow: hidden;
+
+  box-shadow: 0 1px 3px rgba(7, 59, 66, 0.04);
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+.review-section-block:hover {
+
+  border-color: rgba(11, 92, 102, 0.28);
+
+  box-shadow: 0 6px 18px rgba(7, 59, 66, 0.06);
+
+}
+
+
+
+.review-section-head {
+
+  padding: 12px 18px;
+
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, var(--bg-subtle) 100%);
+
+  border-bottom: 1px solid var(--border-subtle);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 12px;
+
+}
+
+
+
+[data-theme="dark"] .review-section-head {
+
+  background: linear-gradient(180deg, #142724 0%, #0f1d1b 100%);
+
+}
+
+
+
+.review-section-title {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+
+}
+
+
+
+.review-section-badge {
+
+  width: 26px;
+
+  height: 26px;
+
+  border-radius: 8px;
+
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+
+  color: #ffffff;
+
+  font-size: 0.74rem;
+
+  font-weight: 850;
+
+  display: grid;
+
+  place-items: center;
+
+  flex-shrink: 0;
+
+  box-shadow: 0 2px 6px rgba(11, 92, 102, 0.22);
+
+}
+
+
+
+.review-title-wrap {
+
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+
+}
+
+
+
+.review-title-en {
+
+  font-size: 0.94rem;
+
+  font-weight: 800;
+
+  color: var(--text-main);
+
+  letter-spacing: -0.015em;
+
+}
+
+
+
+.review-title-ta {
+
+  font-size: 0.78rem;
+
+  color: var(--primary);
+
+  font-weight: 550;
+
+}
+
+
+
+/* Designed Edit Section Button */
+
+.review-edit-btn,
+
+.btn-review-edit {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  font-family: inherit;
+
+  font-size: 0.78rem;
+
+  font-weight: 750;
+
+  letter-spacing: -0.01em;
+
+  color: var(--primary);
+
+  background: #ffffff;
+
+  border: 1.5px solid rgba(11, 92, 102, 0.22);
+
+  padding: 6px 14px;
+
+  border-radius: var(--radius-full);
+
+  cursor: pointer;
+
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+
+  box-shadow: 0 1px 3px rgba(7, 59, 66, 0.05);
+
+  flex-shrink: 0;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+}
+
+
+
+.review-edit-btn svg,
+
+.btn-review-edit svg {
+
+  width: 13px;
+
+  height: 13px;
+
+  stroke: var(--primary);
+
+  stroke-width: 2.3;
+
+  transition: transform 0.2s ease, stroke 0.2s ease;
+
+  flex-shrink: 0;
+
+}
+
+
+
+.review-edit-btn:hover,
+
+.btn-review-edit:hover {
+
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+
+  color: #ffffff;
+
+  border-color: var(--primary);
+
+  box-shadow: 0 4px 14px rgba(11, 92, 102, 0.25);
+
+  transform: translateY(-1px);
+
+}
+
+
+
+.review-edit-btn:hover svg,
+
+.btn-review-edit:hover svg {
+
+  stroke: #ffffff;
+
+  transform: rotate(-10deg) scale(1.1);
+
+}
+
+
+
+.review-edit-btn:active,
+
+.btn-review-edit:active {
+
+  transform: scale(0.97);
+
+}
+
+
+
+[data-theme="dark"] .review-edit-btn,
+
+[data-theme="dark"] .btn-review-edit {
+
+  background: #142a26;
+
+  border-color: rgba(25, 158, 140, 0.35);
+
+  color: #6ee7d5;
+
+}
+
+
+
+[data-theme="dark"] .review-edit-btn svg,
+
+[data-theme="dark"] .btn-review-edit svg {
+
+  stroke: #6ee7d5;
+
+}
+
+
+
+[data-theme="dark"] .review-edit-btn:hover,
+
+[data-theme="dark"] .btn-review-edit:hover {
+
+  background: linear-gradient(135deg, #107869 0%, #073b42 100%);
+
+  color: #ffffff;
+
+  border-color: #6ee7d5;
+
+}
+
+
+
+[data-theme="dark"] .review-edit-btn:hover svg,
+
+[data-theme="dark"] .btn-review-edit:hover svg {
+
+  stroke: #ffffff;
+
+}
+
+
+
+.review-section-body {
+
+  padding: 12px 18px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+}
+
+
+
+.review-data-row {
+
+  display: grid;
+
+  grid-template-columns: 240px 1fr;
+
+  gap: 14px;
+
+  padding: 8px 0;
+
+  border-bottom: 1px solid var(--border-subtle);
+
+  font-size: 0.88rem;
+
+}
+
+
+
+.review-data-row:last-child {
+
+  border-bottom: none;
+
+}
+
+
+
+.review-label-en {
+
+  font-weight: 650;
+
+  color: var(--text-main);
+
+}
+
+
+
+.review-label-ta {
+
+  font-size: 0.76rem;
+
+  color: var(--primary);
+
+  margin-top: 1px;
+
+}
+
+
+
+.review-val {
+
+  color: var(--text-sub);
+
+  word-break: break-word;
+
+}
+
+
+
+.review-val.empty-val {
+
+  color: var(--text-muted);
+
+  font-style: italic;
+
+}
+
+
+
+/* ==========================================================================
+
+   RESPONSIVENESS (Flawless down to 320px Mobile)
+
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+
+  .layout {
+
+    grid-template-columns: 260px minmax(0, 1fr);
+
+    gap: 18px;
+
+  }
+
+}
+
+
+
+@media (max-width: 820px) {
+
+  .shell {
+
+    padding: 14px 14px calc(85px + var(--safe-bottom));
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+  }
+
+  .layout {
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    gap: 16px;
+
+  }
+
+  .sidebar {
+
+    display: none !important;
+
+  }
+
+  .mobile-step-dock {
+
+    display: block;
+
+  }
+
+  .form-card {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border-radius: var(--radius-lg);
+
+  }
+
+  .card-head {
+
+    padding: 20px 18px 14px;
+
+  }
+
+  .form-body {
+
+    padding: 20px 16px;
+
+  }
+
+  .fields-grid {
+
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+
+    width: 100%;
+
+  }
+
+  .card-foot {
+
+    display: none; /* Replaced by sticky mobile bottom dock */
+
+  }
+
+  .clinic-docket-header {
+
+    flex-direction: column;
+
+    align-items: stretch; /* Stretches 100% full width */
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 16px 18px;
+
+    gap: 14px;
+
+    border-radius: var(--radius-lg);
+
+    margin-bottom: 18px;
+
+  }
+
+  .docket-brand-card {
+
+    width: 100%;
+
+    gap: 14px;
+
+  }
+
+  .doctor-portrait-avatar {
+
+    width: 56px;
+
+    height: 56px;
+
+    flex-shrink: 0;
+
+  }
+
+  .docket-doctor-name {
+
+    font-size: 1.15rem;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+  }
+
+  .docket-quick-pills {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+  }
+
+  .docket-pill {
+
+    flex: 1 1 auto;
+
+    justify-content: center;
+
+    padding: 6px 12px;
+
+    font-size: 0.74rem;
+
+  }
+
+  .topbar {
+
+    padding: 10px 14px;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+  }
+
+  .top-actions {
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    justify-content: flex-end;
+
+  }
+
+}
+
+
+
+@media (max-width: 680px) {
+
+  .review-data-row {
+
+    grid-template-columns: 1fr;
+
+    gap: 4px;
+
+  }
+
+  .lang-segmented-group .lang-label-sub {
+
+    display: none;
+
+  }
+
+  .lang-seg-btn {
+
+    padding: 4px 10px;
+
+    font-size: 0.74rem;
+
+  }
+
+}
+
+
+
+@media (max-width: 580px) {
+
+  .topbar {
+
+    padding: 8px 12px;
+
+    gap: 8px;
+
+    flex-wrap: nowrap;
+
+    justify-content: space-between;
+
+  }
+
+  .brand-logo {
+
+    height: 30px;
+
+  }
+
+  .top-actions {
+
+    flex-wrap: nowrap;
+
+    gap: 6px;
+
+    justify-content: flex-end;
+
+  }
+
+  .save-status-pill {
+
+    display: none;
+
+  }
+
+  .top-actions .btn-ctrl span.label-text {
+
+    display: none;
+
+  }
+
+  .lang-seg-btn {
+
+    padding: 4px 7px;
+
+    font-size: 0.72rem;
+
+    gap: 4px;
+
+  }
+
+  .lang-seg-btn svg {
+
+    width: 12px;
+
+    height: 12px;
+
+  }
+
+  .btn-ctrl {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    padding: 0;
+
+  }
+
+}
+
+
+
+@media (max-width: 480px) {
+
+  .shell {
+
+    padding: 10px 10px calc(85px + var(--safe-bottom));
+
+  }
+
+  .topbar {
+
+    padding: 8px 10px;
+
+  }
+
+  .brand {
+
+    gap: 6px;
+
+  }
+
+  .brand-logo {
+
+    height: 28px;
+
+  }
+
+}
+
+
+
+@media (max-width: 350px) {
+
+  .topbar {
+
+    padding: 6px 8px;
+
+    gap: 4px;
+
+  }
+
+  .brand-logo {
+
+    height: 24px;
+
+  }
+
+  .lang-seg-btn {
+
+    padding: 3px 5px;
+
+    font-size: 0.65rem;
+
+  }
+
+  .lang-seg-btn svg {
+
+    display: none;
+
+  }
+
+  .btn-ctrl {
+
+    width: 30px;
+
+    height: 30px;
+
+    min-width: 30px;
+
+  }
+
+  .doctor-portrait-avatar {
+
+    width: 48px;
+
+    height: 48px;
+
+  }
+
+  .docket-doctor-name {
+
+    font-size: 1.05rem;
+
+  }
+
+  .docket-doctor-title {
+
+    font-size: 0.76rem;
+
+  }
+
+  .docket-title-ta {
+
+    font-size: 0.70rem;
+
+  }
+
+  .docket-pill {
+
+    padding: 5px 8px;
+
+    font-size: 0.70rem;
+
+  }
+
+  .card-head {
+
+    padding: 16px 14px 12px;
+
+  }
+
+  .form-body {
+
+    padding: 16px 12px;
+
+  }
+
+  .step-title-en {
+
+    font-size: 1.3rem;
+
+  }
+
+  .step-title-ta {
+
+    font-size: 0.96rem;
+
+  }
+
+  .subtitle-en {
+
+    font-size: 0.82rem;
+
+  }
+
+  .subtitle-ta {
+
+    font-size: 0.75rem;
+
+  }
+
+  .mobile-step-dock {
+
+    padding: 8px 10px calc(8px + var(--safe-bottom));
+
+  }
+
+  .mobile-dock-inner {
+
+    gap: 8px;
+
+  }
+
+  #mobilePrevBtn {
+
+    width: 44px;
+
+    height: 44px;
+
+    min-width: 44px;
+
+  }
+
+  .mobile-step-pill-btn {
+
+    min-height: 44px;
+
+    height: 44px;
+
+    padding: 4px 10px;
+
+  }
+
+  .mobile-step-pill-top {
+
+    font-size: 0.62rem;
+
+  }
+
+  .mobile-step-pill-title {
+
+    font-size: 0.78rem;
+
+  }
+
+  .mobile-pill-chevron {
+
+    width: 20px;
+
+    height: 20px;
+
+  }
+
+  #mobileNextBtn {
+
+    min-height: 44px;
+
+    height: 44px;
+
+    padding: 0 14px;
+
+    font-size: 0.85rem;
+
+    gap: 6px;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+<body data-lang-mode="both">
+
+
+
+<!-- ======================================================================
+
+     TOP NAVIGATION BAR (Docked at top: 0 with clean z-index)
+
+     ====================================================================== -->
+
+<div class="topbar-wrapper">
+
+  <header class="topbar" id="appTopbar">
+
+    <div class="brand">
+
+      <div class="brand-logo-wrap">
+
+        <img src="logo.png" alt="Prana Homeo Care Logo" class="brand-logo" onerror="if(this.src.indexOf('logo.png')!==-1&&this.src.indexOf('/static/')===-1){this.src='/static/logo.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}" />
+
+        <div class="logo-fallback" style="display:none;" title="Prana Homeo Care">
+
+          <svg viewBox="0 0 24 24" class="svg-icon">
+
+            <path d="M12 2v20M2 12h20" stroke-width="3" stroke-linecap="round"/>
+
+          </svg>
+
+        </div>
+
+      </div>
+
+      <h1 class="sr-only">Prana HomeoCare — Clinical Case Record</h1>
+
+    </div>
+
+
+
+    <div class="top-actions">
+
+      <!-- 3-Language Segmented Switcher (Default: Both) -->
+
+      <div class="lang-segmented-group" id="langSegmentedGroup" role="group" aria-label="Language Mode">
+
+        <button type="button" class="lang-seg-btn active" data-lang="both" id="btnLangBoth" title="Bilingual: English &amp; Tamil">
+
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width:14px;height:14px;">
+
+            <circle cx="12" cy="12" r="10"></circle>
+
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+
+          </svg>
+
+          <span><span class="lang-label-main">Both</span><span class="lang-label-sub"> (இருமொழி)</span></span>
+
+        </button>
+
+        <button type="button" class="lang-seg-btn" data-lang="en" id="btnLangEn" title="English only">
+
+          <span>English</span>
+
+        </button>
+
+        <button type="button" class="lang-seg-btn" data-lang="ta" id="btnLangTa" title="தமிழ் மட்டும்">
+
+          <span>தமிழ்</span>
+
+        </button>
+
+      </div>
+
+
+
+      <!-- Auto-save Pill -->
+
+      <div class="save-status-pill saved" id="saveStatusPill" title="Draft saved in this browser">
+
+        <span class="indicator-dot"></span>
+
+        <span id="saveStatusText">Saved</span>
+
+      </div>
+
+
+
+      <!-- Quick Save Draft button -->
+
+      <button class="btn-ctrl" id="saveDraftBtn" type="button" title="Save draft to this device (Ctrl+S)">
+
+        <svg class="svg-icon" viewBox="0 0 24 24">
+
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+
+          <polyline points="17 21 17 13 7 13 7 21"></polyline>
+
+          <polyline points="7 3 7 8 15 8"></polyline>
+
+        </svg>
+
+        <span class="label-text" id="saveDraftLabel">Save</span>
+
+      </button>
+
+
+
+      <!-- Dark / Light Mode Switcher with Vector Sun/Moon -->
+
+      <button class="btn-ctrl theme-toggle" id="themeToggleBtn" type="button" aria-label="Toggle theme">
+
+        <svg class="svg-icon" id="themeIcon" viewBox="0 0 24 24">
+
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+
+        </svg>
+
+      </button>
+
+    </div>
+
+  </header>
+
+</div>
+
+
+
+<div class="shell">
+
+
+
+  <!-- ======================================================================
+
+       HERO BANNER
+
+       ====================================================================== -->
+
+  <section class="clinic-docket-header" id="heroBanner">
+
+    <div class="docket-brand-card">
+
+      <div class="doctor-portrait-avatar">
+
+        <img src="srinivas_dr.jpeg" alt="Dr. G. Srinivasan M.D.(Hom)" class="doctor-photo" onerror="if(this.src.indexOf('srinivas_dr.jpeg')!==-1&&this.src.indexOf('/static/')===-1){this.src='/static/srinivas_dr.jpeg';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}" />
+
+        <div class="doctor-photo-fallback" style="display:none;">
+
+          <svg viewBox="0 0 24 24" class="svg-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+
+        </div>
+
+        <span class="avatar-verified-badge" title="Verified Physician &amp; Clinic">
+
+          <svg viewBox="0 0 24 24" class="svg-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+
+        </span>
+
+      </div>
+
+
+
+      <div class="docket-doctor-meta">
+
+        <div class="docket-eyebrow">
+
+          <span class="docket-tag">CLINICAL INTAKE</span>
+
+          <span class="docket-bullet">•</span>
+
+          <span class="docket-subtag">PRANA HOMEO CARE</span>
+
+        </div>
+
+        <h2 class="docket-doctor-name">Dr. G. Srinivasan <span class="docket-degree">M.D.(Hom)</span></h2>
+
+        <p class="docket-doctor-title">
+
+          Specialist in Paediatric &amp; Classical Constitutional Homeopathy
+
+          <span class="docket-title-ta lang-bilingual-sub">குழந்தை நலம் மற்றும் செவ்வியல் ஹோமியோபதி சிறப்பு மருத்துவர்</span>
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="docket-quick-pills">
+
+      <div class="docket-pill">
+
+        <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+
+        <span><strong>23</strong> Sections</span>
+
+      </div>
+
+      <div class="docket-pill">
+
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+
+        <span>Auto-Saved</span>
+
+      </div>
+
+      <div class="docket-pill">
+
+        <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+
+        <span>Encrypted &amp; Confidential</span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ======================================================================
+
+       MAIN CONTENT: TWO-COLUMN LAYOUT
+
+       ====================================================================== -->
+
+  <div class="layout">
+
+
+
+    <!-- DESKTOP / TABLET SIDEBAR NAVIGATION -->
+
+    <aside class="sidebar" id="mainSidebar" aria-label="Sections navigation">
+
+      <div class="sidebar-header">
+
+        <div class="progress-row">
+
+          <span class="progress-title" id="progressTitle">Your progress</span>
+
+          <span class="progress-pct" id="progressPct">0%</span>
+
+        </div>
+
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+
+          <div class="progress-fill" id="progressFill"></div>
+
+        </div>
+
+        <div class="progress-meta-row">
+
+          <span id="progressMeta">Section 1 of 23</span>
+
+          <span id="progressFilledCount">0 answered</span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Quick Step Search Filter with Fixed SVG Icon -->
+
+      <div class="step-search-wrap">
+
+        <svg class="step-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+          <circle cx="11" cy="11" r="8"></circle>
+
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+
+        </svg>
+
+        <input type="text" class="step-search-input" id="sidebarSearchInput" placeholder="Filter sections / தேடு…" aria-label="Filter sections">
+
+        <button type="button" class="search-clear-btn" id="sidebarSearchClear" style="display:none;" title="Clear search" aria-label="Clear search"><svg viewBox="0 0 24 24" class="svg-icon" style="width:12px;height:12px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+
+      </div>
+
+
+
+      <!-- Step List Container with Categorized Chapters -->
+
+      <nav class="step-list-wrap" id="sidebarStepList" aria-label="Steps list"></nav>
+
+
+
+      <!-- Sidebar Quick Utility Buttons -->
+
+      <div class="sidebar-footer">
+
+        <button type="button" class="btn-ctrl" id="sidebarDownloadBtn" title="Download backup JSON">
+
+          <svg class="svg-icon" viewBox="0 0 24 24">
+
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+
+            <polyline points="7 10 12 15 17 10"></polyline>
+
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+
+          </svg>
+
+          <span id="sidebarBackupLabel">Backup</span>
+
+        </button>
+
+        <button type="button" class="btn-ctrl" id="sidebarClearBtn" title="Reset and start fresh">
+
+          <svg class="svg-icon" viewBox="0 0 24 24">
+
+            <polyline points="3 6 5 6 21 6"></polyline>
+
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+
+          </svg>
+
+          <span id="sidebarResetLabel">Reset</span>
+
+        </button>
+
+      </div>
+
+    </aside>
+
+
+
+    <!-- FORM CARD -->
+
+    <main class="form-card" id="formCard">
+
+      <!-- Card Header: Languages Handled According to Mode -->
+
+      <div class="card-head">
+
+        <div class="card-head-kicker-row">
+
+          <span class="step-kicker-badge" id="stepKicker">STEP 01 / 23</span>
+
+          <span class="step-est-time" id="stepEstTime"><svg class="svg-icon" viewBox="0 0 24 24" style="width:12px;height:12px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <span>1–2 mins</span></span>
+
+        </div>
+
+        <div class="card-head-titles">
+
+          <h2 id="stepTitleEn" class="step-title-en">Patient registration</h2>
+
+          <h3 id="stepTitleTa" class="step-title-ta lang-bilingual-sub">நோயாளர் பதிவு விவரங்கள்</h3>
+
+        </div>
+
+        <div class="card-head-subtitles">
+
+          <p class="subtitle-en" id="stepSubtitleEn">Complete the patient details before starting the case history.</p>
+
+          <p class="subtitle-ta lang-bilingual-sub" id="stepSubtitleTa">நோயாளர் வரலாற்றைத் தொடங்குவதற்கு முன் நோயாளி விவரங்களை நிரப்பவும்.</p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Form Body Container -->
+
+      <form id="caseForm" novalidate onsubmit="return false;">
+
+        <div class="form-body" id="formBody"></div>
+
+
+
+        <!-- Card Footer Navigation (Desktop & Large screens) -->
+
+        <div class="card-foot" id="cardFoot">
+
+          <button class="btn" id="prevBtn" type="button">
+
+            <svg class="svg-icon" viewBox="0 0 24 24">
+
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+
+              <polyline points="12 19 5 12 12 5"></polyline>
+
+            </svg>
+
+            <span id="prevBtnLabel">Previous</span>
+
+          </button>
+
+          <span class="foot-helper-text" id="footNote">
+
+            You can review your answers before final submission.
+
+          </span>
+
+          <button class="btn primary" id="nextBtn" type="button">
+
+            <span id="nextBtnLabel">Continue</span>
+
+            <svg class="svg-icon" viewBox="0 0 24 24">
+
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+
+              <polyline points="12 5 19 12 12 19"></polyline>
+
+            </svg>
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </main>
+
+
+
+  </div>
+
+</div>
+
+
+
+<!-- ======================================================================
+
+     MOBILE STICKY BOTTOM DOCK (For Small Screens & Phones)
+
+     ====================================================================== -->
+
+<div class="mobile-step-dock" id="mobileDock" aria-label="Mobile navigation">
+
+  <div class="mobile-dock-progress" id="mobileDockProgress"></div>
+
+  <div class="mobile-dock-inner">
+
+    <button class="btn" id="mobilePrevBtn" type="button" aria-label="Previous step" title="Previous section">
+
+      <svg class="svg-icon" viewBox="0 0 24 24">
+
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+
+        <polyline points="12 19 5 12 12 5"></polyline>
+
+      </svg>
+
+    </button>
+
+
+
+    <button class="mobile-step-pill-btn" id="mobileDrawerTriggerBtn" type="button" title="View all case sections">
+
+      <div class="mobile-pill-text-col">
+
+        <span class="mobile-step-pill-top" id="mobileKickerText">Step 1 of 23</span>
+
+        <span class="mobile-step-pill-title" id="mobileStepTitle">Patient registration</span>
+
+      </div>
+
+      <span class="mobile-pill-chevron" aria-hidden="true">
+
+        <svg viewBox="0 0 24 24" class="svg-icon" style="width:13px;height:13px;stroke-width:2.8;">
+
+          <polyline points="18 15 12 9 6 15"></polyline>
+
+        </svg>
+
+      </span>
+
+    </button>
+
+
+
+    <button class="btn primary" id="mobileNextBtn" type="button" aria-label="Next step">
+
+      <span id="mobileNextLabel">Next</span>
+
+      <svg class="svg-icon" viewBox="0 0 24 24">
+
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+
+        <polyline points="12 5 19 12 12 19"></polyline>
+
+      </svg>
+
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- ======================================================================
+
+     MOBILE DRAWER / MODAL SHEET (Step Quick Jump Selector)
+
+     ====================================================================== -->
+
+<div class="drawer-backdrop" id="stepDrawerBackdrop" role="dialog" aria-modal="true" aria-label="All Sections">
+
+  <div class="drawer-sheet">
+
+    <div class="drawer-handle"></div>
+
+    <div class="drawer-head">
+
+      <div>
+
+        <h3 id="drawerHeading">All Case Sections</h3>
+
+        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;" id="drawerSub">Jump directly to any section</p>
+
+      </div>
+
+      <button class="drawer-close-btn" id="drawerCloseBtn" type="button" aria-label="Close">
+
+        <svg class="svg-icon" viewBox="0 0 24 24">
+
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+
+        </svg>
+
+      </button>
+
+    </div>
+
+
+
+    <!-- Drawer search input -->
+
+    <div class="step-search-wrap" style="margin-bottom:12px;">
+
+      <svg class="step-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+        <circle cx="11" cy="11" r="8"></circle>
+
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+
+      </svg>
+
+      <input type="text" class="step-search-input" id="drawerSearchInput" placeholder="Filter sections / தேடு…" aria-label="Filter sections">
+
+      <button type="button" class="search-clear-btn" id="drawerSearchClear" style="display:none;" title="Clear search" aria-label="Clear search"><svg viewBox="0 0 24 24" class="svg-icon" style="width:12px;height:12px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+
+    </div>
+
+
+
+    <div class="drawer-body" id="drawerStepList"></div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ======================================================================
+
+     CONFIRMATION / ALERT MODAL
+
+     ====================================================================== -->
+
+<div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true">
+
+  <div class="modal-box">
+
+    <div class="modal-head">
+
+      <div class="modal-icon-wrap" id="modalIconWrap">
+
+        <svg class="svg-icon" viewBox="0 0 24 24">
+
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+
+        </svg>
+
+      </div>
+
+      <h3 id="modalTitle">Confirmation</h3>
+
+    </div>
+
+    <div class="modal-body-text" id="modalBodyText"></div>
+
+    <div class="modal-actions" id="modalActions"></div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ======================================================================
+
+     TOAST CONTAINER
+
+     ====================================================================== -->
+
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+
+
+<!-- ======================================================================
+
+     JAVASCRIPT: APPLICATION LOGIC & DATA
+
+     ====================================================================== -->
+
+<script>
+
+/* ==========================================================================
+
+   CLINICAL CHAPTER DEFINITION WITH VECTOR SVG ICONS
+
+   ========================================================================== */
+
+const chapters = [
+
+  {
+
+    id: "identity",
+
+    title: "Patient Identity & Consent",
+
+    ta: "நோயாளி அடையாளம் & ஒப்புதல்",
+
+    iconSvg: `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+
+    stepIndices: [0, 1]
+
+  },
+
+  {
+
+    id: "complaints",
+
+    title: "Chief Complaints & History",
+
+    ta: "குறைகள் & நோய் வரலாறு",
+
+    iconSvg: `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"></path><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"></path><circle cx="20" cy="10" r="2"></circle></svg>`,
+
+    stepIndices: [2, 3, 4]
+
+  },
+
+  {
+
+    id: "generals",
+
+    title: "Physical Generals & Modalities",
+
+    ta: "உடல் பொதுவான அறிகுறிகள் & விருப்பங்கள்",
+
+    iconSvg: `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>`,
+
+    stepIndices: [5, 6, 7, 8, 9, 10, 11]
+
+  },
+
+  {
+
+    id: "systems",
+
+    title: "Systems & Reproductive Health",
+
+    ta: "உறுப்பு மண்டலங்கள் & இனப்பெருக்க நலம்",
+
+    iconSvg: `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 7.65l.77.78L12 20.67l7.65-7.66.77-.78a5.4 5.4 0 0 0 0-7.65z"></path></svg>`,
+
+    stepIndices: [12, 13, 14, 15]
+
+  },
+
+  {
+
+    id: "mind",
+
+    title: "Sleep, Mind & Disposition",
+
+    ta: "தூக்கம், மனம் & இயல்பு",
+
+    iconSvg: `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04Z"></path></svg>`,
+
+    stepIndices: [16, 17, 18, 19]
+
+  },
+
+  {
+
+    id: "etiology",
+
+    title: "Etiology, Childhood & Notes",
+
+    ta: "காரணங்கள், குழந்தைப் பருவம் & குறிப்புகள்",
+
+    iconSvg: `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`,
+
+    stepIndices: [20, 21, 22]
+
+  }
+
+];
+
+
+
+const steps = [
+
+  {"title": "Patient registration", "ta": "நோயாளர் பதிவு விவரங்கள்", "sub": "Complete the patient details before starting the case history.", "taSub": "நோயாளர் வரலாற்றைத் தொடங்குவதற்கு முன் நோயாளி விவரங்களை நிரப்பவும்.", "fields": [["patientName", "Patient name", "நோயாளியின் பெயர்", "text", true], ["occupation", "Occupation", "தொழில்", "text", false], ["regDate", "Registration date", "பதிவு தேதி", "date", true], ["age", "Age (years)", "வயது (ஆண்டுகளில்)", "number", true], ["gender", "Sex / Gender", "பாலினம்", "select", true, [["Male", "ஆண்"], ["Female", "பெண்"], ["Other", "பிற"]]], ["maritalStatus", "Marital status", "திருமண நிலை", "select", false, [["Single", "திருமணமாகாதவர்"], ["Married", "திருமணமானவர்"], ["Widowed", "விதவை"], ["Divorced", "விவாகரத்து பெற்றவர்"], ["Separated", "பிரிந்து வாழ்பவர்"]]], ["phcId", "PHC ID", "PHC அடையாள எண்", "text", false], ["address", "Address", "முகவரி", "textarea", false], ["phone", "Phone number", "தொலைபேசி எண்", "tel", false], ["refBy", "Referred by", "பரிந்துரைத்தவர்", "text", false], ["diagnosis", "Diagnosis", "நோயறிதல்", "text", false], ["reference", "Reference", "குறிப்பு", "text", false], ["height", "Height", "உயரம்", "text", false], ["weight", "Weight", "எடை", "text", false], ["bp", "Blood pressure", "இரத்த அழுத்தம்", "text", false], ["bmi", "BMI", "உடல் நிறை குறியீடு", "text", false], ["rasi", "Pirandha Rasi / Zodiac sign", "பிறந்த ராசி", "text", false], ["nakshatram", "Nakshatram / Birth star", "நட்சத்திரம்", "text", false]]},
+
+  {"title": "Disclaimer & consent", "ta": "விளக்கக் குறிப்பு மற்றும் ஒப்புதல்", "sub": "Please read and acknowledge before continuing.", "taSub": "தொடர்வதற்கு முன் படித்து ஒப்புதல் அளிக்கக்கவும்.", "fields": [["disclaimerText", "This form collects personal and health information to help document your case history. Please provide information as accurately as you can. Your answers will be reviewed by the clinic for case-taking purposes. This form is not an emergency service. If you have an urgent medical concern, seek appropriate medical care. Ask the clinic if you have questions about how your information is used.", "இந்தப் படிவம் உங்கள் நோய் வரலாற்றைப் பதிவு செய்வதற்காக தனிப்பட்ட மற்றும் உடல்நலத் தகவல்களைச் சேகரிக்கிறது. முடிந்தவரை துல்லியமாகப் பதிலளிக்கவும். அவசர மருத்துவத் தேவைக்கு உடனடியாக உரிய மருத்துவ உதவியை நாடவும். உங்கள் தகவல்கள் எவ்வாறு பயன்படுத்தப்படுகின்றன என்பது குறித்து கேள்விகள் இருந்தால் கிளினிக்கிடம் கேளுங்கள்.", "notice", true], ["consent", "I have read and understood the disclaimer above.", "மேலுள்ள விளக்கக் குறிப்பைப் படித்து புரிந்துகொண்டேன்.", "checkbox", true]]},
+
+  {"title": "Patient’s own words", "ta": "நோயாளியின் சொந்த வார்த்தைகள்", "sub": "Please answer in your own words. Take your time.", "taSub": "உங்கள் சொந்த வார்த்தைகளில் பதிலளிக்கவும். நிதானமாக எழுதவும்.", "fields": [["feelingIllness", "What are your feelings about your illness?", "உங்கள் நோய் குறித்து உங்களுக்கு என்ன உணர்வு உள்ளது?", "textarea", false], ["emotionIllness", "What emotions do you experience because of the illness?", "நோயினால் என்ன உணர்ச்சிகளை அனுபவிக்கிறீர்கள்?", "textarea", false], ["reactionIllness", "How do you behave or react when the illness affects you?", "நோய் பாதிக்கும் போது நீங்கள் எவ்வாறு நடந்துகொள்கிறீர்கள் அல்லது எதிர்வினையாற்றுகிறீர்கள்?", "textarea", false], ["repeatedThoughts", "What thoughts repeatedly come to your mind about your suffering?", "உங்கள் துன்பம் குறித்து மனதில் மீண்டும் மீண்டும் வரும் எண்ணங்கள் என்ன?", "textarea", false], ["expectations", "What are your present needs and expectations from the clinician?", "தற்போது மருத்துவரிடமிருந்து நீங்கள் எதிர்பார்ப்பது என்ன?", "textarea", false], ["clinicReferral", "How did you hear about the clinic, and what brought you here?", "இந்தக் கிளினிக்கைப் பற்றி எப்படித் தெரிந்துகொண்டீர்கள்? இங்கு வரக் காரணம் என்ன?", "textarea", false], ["impact", "How has the complaint affected your daily life?", "இந்தக் குறை உங்கள் அன்றாட வாழ்க்கையை எவ்வாறு பாதித்துள்ளது?", "textarea", false], ["worries", "What worries you most about your suffering?", "உங்கள் துன்பம் குறித்து அதிகமாகக் கவலைப்படுவது என்ன?", "textarea", false]]},
+
+  {"title": "Presenting complaints", "ta": "தற்போதைய குறைகள்", "sub": "Describe each problem one by one, slowly and in detail.", "taSub": "ஒவ்வொரு பிரச்சினையையும் விரிவாகவும் ஒன்றன்பின் ஒன்றாகவும் எழுதவும்.", "fields": [["chiefComplaint", "Tell us about each presenting complaint, one by one.", "ஒவ்வொரு தற்போதைய குறையையும் ஒன்றன்பின் ஒன்றாக விவரிக்கவும்.", "textarea", true], ["complaintSite", "Where exactly is each complaint located?", "ஒவ்வொரு குறையும் உடலில் எங்கு உள்ளது?", "textarea", false], ["sensation", "What does the sensation feel like?", "அந்த உணர்வு எப்படிப்பட்டது?", "textarea", false], ["onsetDuration", "When did each complaint start? Was the onset sudden or gradual?", "ஒவ்வொரு குறையும் எப்போது தொடங்கியது? திடீரெனவா அல்லது படிப்படியாகவா?", "textarea", false], ["frequencySeverity", "How often does it occur and how severe is it?", "எவ்வளவு அடிக்கடி ஏற்படுகிறது? தீவிரம் எவ்வளவு?", "textarea", false], ["aggravation", "What makes it worse?", "எதனால் குறை அதிகரிக்கிறது?", "textarea", false], ["amelioration", "What makes it better?", "எதனால் குறை குறைகிறது?", "textarea", false], ["concomitants", "What other symptoms occur along with it?", "இதனுடன் வேறு என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false]]},
+
+  {"title": "Complaint history & investigations", "ta": "குறை வரலாறு மற்றும் பரிசோதனைகள்", "sub": "Include relevant reports and treatment details.", "taSub": "தொடர்புடைய மருத்துவ அறிக்கைகள் மற்றும் சிகிச்சை விவரங்களைச் சேர்க்கவும்.", "fields": [["historyPresenting", "History of presenting complaints: how did the problem develop over time?", "தற்போதைய குறைகளின் வரலாறு: காலப்போக்கில் பிரச்சினை எவ்வாறு வளர்ந்தது?", "textarea", false], ["precedingEvents", "What happened before the complaint began?", "குறை தொடங்குவதற்கு முன் என்ன நடந்தது?", "textarea", false], ["investigations", "Investigation reports, dates and important findings", "பரிசோதனை அறிக்கைகள், தேதிகள் மற்றும் முக்கிய முடிவுகள்", "textarea", false], ["treatmentHistory", "Treatments taken so far, medicines, duration, benefit or side effects", "இதுவரை எடுத்த சிகிச்சைகள், மருந்துகள், காலம், பயன் அல்லது பக்கவிளைவுகள்", "textarea", false]]},
+
+  {"title": "Thermal status & habits", "ta": "உடல் வெப்பநிலை விருப்பம் மற்றும் பழக்கங்கள்", "sub": "Describe your preferences and what affects your comfort.", "taSub": "வெப்பநிலை விருப்பங்கள் மற்றும் சௌகரியத்தைப் பாதிக்கும் காரணிகளை எழுதவும்.", "fields": [["thermal", "Thermal status: do you generally feel hot or cold? Which conditions are difficult for you?", "உடல் வெப்பநிலை: பொதுவாக வெப்பமாகவா குளிராகவா உணர்கிறீர்கள்? எந்தச் சூழல்கள் சிரமம் தருகின்றன?", "textarea", false], ["season", "Which season do you prefer or dislike? Why?", "எந்தப் பருவத்தை விரும்புகிறீர்கள் அல்லது விரும்புவதில்லை? ஏன்?", "textarea", false], ["eatingFood", "How do you prefer your food: hot, warm or cold?", "உணவை சூடாகவா, மிதமான சூட்டிலா அல்லது குளிராகவா விரும்புகிறீர்கள்?", "textarea", false], ["bathing", "Bathing preferences: water temperature, frequency and effect", "குளிக்கும் பழக்கம்: நீரின் வெப்பநிலை, அடிக்கடி குளித்தல் மற்றும் அதன் தாக்கம்", "textarea", false], ["covering", "How much covering do you need while resting or sleeping?", "ஓய்வெடுக்கும் போது அல்லது தூங்கும் போது எவ்வளவு போர்வை தேவை?", "textarea", false], ["fanning", "Do you prefer fanning or moving air? What happens without it?", "விசிறி அல்லது காற்றை விரும்புகிறீர்களா? அது இல்லாவிட்டால் என்ன ஆகும்?", "textarea", false]]},
+
+  {"title": "Appetite", "ta": "பசி", "sub": "Answer each appetite question separately.", "taSub": "பசி தொடர்பான ஒவ்வொரு கேள்விக்கும் தனித்தனியாகப் பதிலளிக்கவும்.", "fields": [["appetiteUsual", "How is your appetite usually?", "பொதுவாக உங்கள் பசி எப்படி உள்ளது?", "textarea", false], ["appetiteTiming", "When do you feel hungry? At fixed times or irregularly?", "எப்போது பசி ஏற்படுகிறது? குறிப்பிட்ட நேரத்திலா அல்லது ஒழுங்கற்ற நேரங்களிலா?", "textarea", false], ["appetiteHunger", "What happens if you remain hungry for a long time?", "நீண்ட நேரம் பசியுடன் இருந்தால் என்ன ஆகிறது?", "textarea", false], ["eatingSpeed", "How fast do you eat? Do you chew slowly or eat quickly?", "எவ்வளவு வேகமாகச் சாப்பிடுகிறீர்கள்? மெதுவாக மென்று சாப்பிடுகிறீர்களா அல்லது வேகமாகவா?", "textarea", false]]},
+
+  {"title": "Thirst, desire & aversion", "ta": "தாகம், விருப்பம் மற்றும் வெறுப்பு", "sub": "Describe each pattern separately.", "taSub": "ஒவ்வொரு விருப்பத்தையும் வெறுப்பையும் விவரிக்கவும்.", "fields": [["thirstAmount", "How much water do you drink in a day? Does it change by season?", "ஒரு நாளில் எவ்வளவு தண்ணீர் குடிக்கிறீர்கள்? பருவத்தின்படி மாறுகிறதா?", "textarea", false], ["thirstTiming", "When do you feel thirsty? How often and how much at a time?", "எப்போது தாகம் ஏற்படுகிறது? எவ்வளவு அடிக்கடி, ஒருமுறைக்கு எவ்வளவு குடிக்கிறீர்கள்?", "textarea", false], ["thirstTemperature", "Do you prefer cold, cool, room-temperature or warm drinks?", "குளிர்ந்த, சாதாரண வெப்பநிலை அல்லது வெந்நீர்/பானங்களில் எதை விரும்புகிறீர்கள்?", "textarea", false], ["desires", "What foods, drinks or other things do you strongly desire?", "எந்த உணவு, பானம் அல்லது பிறவற்றை மிகவும் விரும்புகிறீர்கள்?", "textarea", false], ["aversions", "What foods or drinks do you dislike or avoid? Why?", "எந்த உணவு அல்லது பானங்களை விரும்புவதில்லை அல்லது தவிர்க்கிறீர்கள்? ஏன்?", "textarea", false], ["disagreeingFood", "Which foods disagree with you or cause symptoms?", "எந்த உணவுகள் ஒத்துக்கொள்ளாமல் அறிகுறிகளை ஏற்படுத்துகின்றன?", "textarea", false]]},
+
+  {"title": "Stool", "ta": "மலம்", "sub": "Please answer the stool questions individually.", "taSub": "மலம் தொடர்பான கேள்விகளுக்குப் பதிலளிக்கவும்.", "fields": [["stoolFrequency", "How often do you pass stool? Has this changed?", "எவ்வளவு அடிக்கடி மலம் கழிக்கிறீர்கள்? இதில் மாற்றம் உள்ளதா?", "textarea", false], ["stoolCharacter", "Describe the stool: consistency, colour, amount and smell.", "மலத்தின் தன்மை, நிறம், அளவு மற்றும் மணத்தை விவரிக்கவும்.", "textarea", false], ["stoolSymptoms", "Is there pain, straining, urgency, incomplete evacuation, constipation, diarrhoea, blood or mucus?", "வலி, முக்குதல், அவசரம், முழுமையாக வெளியேறாத உணர்வு, மலச்சிக்கல், வயிற்றுப்போக்கு, இரத்தம் அல்லது சளி உள்ளதா?", "textarea", false], ["stoolBeforeAfter", "How do you feel before and after passing stool?", "மலம் கழிப்பதற்கு முன்பும் பின்பும் எப்படி உணர்கிறீர்கள்?", "textarea", false]]},
+
+  {"title": "Urine", "ta": "சிறுநீர்", "sub": "Answer each question about urination.", "taSub": "சிறுநீர் கழித்தல் தொடர்பான கேள்விகளுக்குப் பதிலளிக்கவும்.", "fields": [["urineFrequency", "How often do you pass urine during the day and night?", "பகலிலும் இரவிலும் எவ்வளவு அடிக்கடி சிறுநீர் கழிக்கிறீர்கள்?", "textarea", false], ["urineCharacter", "Describe the colour, amount, smell and appearance of urine.", "சிறுநீரின் நிறம், அளவு, மணம் மற்றும் தோற்றத்தை விவரிக்கவும்.", "textarea", false], ["urineSymptoms", "Do you have burning, pain, urgency, difficulty starting, weak stream or leakage?", "எரிச்சல், வலி, அவசரம், தொடங்க சிரமம், பலவீனமான ஓட்டம் அல்லது கசிவு உள்ளதா?", "textarea", false], ["urineBeforeAfter", "What symptoms occur before, during or after urination?", "சிறுநீர் கழிப்பதற்கு முன், போது அல்லது பின் என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false]]},
+
+  {"title": "Sweat & body odour", "ta": "வியர்வை மற்றும் உடல் மணம்", "sub": "Describe the amount, location and circumstances.", "taSub": "வியர்வையின் அளவு, இடம் மற்றும் சூழலை விவரிக்கவும்.", "fields": [["sweatAmount", "How much do you sweat, and under what circumstances?", "எவ்வளவு வியர்க்கிறது? எந்தச் சூழலில் வியர்க்கிறது?", "textarea", false], ["sweatLocation", "Which body parts sweat most or least? Is it equal on both sides?", "எந்த உடற்பகுதிகளில் அதிகமாக அல்லது குறைவாக வியர்க்கிறது? இருபுறமும் சமமா?", "textarea", false], ["sweatOdourStain", "Describe the smell, stains or nature of the sweat.", "வியர்வையின் மணம், கறைகள் அல்லது தன்மையை விவரிக்கவும்.", "textarea", false], ["sweatTiming", "When does sweating occur? What happens before or after it?", "எப்போது வியர்க்கிறது? அதற்கு முன் அல்லது பின் என்ன நடக்கிறது?", "textarea", false]]},
+
+  {"title": "Other physical generals", "ta": "பிற உடல் பொதுவான அறிகுறிகள்", "sub": "Use these fields for the remaining general symptoms.", "taSub": "பிற பொதுவான உடல் அறிகுறிகளை இங்கே குறிப்பிடவும்.", "fields": [["belchingGas", "Belching and passing gas: frequency, smell, character, and how you feel afterwards.", "ஏப்பம் மற்றும் வாயு: அடிக்கடி ஏற்படுதல், மணம், தன்மை மற்றும் வெளியேறிய பின் ஏற்படும் உணர்வு.", "textarea", false], ["sleepGeneral", "Sleep: duration, quality, waking, refreshing or unrefreshing sleep", "தூக்கம்: நேரம், தரம், விழித்தல், புத்துணர்ச்சி கிடைக்கிறதா?", "textarea", false], ["perspirationOther", "Any other perspiration-related symptom not already described", "முன்பு குறிப்பிடாத வியர்வை தொடர்பான பிற அறிகுறிகள்", "textarea", false], ["generalNotes", "Any other general symptom or bodily change", "பிற பொதுவான அறிகுறிகள் அல்லது உடல் மாற்றங்கள்", "textarea", false]]},
+
+  {"title": "Chest, heart & breathing", "ta": "மார்பு, இதயம் மற்றும் சுவாசம்", "sub": "Describe each symptom and what brings it on or relieves it.", "taSub": "மார்பு, சுவாசம் மற்றும் இதய அறிகுறிகளை விவரிக்கவும்.", "fields": [["chest", "Chest symptoms: pain, tightness, heaviness, location and spread", "மார்பு அறிகுறிகள்: வலி, இறுக்கம், கனத்த உணர்வு, இடம் மற்றும் பரவல்", "textarea", false], ["heart", "Heart symptoms: palpitations, irregular beats, discomfort or related symptoms", "இதய அறிகுறிகள்: படபடப்பு, ஒழுங்கற்ற துடிப்பு, அசௌகரியம் அல்லது தொடர்புடைய அறிகுறிகள்", "textarea", false], ["cough", "Cough: dry or productive, timing, triggers and what relieves it", "இருமல்: வறண்டதா அல்லது சளியுடனா, நேரம், தூண்டுதல்கள் மற்றும் குறைக்கும் காரணிகள்", "textarea", false], ["sputum", "Sputum: amount, colour, smell, consistency and time of day", "சளி: அளவு, நிறம், மணம், அடர்த்தி மற்றும் ஏற்படும் நேரம்", "textarea", false], ["throatTrachea", "Throat, larynx or trachea symptoms: soreness, irritation, constriction or difficulty", "தொண்டை, குரல்வளை அல்லது மூச்சுக்குழாய் அறிகுறிகள்: வலி, எரிச்சல், இறுக்கம் அல்லது சிரமம்", "textarea", false], ["voice", "Voice: hoarseness, weakness, loss of voice or change with use", "குரல்: கரகரப்பு, பலவீனம், குரல் இழப்பு அல்லது பயன்படுத்தும்போது மாற்றம்", "textarea", false]]},
+
+  {"title": "Menstrual history", "ta": "மாதவிடாய் வரலாறு", "sub": "Complete the questions that apply to you.", "taSub": "உங்களுக்குப் பொருந்தும் கேள்விகளுக்குப் பதிலளிக்கவும்.", "fields": [["menarche", "At what age did menstruation begin? Were there problems at that time?", "எந்த வயதில் மாதவிடாய் தொடங்கியது? அப்போது சிரமங்கள் இருந்தனவா?", "textarea", false], ["cycle", "Describe the cycle length and regularity.", "மாதவிடாய் சுழற்சியின் இடைவெளி மற்றும் ஒழுங்கை விவரிக்கவும்.", "textarea", false], ["flow", "Describe the flow, duration, colour, clots and odour.", "இரத்தப்போக்கின் அளவு, நாட்கள், நிறம், கட்டிகள் மற்றும் மணத்தை விவரிக்கவும்.", "textarea", false], ["pads", "How many pads are used per day? Does this change during the period?", "ஒரு நாளில் எத்தனை பேட்கள் பயன்படுத்துகிறீர்கள்? மாதவிடாய் நாட்களில் மாறுகிறதா?", "textarea", false], ["beforeMenses", "What symptoms occur before menstruation?", "மாதவிடாய்க்கு முன் என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false], ["duringMenses", "What symptoms occur during menstruation?", "மாதவிடாயின் போது என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false], ["afterMenses", "What symptoms occur after menstruation?", "மாதவிடாய்க்குப் பின் என்ன அறிகுறிகள் ஏற்படுகின்றன?", "textarea", false]]},
+
+  {"title": "Female discharge & reproductive health", "ta": "பெண்களின் வெளியேற்றம் மற்றும் இனப்பெருக்க உடல்நலம்", "sub": "Answer only what is relevant to you.", "taSub": "உங்களுக்குப் பொருந்தும் தகவல்களை மட்டும் எழுதவும்.", "fields": [["dischargeFlow", "Any vaginal discharge or leucorrhoea? Describe amount and frequency.", "யோனி வெளியேற்றம் அல்லது வெள்ளைப்படுதல் உள்ளதா? அளவு மற்றும் அடிக்கடி ஏற்படுவதை விவரிக்கவும்.", "textarea", false], ["dischargeCharacter", "Describe colour, odour, consistency and appearance.", "நிறம், மணம், அடர்த்தி மற்றும் தோற்றத்தை விவரிக்கவும்.", "textarea", false], ["dischargeSymptoms", "Are there associated itching, pain, irritation or other symptoms?", "அரிப்பு, வலி, எரிச்சல் அல்லது பிற அறிகுறிகள் உள்ளனவா?", "textarea", false], ["pregnancyBirth", "Pregnancy, delivery, breastfeeding, contraception or other reproductive history relevant to your case", "கர்ப்பம், பிரசவம், தாய்ப்பால், கருத்தடை அல்லது தொடர்புடைய இனப்பெருக்க வரலாறு", "textarea", false], ["breast", "Any breast symptoms or concerns?", "மார்பகத்தில் அறிகுறிகள் அல்லது கவலைகள் உள்ளனவா?", "textarea", false]]},
+
+  {"title": "Male sexual & reproductive health", "ta": "ஆண்களின் பாலியல் மற்றும் இனப்பெருக்க உடல்நலம்", "sub": "Answer privately and only where relevant.", "taSub": "பொருந்தும் தகவல்களை மட்டும் அந்தரங்கமாக எழுதவும்.", "fields": [["sexualDesire", "How would you describe your sexual desire or libido? Has it changed?", "பாலியல் விருப்பம் எவ்வாறு உள்ளது? அதில் மாற்றம் ஏற்பட்டுள்ளதா?", "textarea", false], ["sexualLife", "Any concern about sexual life, intimacy or intercourse?", "பாலியல் வாழ்க்கை, நெருக்கம் அல்லது உடலுறவு குறித்து கவலை உள்ளதா?", "textarea", false], ["erection", "Any difficulty with erection, its duration or maintenance?", "விறைப்புத்தன்மை ஏற்படுதல் அல்லது நீடித்திருப்பதில் சிரமம் உள்ளதா?", "textarea", false], ["ejaculation", "Any concern about ejaculation, timing, pain or semen?", "விந்து வெளியேற்றம், நேரம், வலி அல்லது விந்து குறித்து கவலை உள்ளதா?", "textarea", false], ["sexualBeforeAfter", "How do you feel before and after sexual activity? Any related symptoms?", "பாலியல் செயல்பாட்டிற்கு முன்பும் பின்பும் எப்படி உணர்கிறீர்கள்? தொடர்புடைய அறிகுறிகள் உள்ளனவா?", "textarea", false], ["sexualHealthOther", "Any other sexual or reproductive health concern you wish to share?", "பகிர விரும்பும் பிற பாலியல் அல்லது இனப்பெருக்க உடல்நலக் கவலைகள் உள்ளனவா?", "textarea", false]]},
+
+  {"title": "Sleep, position & dreams", "ta": "தூக்கம், தூங்கும் நிலை மற்றும் கனவுகள்", "sub": "Describe your usual sleep and any unusual events.", "taSub": "வழக்கமான தூக்கம் மற்றும் கனவுகளை விவரிக்கவும்.", "fields": [["sleepDuration", "How many hours do you sleep? What time do you go to bed and wake?", "எத்தனை மணி நேரம் தூங்குகிறீர்கள்? எப்போது தூங்கச் சென்று எப்போது எழுகிறீர்கள்?", "textarea", false], ["sleepQuality", "Do you fall asleep easily? Do you wake during the night? Is sleep refreshing?", "எளிதில் தூக்கம் வருகிறதா? இரவில் விழிக்கிறீர்களா? தூக்கம் புத்துணர்ச்சி தருகிறதா?", "textarea", false], ["sleepPosition", "Which position do you prefer? Which position can you not sleep in, and why?", "எந்த நிலையில் தூங்க விரும்புகிறீர்கள்? எந்த நிலையில் தூங்க முடியாது? ஏன்?", "textarea", false], ["sleepEvents", "Any snoring, teeth grinding, salivation, sweating, open eyes/mouth, sleepwalking, talking, weeping, moaning, jerking or frequent turning?", "குறட்டை, பற்களைக் கடித்தல், உமிழ்நீர், வியர்வை, கண்/வாய் திறந்திருத்தல், தூக்கத்தில் நடப்பது/பேசுவது/அழுவது, திடுக்கிடுதல் அல்லது புரளுதல் உள்ளதா?", "textarea", false], ["dreams", "What do you dream about? Any recurring or disturbing dreams?", "என்ன கனவுகள் வருகின்றன? மீண்டும் மீண்டும் வரும் அல்லது தொந்தரவு தரும் கனவுகள் உள்ளனவா?", "textarea", false]]},
+
+  {"title": "Mind & thoughts", "ta": "மனம் மற்றும் எண்ணங்கள்", "sub": "Mind is a required case-taking section. Describe thoughts and emotional experiences in your own words.", "taSub": "மனம் தொடர்பான தகவல்கள் மிக முக்கியம். உங்கள் எண்ணங்களை விவரிக்கவும்.", "fields": [["mindDescribe", "Describe your thoughts and mental state in detail.", "உங்கள் எண்ணங்களையும் மனநிலையையும் விரிவாக விவரிக்கவும்.", "textarea", true], ["mindRecurring", "What thoughts keep returning to your mind?", "மனதில் மீண்டும் மீண்டும் வரும் எண்ணங்கள் என்ன?", "textarea", false], ["mindStress", "What is the most stressful period or experience in your life? How did it affect you?", "வாழ்க்கையில் அதிக மனஅழுத்தம் தந்த காலம் அல்லது அனுபவம் எது? அது உங்களை எவ்வாறு பாதித்தது?", "textarea", false], ["mindCoping", "When distressed, what do you usually do and what helps you feel better?", "மனவேதனை ஏற்படும் போது பொதுவாக என்ன செய்கிறீர்கள்? எது நிம்மதி தருகிறது?", "textarea", false]]},
+
+  {"title": "Fear, anger, weeping & worry", "ta": "பயம், கோபம், அழுகை மற்றும் கவலை", "sub": "For each emotion, include triggers, how you express it, and two or three examples.", "taSub": "ஒவ்வொரு உணர்ச்சிக்கும் உதாரணங்களுடன் விவரிக்கவும்.", "fields": [["fear", "What fears do you have now or had in childhood? What triggers them? How do you express fear? Give 2–3 examples.", "தற்போது அல்லது குழந்தைப் பருவத்தில் என்ன பயங்கள் இருந்தன? எது தூண்டுகிறது? பயத்தை எவ்வாறு வெளிப்படுத்துகிறீர்கள்? 2–3 உதாரணங்கள் தரவும்.", "textarea", false], ["anger", "What makes you angry? What triggers it, how do you express it, and what happens afterwards? Give 2–3 examples.", "எது கோபத்தை ஏற்படுத்துகிறது? எது தூண்டுகிறது? கோபத்தை எவ்வாறு வெளிப்படுத்துகிறீர்கள்? பின்னர் என்ன நடக்கிறது? 2–3 உதாரணங்கள் தரவும்.", "textarea", false], ["weeping", "What makes you weep? What triggers it and how do you express it? Give 2–3 examples.", "எது அழுகையை ஏற்படுத்துகிறது? எது தூண்டுகிறது? எவ்வாறு வெளிப்படுத்துகிறீர்கள்? 2–3 உதாரணங்கள் தரவும்.", "textarea", false], ["worry", "What do you worry about most? How does worry affect your body, sleep or daily life?", "எதைப் பற்றி அதிகம் கவலைப்படுகிறீர்கள்? அது உடல், தூக்கம் அல்லது அன்றாட வாழ்க்கையை எவ்வாறு பாதிக்கிறது?", "textarea", false]]},
+
+  {"title": "Nature, disposition & life history", "ta": "இயல்பு, மனப்பாங்கு மற்றும் வாழ்க்கை வரலாறு", "sub": "Describe your traits and important life experiences.", "taSub": "உங்கள் இயல்புகள் மற்றும் முக்கிய வாழ்க்கை அனுபவங்களை எழுதவும்.", "fields": [["natureDisposition", "Which traits describe you: affectionate, caring, playful, amorous, aggressive, mischievous, alert, quick to react, animated, restless, deceitful, curious, malicious, jealous, expressive, communicative, systematic, calculative, fastidious, organized, soft, sensitive, emotional, sentimental, disorganized, adjusting, easily influenced, adaptable or irritable? Give examples.", "அன்பானவர், அக்கறையுள்ளவர், விளையாட்டுத்தனமானவர், ஆக்ரோஷமானவர், குறும்பானவர், எச்சரிக்கையானவர், அமைதியற்றவர், ஆர்வமுள்ளவர், பொறாமை, உணர்ச்சிவசப்படுதல், ஒழுங்கு, உணர்திறன், எளிதில் பாதிக்கப்படுதல், எளிதில் ஒத்துப்போதல் அல்லது எரிச்சல் போன்ற எந்த இயல்புகள் உங்களிடம் உள்ளன? உதாரணங்களுடன் விவரிக்கவும்.", "textarea", false], ["childhood", "Describe your childhood and family environment.", "உங்கள் குழந்தைப் பருவம் மற்றும் குடும்பச் சூழலை விவரிக்கவும்.", "textarea", false], ["schoolCollege", "Describe your schooling and college experiences.", "பள்ளி மற்றும் கல்லூரி அனுபவங்களை விவரிக்கவும்.", "textarea", false], ["workplace", "Describe your workplace experiences and relationships.", "பணியிட அனுபவங்கள் மற்றும் உறவுகளை விவரிக்கவும்.", "textarea", false], ["marriage", "Describe marriage or important relationships, if applicable.", "திருமணம் அல்லது முக்கியமான உறவுகளைப் பொருந்தினால் விவரிக்கவும்.", "textarea", false]]},
+
+  {"title": "Causation & life events", "ta": "காரணங்கள் மற்றும் வாழ்க்கை நிகழ்வுகள்", "sub": "What happened around the time your problems began? Select or describe what applies.", "taSub": "பிரச்சினை தொடங்கிய காலத்தில் நிகழ்ந்த சம்பவங்களை விவரிக்கவும்.", "fields": [["causation", "Did the problem begin after rejection, neglect, being looked down on, failure in defence or competition, aggression/attack, failure in love, a break in structure or relationship, failure in performance, loss of power/responsibility, emotional or physical hurt, or shock? Describe the event and its effect.", "நிராகரிப்பு, புறக்கணிப்பு, இழிவாக நடத்துதல், தற்காப்பு/போட்டியில் தோல்வி, தாக்குதல், காதல் தோல்வி, உறவு முறிவு, செயல்திறன் தோல்வி, பொறுப்பு/அதிகாரம் இழப்பு, மன/உடல் காயம் அல்லது அதிர்ச்சிக்குப் பிறகு பிரச்சினை தொடங்கியதா? நிகழ்வையும் அதன் தாக்கத்தையும் விவரிக்கவும்.", "textarea", false], ["triggeringEvents", "What events or circumstances make the complaints return or worsen?", "எந்த நிகழ்வுகள் அல்லது சூழ்நிலைகள் குறைகளை மீண்டும் ஏற்படுத்துகின்றன அல்லது அதிகரிக்கின்றன?", "textarea", false], ["summaryComparison", "Summarise your whole problem in one or two lines, or compare it with something that describes it.", "உங்கள் முழுப் பிரச்சினையையும் ஒன்று அல்லது இரண்டு வரிகளில் சுருக்கவும் அல்லது அதனை விளக்கும் ஒன்றுடன் ஒப்பிடவும்.", "textarea", false]]},
+
+  {"title": "Childhood behaviour & birth history", "ta": "குழந்தைப் பருவ நடத்தை மற்றும் பிறப்பு வரலாறு", "sub": "Include relevant childhood behaviour and the mother's condition during pregnancy, delivery and breastfeeding.", "taSub": "குழந்தைப் பருவ நடத்தை மற்றும் தாயின் கர்ப்பகால நிலைகளை விவரிக்கவும்.", "fields": [["childBehaviour", "As a child, were you stubborn, temperamental, disobedient, aggressive, hyperactive, destructive, courageous, possessive, competitive, jealous of siblings, unusually skilled, prone to unusual desires, boastful, stealing, lazy or sensitive? Give examples where relevant.", "குழந்தையாக இருந்தபோது பிடிவாதம், கோபம், கீழ்ப்படியாமை, ஆக்ரோஷம், மிகைச் செயல்பாடு, பொருட்களை உடைத்தல், தைரியம், உடைமை உணர்வு, போட்டி, உடன்பிறந்தோர் பொறாமை, சிறப்புத் திறன், அசாதாரண விருப்பம், தற்பெருமை, திருடுதல், சோம்பல் அல்லது உணர்திறன் இருந்ததா? பொருந்தும் இடங்களில் உதாரணங்கள் தரவும்.", "textarea", false], ["childIncident", "Describe one incident that affected you greatly during childhood.", "குழந்தைப் பருவத்தில் உங்களை மிகவும் பாதித்த ஒரு சம்பவத்தை விவரிக்கவும்.", "textarea", false], ["motherPregnancy", "Describe in detail the mother's emotional and physical state during pregnancy. Include any known dreams or major events during that period.", "கர்ப்பகாலத்தில் தாயின் உணர்ச்சி மற்றும் உடல் நிலையை விரிவாக விவரிக்கவும். தெரிந்தால் அக்காலக் கனவுகள் அல்லது முக்கிய நிகழ்வுகளையும் குறிப்பிடவும்.", "textarea", false], ["motherDelivery", "Describe the mother's emotional and physical state during delivery and any significant events around the birth.", "பிரசவத்தின் போது தாயின் உணர்ச்சி மற்றும் உடல் நிலை மற்றும் பிறப்பைச் சுற்றிய முக்கிய நிகழ்வுகளை விவரிக்கவும்.", "textarea", false], ["motherBreastfeeding", "Describe the mother's emotional and physical state during breastfeeding. Include difficulties or notable events, if known.", "தாய்ப்பால் கொடுத்த காலத்தில் தாயின் உணர்ச்சி மற்றும் உடல் நிலையை விவரிக்கவும். தெரிந்தால் சிரமங்கள் அல்லது குறிப்பிடத்தக்க நிகழ்வுகளைச் சேர்க்கவும்.", "textarea", false]]},
+
+  {"title": "Case summary & clinician notes", "ta": "வழக்கு சுருக்கம் மற்றும் மருத்துவர் குறிப்புகள்", "sub": "The clinician may complete the analysis fields after reviewing the patient's history.", "taSub": "மருத்துவர் ஆய்வு செய்து இப்பகுதியை நிரப்பலாம்.", "fields": [["miasm", "Miasmatic assessment", "மியாஸ்மிக் மதிப்பீடு", "textarea", false], ["analysis", "Analysis of the case", "வழக்கு பகுப்பாய்வு", "textarea", false], ["repertory", "Repertory analysis", "ரெபர்டரி பகுப்பாய்வு", "textarea", false], ["remedyDD", "Remedy and differential diagnosis", "மருந்து மற்றும் வேறுபாட்டு நோயறிதல்", "textarea", false], ["prescription", "Prescription", "மருந்துச் சீட்டு", "textarea", false], ["management", "Management advice", "மேலாண்மை ஆலோசனை", "textarea", false]]}
+
+];
+
+
+
+const REVIEW_STEP_INDEX = steps.length; // Step 23 (24th item in flow)
+
+const TOTAL_FLOW_STEPS = steps.length + 1; // 23 question steps + 1 review step = 24 steps
+
+
+
+/* Smart Symptom Suggestion Chips with Dual-Language labels */
+
+const fieldSuggestions = {
+
+  thermal: [
+
+    { en: "Generally Chilly (easily cold)", ta: "குளிர் தாங்க முடியாது" },
+
+    { en: "Generally Hot (cannot bear heat)", ta: "வெப்பம் தாங்க முடியாது" },
+
+    { en: "Loves open fresh air", ta: "திறந்தவெளி காற்று பிடிக்கும்" },
+
+    { en: "Worse in damp rainy season", ta: "மழைக்காலத்தில் அதிகரிக்கும்" },
+
+    { en: "Prefers warm baths", ta: "வெந்நீர் குளியல் பிடிக்கும்" },
+
+    { en: "Needs breezy fanning", ta: "விசிறி காற்று தேவை" }
+
+  ],
+
+  appetiteUsual: [
+
+    { en: "Good & normal appetite", ta: "இயல்பான நல்ல பசி" },
+
+    { en: "Loss of appetite / poor appetite", ta: "பசியின்மை" },
+
+    { en: "Ravenous / Excessive hunger", ta: "அளவுக்கு அதிகமான பசி" },
+
+    { en: "Hunger causes headache / shaking", ta: "பசித்தால் தலைவலி / நடுக்கம்" },
+
+    { en: "Full after a few morsels", ta: "சிறிது சாப்பிட்டதும் வயிறு நிறைந்தது போல்" }
+
+  ],
+
+  thirstAmount: [
+
+    { en: "Drinks large quantity at long intervals", ta: "அதிக அளவில் நீண்ட இடைவெளியில்" },
+
+    { en: "Small sips frequently", ta: "சிறிய அளவில் அடிக்கடி" },
+
+    { en: "Thirstless even with dry mouth", ta: "வாய் உலர்ந்தாலும் தாகமின்மை" },
+
+    { en: "Craves ice-cold chilled water", ta: "ஐஸ் போன்ற குளிர்ந்த நீர்" },
+
+    { en: "Prefers warm / hot water", ta: "மிதமான சூடான நீர்" }
+
+  ],
+
+  desires: [
+
+    { en: "Sweets & confectionery", ta: "இனிப்பு வகைகள்" },
+
+    { en: "Spicy & hot masala", ta: "காரமான உணவுகள்" },
+
+    { en: "Sour food & pickles", ta: "புளிப்பு & ஊறுகாய்" },
+
+    { en: "Salty foods", ta: "உப்பு நிறைந்தவை" },
+
+    { en: "Warm milk or soups", ta: "சூடான பால் அல்லது சூப்" }
+
+  ],
+
+  aversions: [
+
+    { en: "Aversion to milk", ta: "பால் வெறுப்பு" },
+
+    { en: "Aversion to meat / fish", ta: "அசைவ உணவு வெறுப்பு" },
+
+    { en: "Aversion to fatty / oily food", ta: "எண்ணெய் உணவுகள் வெறுப்பு" },
+
+    { en: "Aversion to sweets", ta: "இனிப்பு வெறுப்பு" }
+
+  ],
+
+  sleepPosition: [
+
+    { en: "Sleeps on right side", ta: "வலது புறமாக படுப்பது" },
+
+    { en: "Sleeps on left side", ta: "இடது புறமாக படுப்பது" },
+
+    { en: "Sleeps on stomach / abdomen", ta: "குப்புற படுப்பது" },
+
+    { en: "Sleeps on back", ta: "மல்லாந்து படுப்பது" },
+
+    { en: "Cannot sleep on left side", ta: "இடதுபுறம் படுக்க முடியாது" }
+
+  ],
+
+  mindDescribe: [
+
+    { en: "Anxious about health & future", ta: "உடல்நலம் & எதிர்காலக் கவலை" },
+
+    { en: "Hurried & restless inside", ta: "அவசரமும் அமைதியின்மையும்" },
+
+    { en: "Sensitive to loud noise & lights", ta: "சத்தம் & ஒளிக்கு அதீத உணர்திறன்" },
+
+    { en: "Cheered by pleasant company", ta: "நட்புடன் இருத்தல் நிம்மதி தருகிறது" },
+
+    { en: "Prefers solitude / being alone", ta: "தனிமையை விரும்புகிறேன்" },
+
+    { en: "Very systematic & organized", ta: "ஒழுங்கு & திட்டமிடல் விரும்புபவர்" }
+
+  ],
+
+  aggravation: [
+
+    { en: "Worse in morning on waking", ta: "காலையில் எழுந்தவுடன் அதிகரிக்கும்" },
+
+    { en: "Worse in evening / twilight", ta: "மாலையில் அதிகரிக்கும்" },
+
+    { en: "Worse with physical exertion", ta: "உழைப்பினால் அதிகரிக்கும்" },
+
+    { en: "Worse from cold draft of air", ta: "குளிர்ந்த காற்றினால் அதிகரிக்கும்" }
+
+  ],
+
+  amelioration: [
+
+    { en: "Better with warm applications", ta: "சூடான ஒத்தடம் நிம்மதி தருகிறது" },
+
+    { en: "Better with quiet rest", ta: "அமைதியான ஓய்வு நிம்மதி தருகிறது" },
+
+    { en: "Better in open fresh air", ta: "திறந்தவெளி காற்றில் நலம்" },
+
+    { en: "Better after gentle walking", ta: "மெதுவாக நடக்கும்போது குறைகிறது" }
+
+  ]
+
+};
+
+
+
+/* ==========================================================================
+
+   APPLICATION STATE & 3-WAY LANGUAGE MODES
+
+   ========================================================================== */
+
+let current = 0;                  // Current step index (0 to 23)
+
+let langMode = "both";           // Options: "both" (default), "en", "ta"
+
+let data = {};                    // Form answers dictionary
+
+
+
+const $ = id => document.getElementById(id);
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+
+
+/* Helper to render appropriate text based on 3-way language mode */
+
+function getLangText(en, ta) {
+
+  if (langMode === "ta") return ta || en;
+
+  if (langMode === "en") return en;
+
+  return `${en} / ${ta}`;
+
+}
+
+
+
+/* ==========================================================================
+
+   LANGUAGE MODE SWITCHER (Both / English / Tamil)
+
+   ========================================================================== */
+
+function initLanguageMode() {
+
+  const saved = localStorage.getItem("prana_language_mode") || "both";
+
+  setLanguageMode(saved, false);
+
+}
+
+
+
+function setLanguageMode(mode, showNotification = true) {
+
+  langMode = mode;
+
+  localStorage.setItem("prana_language_mode", mode);
+
+  document.body.setAttribute("data-lang-mode", mode);
+
+
+
+  // Update active pill in segmented group
+
+  document.querySelectorAll(".lang-seg-btn").forEach(btn => {
+
+    btn.classList.toggle("active", btn.dataset.lang === mode);
+
+  });
+
+
+
+  // Dynamically update static UI text elements
+
+  if ($("brandCaption")) {
+
+    $("brandCaption").textContent = getLangText("Patient case record · Dr. G. Srinivasan M.D(Hom)", "நோயாளி மருத்துவப் பதிவு · டாக்டர் ஜி. சீனிவாசன் M.D(Hom)");
+
+  }
+
+  if ($("sidebarSearchInput")) {
+
+    $("sidebarSearchInput").placeholder = getLangText("Filter sections…", "பகுதிகளைத் தேடு…");
+
+  }
+
+  if ($("drawerSearchInput")) {
+
+    $("drawerSearchInput").placeholder = getLangText("Filter sections…", "பகுதிகளைத் தேடு…");
+
+  }
+
+  if ($("mobileDrawerTitle")) {
+
+    $("mobileDrawerTitle").textContent = getLangText("Case Record Sections", "மருத்துவ வழக்கு பகுதிகள்");
+
+  }
+
+  if ($("mobileSectionsLabel")) {
+
+    $("mobileSectionsLabel").textContent = getLangText("Sections", "பகுதிகள்");
+
+  }
+
+  if ($("saveDraftLabel")) {
+
+    $("saveDraftLabel").textContent = getLangText("Save", "சேமி");
+
+  }
+
+  if ($("saveDraftBtn")) {
+
+    $("saveDraftBtn").title = getLangText("Save draft to this device (Ctrl+S)", "வரைவை இந்தச் சாதனத்தில் சேமிக்கவும் (Ctrl+S)");
+
+  }
+
+  updateSaveIndicator(true);
+
+
+
+  render();
+
+  renderNav();
+
+
+
+  if (showNotification) {
+
+    const labels = {
+
+      both: "Language: Both English & தமிழ் (Default)",
+
+      en: "Language: English only",
+
+      ta: "மொழி: தமிழ் மட்டும்"
+
+    };
+
+    showToast(labels[mode] || mode);
+
+  }
+
+}
+
+
+
+/* ==========================================================================
+
+   THEME (DARK / LIGHT MODE)
+
+   ========================================================================== */
+
+function initTheme() {
+
+  const saved = localStorage.getItem("prana_theme");
+
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  const theme = saved || (prefersDark ? "dark" : "light");
+
+  setTheme(theme);
+
+}
+
+
+
+function setTheme(theme) {
+
+  document.documentElement.setAttribute("data-theme", theme);
+
+  localStorage.setItem("prana_theme", theme);
+
+  const icon = $("themeIcon");
+
+  if (icon) {
+
+    if (theme === "dark") {
+
+      // Sun icon
+
+      icon.innerHTML = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>`;
+
+    } else {
+
+      // Moon icon
+
+      icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+
+    }
+
+  }
+
+}
+
+
+
+function toggleTheme() {
+
+  const cur = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+
+  setTheme(cur);
+
+  showToast(cur === "dark" ? "Dark mode enabled" : "Light mode enabled");
+
+}
+
+
+
+/* ==========================================================================
+
+   LOCAL STORAGE & DRAFT RESILIENCE
+
+   ========================================================================== */
+
+const DRAFT_KEY = "pranaCaseDraftV2";
+
+
+
+function loadDraft() {
+
+  try {
+
+    const raw = localStorage.getItem(DRAFT_KEY);
+
+    if (raw) {
+
+      data = JSON.parse(raw);
+
+      if (Object.keys(data).length > 0) {
+
+        showDraftResumedBanner();
+
+      }
+
+    }
+
+  } catch (e) {
+
+    data = {};
+
+  }
+
+}
+
+
+
+function saveDraft(manual = false) {
+
+  collect(false);
+
+  try {
+
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+
+    updateSaveIndicator(true);
+
+    if (manual) {
+
+      showToast(getLangText("Draft saved safely to this browser", "வரைவு சேமிக்கப்பட்டது"));
+
+    }
+
+  } catch (e) {
+
+    updateSaveIndicator(false);
+
+    if (manual) {
+
+      showToast(getLangText("Could not save to local storage", "சேமிக்க முடியவில்லை"));
+
+    }
+
+  }
+
+}
+
+
+
+function updateSaveIndicator(success) {
+
+  const pill = $("saveStatusPill");
+
+  const text = $("saveStatusText");
+
+  if (!pill || !text) return;
+
+
+
+  if (success) {
+
+    pill.className = "save-status-pill saved";
+
+    text.textContent = langMode === "en" ? "Saved" : (langMode === "ta" ? "சேமிக்கப்பட்டது" : "Saved / சேமிக்கப்பட்டது");
+
+  } else {
+
+    pill.className = "save-status-pill";
+
+    text.textContent = langMode === "en" ? "Unsaved" : (langMode === "ta" ? "சேமிக்கப்படவில்லை" : "Unsaved / சேமிக்கப்படவில்லை");
+
+  }
+
+}
+
+
+
+let autoSaveTimer = null;
+
+function triggerAutoSave() {
+
+  clearTimeout(autoSaveTimer);
+
+  updateSaveIndicator(false);
+
+  autoSaveTimer = setTimeout(() => {
+
+    collect(true);
+
+    updateSaveIndicator(true);
+
+  }, 400);
+
+}
+
+
+
+function showDraftResumedBanner() {
+
+  const patientName = data.patientName || data["Name /"] || "";
+
+  const nameSnippet = patientName ? ` (${patientName})` : "";
+
+  showToast(getLangText(`Welcome back! Draft restored${nameSnippet}`, `வரைவு மீட்கப்பட்டது${nameSnippet}`));
+
+}
+
+
+
+function clearAllDraftData() {
+
+  showConfirmModal(
+
+    getLangText("Reset & Clear Form", "படிவத்தை அழிக்கவும்"),
+
+    `
+
+      <p style="margin-bottom:8px;">Are you sure you want to clear your saved draft? All entered clinical answers on this device will be deleted.</p>
+
+      <p style="color:var(--text-muted);font-size:0.85rem;">உங்கள் சேமிக்கப்பட்ட வரைவை நிச்சயமாக அழிக்க விரும்புகிறீர்களா? இந்தச் சாதனத்தில் உள்ளிடப்பட்ட அனைத்து மருத்துவப் பதில்களும் நீக்கப்படும்.</p>
+
+    `,
+
+    [
+
+      {
+
+        text: getLangText("Cancel", "ரத்து செய்"),
+
+        className: "btn",
+
+        onClick: hideConfirmModal
+
+      },
+
+      {
+
+        text: getLangText("Yes, Clear Form", "ஆம், அழி"),
+
+        className: "btn",
+
+        style: "background:#c0392b;color:#fff;border-color:#c0392b;",
+
+        onClick: () => {
+
+          localStorage.removeItem(DRAFT_KEY);
+
+          data = {};
+
+          current = 0;
+
+          hideConfirmModal();
+
+          render();
+
+          showToast(getLangText("Form cleared", "படிவம் அழிக்கப்பட்டது"));
+
+        }
+
+      }
+
+    ]
+
+  );
+
+}
+
+
+
+/* ==========================================================================
+
+   DATA HARVESTING FROM ACTIVE FORM
+
+   ========================================================================== */
+
+function collect(save = true) {
+
+  document.querySelectorAll("#formBody [data-field]").forEach(el => {
+
+    const id = el.dataset.field;
+
+    if (el.type === "checkbox") {
+
+      data[id] = el.checked;
+
+    } else {
+
+      data[id] = el.value;
+
+    }
+
+  });
+
+  if (save) {
+
+    try {
+
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+
+    } catch (e) {}
+
+  }
+
+}
+
+
+
+
+
+
+
+/* ==========================================================================
+
+   FIELD RENDERING & QUICK CHIPS
+
+   ========================================================================== */
+
+function appendChipText(fieldId, text) {
+
+  const el = $(fieldId);
+
+  if (!el) return;
+
+  const cur = el.value.trim();
+
+  if (!cur) {
+
+    el.value = text;
+
+  } else {
+
+    el.value = cur + (cur.endsWith(".") || cur.endsWith(",") ? " " : ", ") + text;
+
+  }
+
+  el.focus();
+
+  triggerAutoSave();
+
+}
+
+
+
+function getFieldIconSvg(id, type) {
+
+  if (id === 'patientName' || id === 'childName' || id === 'fatherName') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+
+  }
+
+  if (id === 'phone' || type === 'tel') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`;
+
+  }
+
+  if (type === 'date' || id === 'regDate' || id === 'dob') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+
+  }
+
+  if (type === 'number' || id === 'age') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>`;
+
+  }
+
+  if (id === 'occupation') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`;
+
+  }
+
+  if (id === 'phcId') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><line x1="15" y1="8" x2="17" y2="8"/><line x1="15" y1="12" x2="17" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>`;
+
+  }
+
+  if (id === 'refBy' || id === 'reference') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>`;
+
+  }
+
+  if (id === 'height') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4"/></svg>`;
+
+  }
+
+  if (id === 'weight') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9 9 9 0 0 0 18 0 9 9 0 0 0-9-9z"/><path d="M12 7v5l3 3"/></svg>`;
+
+  }
+
+  if (id === 'bp') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+
+  }
+
+  if (id === 'diagnosis') {
+
+    return `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>`;
+
+  }
+
+  return '';
+
+}
+
+
+
+function fieldHTML(f) {
+
+  const [id, en, ta, type, required, options] = f;
+
+  const value = data[id] ?? (type === "checkbox" ? false : "");
+
+
+
+  const showEn = langMode !== "ta";
+
+  const showTa = langMode !== "en";
+
+
+
+  const primaryLabel = langMode === "ta" ? ta : en;
+
+  const secondaryLabel = langMode === "ta" ? en : ta;
+
+  const hasSub = langMode === "both" && secondaryLabel;
+
+
+
+  if (type === "notice") {
+
+    return `
+
+      <div class="field full">
+
+        <div class="notice-box">
+
+          <strong style="color:var(--primary);display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:0.95rem;">
+
+            <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+
+            <span>${getLangText("Notice & Consent", "அறிவிப்பு மற்றும் ஒப்புதல்")}</span>
+
+          </strong>
+
+          ${showEn ? `<p style="margin-bottom:8px;font-weight:650;color:var(--text-main);">${esc(en)}</p>` : ""}
+
+          ${showTa ? `<p style="color:var(--text-sub);font-size:0.88rem;">${esc(ta)}</p>` : ""}
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+
+  if (type === "checkbox") {
+
+    return `
+
+      <div class="field full">
+
+        <div class="checkbox-card" onclick="const cb=$('${id}'); cb.checked=!cb.checked; cb.dispatchEvent(new Event('change'));">
+
+          <input data-field="${id}" id="${id}" type="checkbox" ${value ? "checked" : ""} ${required ? "required" : ""} onclick="event.stopPropagation();">
+
+          <label for="${id}" onclick="event.stopPropagation();">
+
+            <span class="label-text-en">${esc(primaryLabel)}${required ? ' <span class="required-star">*</span>' : ""}</span>
+
+            ${hasSub ? `<span class="label-text-ta lang-bilingual-sub">${esc(secondaryLabel)}</span>` : ""}
+
+          </label>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+
+  if (type === "select") {
+
+    const opts = (options || []).map(([val, taVal]) => {
+
+      let optText = val;
+
+      if (langMode === "ta") optText = taVal;
+
+      else if (langMode === "both") optText = `${val} — ${taVal}`;
+
+      return `<option value="${esc(val)}" ${value === val ? "selected" : ""}>${esc(optText)}</option>`;
+
+    }).join("");
+
+
+
+    const placeholderText = langMode === "en" ? "Select an option…" : (langMode === "ta" ? "தேர்ந்தெடுக்கவும்…" : "Select an option… / தேர்ந்தெடுக்கவும்…");
+
+
+
+    return `
+
+      <div class="field">
+
+        <label for="${id}" class="field-label">
+
+          <div class="label-header">
+
+            <span class="label-text-en">${esc(primaryLabel)}${required ? ' <span class="required-star">*</span>' : ""}</span>
+
+            ${hasSub ? `<span class="label-text-ta lang-bilingual-sub">${esc(secondaryLabel)}</span>` : ""}
+
+          </div>
+
+        </label>
+
+        <div class="select-wrap">
+
+          <select data-field="${id}" id="${id}" ${required ? "required" : ""}>
+
+            <option value="">${esc(placeholderText)}</option>
+
+            ${opts}
+
+          </select>
+
+          <span class="select-caret">
+
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+
+          </span>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+
+  if (type === "textarea") {
+
+    const suggestions = fieldSuggestions[id] || [];
+
+    const chipsHTML = suggestions.length > 0 ? `
+
+      <div class="quick-chips">
+
+        ${suggestions.map(s => {
+
+          let chipLabel = s.en;
+
+          let chipInsert = s.en;
+
+          if (langMode === "ta") {
+
+            chipLabel = s.ta;
+
+            chipInsert = s.ta;
+
+          } else if (langMode === "both") {
+
+            chipLabel = `${s.en} (${s.ta})`;
+
+            chipInsert = `${s.en} (${s.ta})`;
+
+          }
+
+          return `
+
+            <button type="button" class="chip-tag" onclick="appendChipText('${id}', '${esc(chipInsert)}');">
+
+              <span style="font-weight:900;color:var(--primary);font-size:0.85rem;">+</span>
+
+              <span>${esc(chipLabel)}</span>
+
+            </button>
+
+          `;
+
+        }).join("")}
+
+      </div>
+
+    ` : "";
+
+
+
+    const placeholderText = langMode === "en"
+
+      ? "Type your detailed answer here…"
+
+      : (langMode === "ta" ? "உங்கள் விரிவான பதிலை இங்கே எழுதவும்…" : "Type your answer here… / உங்கள் விரிவான பதிலை இங்கே எழுதவும்…");
+
+
+
+    return `
+
+      <div class="field full">
+
+        <label for="${id}" class="field-label">
+
+          <div class="label-header">
+
+            <span class="label-text-en">${esc(primaryLabel)}${required ? ' <span class="required-star">*</span>' : ""}</span>
+
+            ${hasSub ? `<span class="label-text-ta lang-bilingual-sub">${esc(secondaryLabel)}</span>` : ""}
+
+          </div>
+
+        </label>
+
+        <div class="textarea-wrap">
+
+          <textarea data-field="${id}" id="${id}" ${required ? "required" : ""} placeholder="${esc(placeholderText)}">${esc(value)}</textarea>
+
+        </div>
+
+        ${chipsHTML}
+
+      </div>
+
+    `;
+
+  }
+
+
+
+  // Standard inputs (text, number, date, tel)
+
+  const isDate = type === "date";
+
+  const numAttrs = type === "number" ? 'min="0" max="130" step="1"' : "";
+
+  const isFull = id === "address" || id === "diagnosis" || id === "reference";
+
+
+
+  let placeholderText = "";
+
+  if (!isDate) {
+
+    if (langMode === "en") placeholderText = `Enter ${en}…`;
+
+    else if (langMode === "ta") placeholderText = `${ta} உள்ளிடவும்…`;
+
+    else placeholderText = `${en} / ${ta}…`;
+
+  }
+
+
+
+  const leadIcon = getFieldIconSvg(id, type);
+
+
+
+  return `
+
+    <div class="field ${isFull ? "full" : ""}">
+
+      <label for="${id}" class="field-label">
+
+        <div class="label-header">
+
+          <span class="label-text-en">${esc(primaryLabel)}${required ? ' <span class="required-star">*</span>' : ""}</span>
+
+          ${hasSub ? `<span class="label-text-ta lang-bilingual-sub">${esc(secondaryLabel)}</span>` : ""}
+
+        </div>
+
+        ${isDate ? `
+
+          <button type="button" class="btn-today" onclick="$('${id}').value=new Date().toISOString().slice(0,10);triggerAutoSave();">
+
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+
+            <span>${getLangText("Today", "இன்று")}</span>
+
+          </button>
+
+        ` : ""}
+
+      </label>
+
+      <div class="input-wrap ${leadIcon ? "has-lead-icon" : ""}">
+
+        ${leadIcon ? `<span class="input-lead-icon">${leadIcon}</span>` : ""}
+
+        <input data-field="${id}" id="${id}" type="${type}" ${numAttrs} value="${esc(value)}" ${required ? "required" : ""} placeholder="${esc(placeholderText)}">
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function calculateStats() {
+
+  let totalFields = 0;
+
+  let filledFields = 0;
+
+
+
+  steps.forEach(s => {
+
+    s.fields.forEach(f => {
+
+      if (f[3] === "notice") return;
+
+      totalFields++;
+
+      const val = data[f[0]];
+
+      if (f[3] === "checkbox") {
+
+        if (val === true) filledFields++;
+
+      } else if (String(val ?? "").trim() !== "") {
+
+        filledFields++;
+
+      }
+
+    });
+
+  });
+
+
+
+  const pct = Math.round((filledFields / Math.max(1, totalFields)) * 100);
+
+  return { totalFields, filledFields, pct };
+
+}
+
+
+
+function isStepCompleted(stepIdx) {
+
+  if (stepIdx >= steps.length) return false;
+
+  const s = steps[stepIdx];
+
+  const relevantFields = s.fields.filter(f => f[3] !== "notice");
+
+  if (relevantFields.length === 0) return true;
+
+
+
+  const requiredFields = relevantFields.filter(f => f[4]);
+
+  if (requiredFields.length > 0) {
+
+    return requiredFields.every(f => {
+
+      const v = data[f[0]];
+
+      return f[3] === "checkbox" ? v === true : String(v ?? "").trim() !== "";
+
+    });
+
+  }
+
+
+
+  return relevantFields.some(f => {
+
+    const v = data[f[0]];
+
+    return f[3] === "checkbox" ? v === true : String(v ?? "").trim() !== "";
+
+  });
+
+}
+
+
+
+/* ==========================================================================
+
+   NAVIGATION RENDERING (SIDEBAR & MOBILE DRAWER with Vector Icons)
+
+   ========================================================================== */
+
+function buildStepItemsHTML(searchTerm = "") {
+
+  const term = searchTerm.trim().toLowerCase();
+
+  let matchedAny = false;
+
+
+
+  const html = chapters.map((chap, cIdx) => {
+
+    const matchingSteps = chap.stepIndices.filter(sIdx => {
+
+      if (sIdx >= steps.length) return false;
+
+      if (!term) return true;
+
+      const s = steps[sIdx];
+
+      return (
+
+        s.title.toLowerCase().includes(term) ||
+
+        (s.ta && s.ta.toLowerCase().includes(term)) ||
+
+        (s.sub && s.sub.toLowerCase().includes(term)) ||
+
+        (s.taSub && s.taSub.toLowerCase().includes(term)) ||
+
+        chap.title.toLowerCase().includes(term) ||
+
+        chap.ta.toLowerCase().includes(term)
+
+      );
+
+    });
+
+
+
+    if (matchingSteps.length === 0) return "";
+
+    matchedAny = true;
+
+
+
+    const items = matchingSteps.map(i => {
+
+      const s = steps[i];
+
+      const active = i === current ? "active" : "";
+
+      const done = isStepCompleted(i) ? "done" : "";
+
+
+
+      const pTitle = langMode === "ta" ? s.ta : s.title;
+
+      const sTitle = langMode === "ta" ? s.title : s.ta;
+
+      const showSub = langMode === "both" && sTitle;
+
+
+
+      return `
+
+        <button class="step-item-btn ${active} ${done}" type="button" data-step="${i}">
+
+          <span class="step-num-badge">${done ? `<svg class="svg-icon" viewBox="0 0 24 24" style="width:11px;height:11px;stroke-width:3;"><polyline points="20 6 9 17 4 12"></polyline></svg>` : i + 1}</span>
+
+          <span class="step-label-wrap">
+
+            <span class="step-label-en">${esc(pTitle)}</span>
+
+            ${showSub ? `<span class="step-label-ta lang-bilingual-sub">${esc(sTitle)}</span>` : ""}
+
+          </span>
+
+          <svg class="step-item-status-icon svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+
+        </button>
+
+      `;
+
+    }).join("");
+
+
+
+    const chapPTitle = langMode === "ta" ? chap.ta : chap.title;
+
+    const chapSTitle = langMode === "ta" ? chap.title : chap.ta;
+
+
+
+    return `
+
+      <div class="chapter-group">
+
+        <div class="chapter-label">
+
+          ${chap.iconSvg}
+
+          <span>${esc(chapPTitle)}</span>
+
+          ${langMode === "both" ? `<span class="chap-ta-sub lang-bilingual-sub">(${esc(chapSTitle)})</span>` : ""}
+
+        </div>
+
+        ${items}
+
+      </div>
+
+    `;
+
+  }).join("");
+
+
+
+  if (term && !matchedAny) {
+
+    return `
+
+      <div style="padding:24px 10px;text-align:center;color:var(--text-muted);font-size:0.84rem;">
+
+        <svg class="svg-icon" viewBox="0 0 24 24" style="width:28px;height:28px;margin-bottom:6px;stroke:var(--border-medium);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+
+        <div style="font-weight:700;">No sections found</div>
+
+        <div style="font-size:0.75rem;">பொருத்தமான பகுதிகள் இல்லை</div>
+
+      </div>
+
+    `;
+
+  }
+
+
+
+  const revTitle = getLangText("Review & Submit Case Record", "மதிப்பாய்வு மற்றும் இறுதிச் சமர்ப்பிப்பு");
+
+  return html + `
+
+    <div class="chapter-group" style="margin-top:6px;">
+
+      <button class="step-item-btn ${current === REVIEW_STEP_INDEX ? "active" : ""}" type="button" data-step="${REVIEW_STEP_INDEX}" style="border:1.5px dashed var(--primary);padding:10px;">
+
+        <span class="step-num-badge" style="background:var(--primary);color:#fff;"><svg class="svg-icon" viewBox="0 0 24 24" style="width:11px;height:11px;fill:currentColor;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+
+        <span class="step-label-wrap">
+
+          <span class="step-label-en"><strong>${esc(revTitle)}</strong></span>
+
+        </span>
+
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function bindStepNavButtons(container) {
+
+  container.querySelectorAll("[data-step]").forEach(b => {
+
+    b.onclick = () => {
+
+      collect();
+
+      current = +b.dataset.step;
+
+      render();
+
+      closeDrawer();
+
+      $("formCard").scrollIntoView({ behavior: "smooth", block: "start" });
+
+    };
+
+  });
+
+}
+
+
+
+function renderNav() {
+
+  const sidebarContainer = $("sidebarStepList");
+
+  if (sidebarContainer) {
+
+    const term = $("sidebarSearchInput") ? $("sidebarSearchInput").value : "";
+
+    sidebarContainer.innerHTML = buildStepItemsHTML(term);
+
+    bindStepNavButtons(sidebarContainer);
+
+
+
+    const clearBtn = $("sidebarSearchClear");
+
+    if (clearBtn) clearBtn.style.display = term ? "flex" : "none";
+
+  }
+
+
+
+  const drawerContainer = $("drawerStepList");
+
+  if (drawerContainer) {
+
+    const term = $("drawerSearchInput") ? $("drawerSearchInput").value : "";
+
+    drawerContainer.innerHTML = buildStepItemsHTML(term);
+
+    bindStepNavButtons(drawerContainer);
+
+
+
+    const drawerClearBtn = $("drawerSearchClear");
+
+    if (drawerClearBtn) drawerClearBtn.style.display = term ? "flex" : "none";
+
+  }
+
+
+
+  scrollActiveStepIntoView();
+
+}
+
+
+
+function scrollActiveStepIntoView() {
+
+  setTimeout(() => {
+
+    const activeBtn = document.querySelector("#mainSidebar .step-item-btn.active");
+
+    if (activeBtn) {
+
+      activeBtn.scrollIntoView({ block: "nearest", behavior: "smooth" });
+
+    }
+
+  }, 50);
+
+}
+
+
+
+/* ==========================================================================
+
+   REVIEW SCREEN HTML
+
+   ========================================================================== */
+
+function getDisplayValue(f, val) {
+
+  if (f[3] === "checkbox") {
+
+    return val ? (langMode === "ta" ? "ஆம்" : (langMode === "both" ? "Yes / ஆம்" : "Yes"))
+
+               : (langMode === "ta" ? "இல்லை" : (langMode === "both" ? "No / இல்லை" : "No"));
+
+  }
+
+  if (f[3] === "select" && f[5]) {
+
+    const opt = f[5].find(o => o[0] === val);
+
+    if (opt) {
+
+      if (langMode === "ta") return opt[1];
+
+      if (langMode === "both") return `${opt[0]} — ${opt[1]}`;
+
+      return opt[0];
+
+    }
+
+  }
+
+  return String(val ?? "");
+
+}
+
+
+
+function reviewHTML() {
+
+  const { totalFields, filledFields, pct } = calculateStats();
+
+
+
+  const sectionsHTML = steps.map((s, i) => {
+
+    const rows = s.fields
+
+      .filter(f => f[3] !== "notice")
+
+      .map(f => {
+
+        const val = data[f[0]];
+
+        const hasVal = f[3] === "checkbox" ? val === true : String(val ?? "").trim() !== "";
+
+        return `
+
+          <div class="review-data-row">
+
+            <div class="review-label-col">
+
+              <span class="review-label-en">${esc(langMode === "ta" ? f[2] : f[1])}</span>
+
+              ${langMode === "both" ? `<span class="review-label-ta lang-bilingual-sub">${esc(f[2])}</span>` : ""}
+
+            </div>
+
+            <div class="review-val ${hasVal ? "" : "empty-val"}">
+
+              ${hasVal ? esc(getDisplayValue(f, val)) : `— ${getLangText("Not specified", "குறிப்பிடப்படவில்லை")} —`}
+
+            </div>
+
+          </div>
+
+        `;
+
+      }).join("");
+
+
+
+    const pTitle = langMode === "ta" ? s.ta : s.title;
+
+    const sTitle = langMode === "ta" ? s.title : s.ta;
+
+
+
+    return `
+
+      <div class="review-section-block">
+
+        <div class="review-section-head">
+
+          <div class="review-section-title">
+
+            <span class="review-section-badge">${i + 1}</span>
+
+            <div class="review-title-wrap">
+
+              <span class="review-title-en">${esc(pTitle)}</span>
+
+              ${langMode === "both" ? `<span class="review-title-ta lang-bilingual-sub">${esc(sTitle)}</span>` : ""}
+
+            </div>
+
+          </div>
+
+          <button class="review-edit-btn" type="button" data-edit="${i}">
+
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+
+            <span>${getLangText("Edit Section", "திருத்து")}</span>
+
+          </button>
+
+        </div>
+
+        <div class="review-section-body">
+
+          ${rows}
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+
+
+  return `
+
+    <div class="section-guidance">
+
+      <svg class="guidance-icon svg-icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+
+      <div class="guidance-content">
+
+        <div class="guidance-text-en"><strong>${getLangText("Review your complete clinical case record", "உங்கள் முழு மருத்துவப் பதிவை மதிப்பாய்வு செய்யவும்")}:</strong></div>
+
+        <div class="guidance-text-en">${getLangText("Please review all information carefully before final submission. Click Edit Section on any item to make changes.", "மருத்துவரிடம் இறுதிச் சமர்ப்பிப்பு செய்வதற்கு முன் உங்கள் பதில்களைச் சரிபார்க்கவும். மாற்றங்கள் செய்ய 'திருத்து' என்பதைத் தேர்ந்தெடுக்கவும்.")}</div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="review-stats-bar">
+
+      <div class="review-stat-card">
+
+        <div class="review-stat-val">${pct}%</div>
+
+        <div class="review-stat-label">${getLangText("Completed", "நிறைவு பெற்றது")}</div>
+
+      </div>
+
+      <div class="review-stat-card">
+
+        <div class="review-stat-val">${filledFields} / ${totalFields}</div>
+
+        <div class="review-stat-label">${getLangText("Fields Answered", "பதிலளிக்கப்பட்டது")}</div>
+
+      </div>
+
+      <div class="review-stat-card">
+
+        <div class="review-stat-val">23</div>
+
+        <div class="review-stat-label">${getLangText("Total Sections", "மொத்த பகுதிகள்")}</div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="review-accordion">
+
+      ${sectionsHTML}
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* ==========================================================================
+
+   MAIN RENDER FUNCTION
+
+   ========================================================================== */
+
+function render() {
+
+  const isReview = current === REVIEW_STEP_INDEX;
+
+  const s = isReview ? { 
+
+    title: "Review & Confirm Case Record", 
+
+    ta: "வழக்கு மதிப்பாய்வு மற்றும் இறுதி உறுதிப்படுத்தல்", 
+
+    sub: "Review all your entered symptoms and clinical answers before final submission.",
+
+    taSub: "மருத்துவரிடம் இறுதிச் சமர்ப்பிப்பு செய்வதற்கு முன் அனைத்துப் பதில்களையும் சரிபார்க்கவும்."
+
+  } : steps[current];
+
+
+
+  // Headings according to language mode
+
+  const pTitle = langMode === "ta" ? s.ta : s.title;
+
+  const sTitle = langMode === "ta" ? s.title : s.ta;
+
+  const pSub = langMode === "ta" ? (s.taSub || s.ta) : s.sub;
+
+  const sSub = langMode === "ta" ? s.sub : (s.taSub || s.ta);
+
+
+
+  // Card Kicker & Timings
+
+  if (isReview) {
+
+    $("stepKicker").textContent = `STEP 24 / 24 · ${getLangText("FINAL REVIEW", "இறுதி மதிப்பாய்வு")}`;
+
+    $("stepEstTime").innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24" style="width:12px;height:12px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <span>${getLangText("~1 min", "~1 நிமிடம்")}</span>`;
+
+  } else {
+
+    $("stepKicker").textContent = `STEP ${String(current + 1).padStart(2, "0")} / 23`;
+
+    $("stepEstTime").innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24" style="width:12px;height:12px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <span>${getLangText("1–2 mins", "1–2 நிமிடம்")}</span>`;
+
+  }
+
+
+
+  $("stepTitleEn").textContent = pTitle;
+
+  $("stepTitleTa").textContent = sTitle;
+
+  $("stepSubtitleEn").textContent = pSub;
+
+  $("stepSubtitleTa").textContent = sSub;
+
+
+
+  // Mobile Dock Kicker
+
+  if (isReview) {
+
+    $("mobileKickerText").textContent = `Step 24 / 24`;
+
+    $("mobileStepTitle").textContent = getLangText("Review & Submit", "மதிப்பாய்வு & சமர்ப்பி");
+
+  } else {
+
+    $("mobileKickerText").textContent = `Step ${current + 1} of 23`;
+
+    $("mobileStepTitle").textContent = pTitle;
+
+  }
+
+
+
+  // Progress Calculations
+
+  const flowPct = Math.round(((current + 1) / TOTAL_FLOW_STEPS) * 100);
+
+  $("progressPct").textContent = `${flowPct}%`;
+
+  $("progressFill").style.width = `${flowPct}%`;
+
+  if ($("mobileDockProgress")) $("mobileDockProgress").style.width = `${flowPct}%`;
+
+  $("progressTitle").textContent = getLangText("Your progress", "முன்னேற்றம்");
+
+  $("progressMeta").textContent = isReview 
+
+    ? getLangText("Review & Submit", "மதிப்பாய்வு & சமர்ப்பி")
+
+    : getLangText(`Section ${current + 1} of 23`, `பகுதி ${current + 1} / 23`);
+
+
+
+  const { filledFields } = calculateStats();
+
+  $("progressFilledCount").textContent = `${filledFields} ${getLangText("answered", "பதிலளிக்கப்பட்டது")}`;
+
+
+
+  // Form Body
+
+  if (isReview) {
+
+    $("nextBtn").classList.add("is-submit");
+
+    $("mobileNextBtn").classList.add("is-submit");
+
+    $("formBody").innerHTML = reviewHTML();
+
+
+
+    document.querySelectorAll("[data-edit]").forEach(b => {
+
+      b.onclick = () => {
+
+        collect();
+
+        current = +b.dataset.edit;
+
+        render();
+
+        $("formCard").scrollIntoView({ behavior: "smooth", block: "start" });
+
+      };
+
+    });
+
+
+
+    $("nextBtnLabel").textContent = getLangText("Submit Case Record", "வழக்கைச் சமர்ப்பிக்கவும்");
+
+    $("mobileNextLabel").textContent = getLangText("Submit", "சமர்ப்பி");
+
+    $("footNote").textContent = getLangText("Transmits your case record securely to Dr. G. Srinivasan M.D(Hom)", "மருத்துவர் சீனிவாசனிடம் உங்கள் தகவல்களைப் பாதுகாப்பாகச் சமர்ப்பிக்கிறது.");
+
+  } else {
+
+    $("nextBtn").classList.remove("is-submit");
+
+    $("mobileNextBtn").classList.remove("is-submit");
+
+    $("formBody").innerHTML = `
+
+      <div class="section-guidance">
+
+        <svg class="guidance-icon svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+
+        <div class="guidance-content">
+
+          <div class="guidance-text-en"><strong>${esc(pTitle)}</strong>: ${esc(pSub)}</div>
+
+          ${langMode === "both" ? `<div class="guidance-text-ta lang-bilingual-sub"><strong>${esc(sTitle)}</strong>: ${esc(sSub)}</div>` : ""}
+
+        </div>
+
+      </div>
+
+      <div class="fields-grid">${s.fields.map(fieldHTML).join("")}</div>
+
+    `;
+
+
+
+    $("nextBtnLabel").textContent = getLangText("Continue", "தொடரவும்");
+
+    $("mobileNextLabel").textContent = getLangText("Next", "அடுத்து");
+
+    $("footNote").textContent = getLangText("You can review all answers before final submission", "இறுதிச் சமர்ப்பிப்புக்கு முன் உங்கள் பதில்களை மதிப்பாய்வு செய்யலாம்.");
+
+
+
+    document.querySelectorAll("#formBody [data-field]").forEach(el => {
+
+      el.addEventListener("input", triggerAutoSave);
+
+      el.addEventListener("change", triggerAutoSave);
+
+    });
+
+  }
+
+
+
+  // Prev Button state
+
+  const prevDisabled = current === 0;
+
+  $("prevBtn").disabled = prevDisabled;
+
+  $("mobilePrevBtn").disabled = prevDisabled;
+
+  $("prevBtnLabel").textContent = getLangText("Previous", "முந்தையது");
+
+
+
+  // Sidebar utility labels
+
+  $("sidebarBackupLabel").textContent = getLangText("Backup", "காப்பு");
+
+  $("sidebarResetLabel").textContent = getLangText("Reset", "அழி");
+
+  $("saveDraftLabel").textContent = getLangText("Save", "சேமி");
+
+
+
+  renderNav();
+
+}
+
+
+
+/* ==========================================================================
+
+   VALIDATION
+
+   ========================================================================== */
+
+function validateCurrent() {
+
+  if (current >= steps.length) return true;
+
+  const s = steps[current];
+
+
+
+  for (const f of s.fields) {
+
+    if (!f[4]) continue;
+
+    const v = data[f[0]];
+
+    const missing = f[3] === "checkbox" ? !v : !String(v ?? "").trim();
+
+    if (missing) {
+
+      const el = $(f[0]);
+
+      if (el) {
+
+        el.focus();
+
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        if (el.reportValidity) el.reportValidity();
+
+      }
+
+      showToast(getLangText(`Please complete required field: ${f[1]}`, `கட்டாயப் புலத்தை நிரப்பவும்: ${f[2]}`));
+
+      return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
+
+
+/* ==========================================================================
+
+   CASE SUBMISSION TO BACKEND (Dual-path: /api/cases and /api/cases.php)
+
+   ========================================================================== */
+
+async function submitCaseToServer() {
+
+  collect();
+
+  const nextBtn = $("nextBtn");
+
+  const origText = nextBtn.innerHTML;
+
+  nextBtn.disabled = true;
+
+  $("mobileNextBtn").disabled = true;
+
+  nextBtn.innerHTML = `<svg class="svg-icon spinner" viewBox="0 0 24 24" style="width:16px;height:16px;animation:spin 0.9s linear infinite;vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-dasharray="32" stroke-linecap="round" fill="none"/></svg> <span>${getLangText("Submitting securely…", "பாதுகாப்பாகச் சமர்ப்பிக்கிறது…")}</span>`;
+
+
+
+  const patientName = String(data.patientName || data["Name /"] || data["s0f0"] || "").trim() || "Patient";
+
+  const phone = String(data.phone || data["Ph.No ./"] || data["s0f8"] || "").trim();
+
+  const diagnosis = String(data.diagnosis || data["Diagnosis /"] || "").trim();
+
+
+
+  const payload = {
+
+    formName: "Prana HomeoCare Case Record",
+
+    submittedAt: new Date().toISOString(),
+
+    language: langMode,
+
+    answers: {
+
+      ...data,
+
+      patientName: patientName,
+
+      phone: phone,
+
+      diagnosis: diagnosis
+
+    }
+
+  };
+
+
+
+  let submitSuccess = false;
+
+  let caseId = null;
+
+  let errorMsg = "";
+
+
+
+  // Attempt 1: Standard API endpoint (/api/cases)
+
+  try {
+
+    const res = await fetch("/api/cases", {
+
+      method: "POST",
+
+      headers: { "Content-Type": "application/json" },
+
+      body: JSON.stringify(payload)
+
+    });
+
+    if (res.ok) {
+
+      const result = await res.json().catch(() => ({}));
+
+      caseId = result.id || Math.floor(1000 + Math.random() * 9000);
+
+      submitSuccess = true;
+
+    } else {
+
+      errorMsg = `Endpoint /api/cases returned ${res.status}`;
+
+    }
+
+  } catch (err) {
+
+    errorMsg = err.message || "Failed /api/cases";
+
+  }
+
+
+
+  // Attempt 2: Direct PHP endpoint fallback (/api/cases.php)
+
+  if (!submitSuccess) {
+
+    try {
+
+      const res = await fetch("/api/cases.php", {
+
+        method: "POST",
+
+        headers: { "Content-Type": "application/json" },
+
+        body: JSON.stringify(payload)
+
+      });
+
+      if (res.ok) {
+
+        const result = await res.json().catch(() => ({}));
+
+        caseId = result.id || Math.floor(1000 + Math.random() * 9000);
+
+        submitSuccess = true;
+
+      }
+
+    } catch (err2) {
+
+      console.warn("PHP endpoint fallback notice:", err2);
+
+    }
+
+  }
+
+
+
+  if (submitSuccess) {
+
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+
+    renderSuccessScreen(caseId, patientName, phone);
+
+  } else {
+
+    nextBtn.disabled = false;
+
+    $("mobileNextBtn").disabled = false;
+
+    nextBtn.innerHTML = origText;
+
+    showSubmitFallbackModal(payload, errorMsg);
+
+  }
+
+}
+
+
+
+/* ==========================================================================
+
+   SUCCESS SCREEN (Vector Icons & Complete Clinic Details)
+
+   ========================================================================== */
+
+function renderSuccessScreen(caseId, patientName, phone) {
+
+  const waMsg = encodeURIComponent(
+
+    `Hello Dr. Srinivasan, I have submitted my case sheet record on Prana Homeo Care. Case ID: #${caseId}. Patient Name: ${patientName}${phone ? " (Phone: " + phone + ")" : ""}.`
+
+  );
+
+  const waUrl = `https://wa.me/919962303009?text=${waMsg}`;
+
+
+
+  $("cardFoot").style.display = "none";
+
+  $("mobileDock").style.display = "none";
+
+  $("stepKicker").textContent = getLangText("SUBMISSION COMPLETE", "சமர்ப்பிப்பு முடிந்தது");
+
+  $("stepTitleEn").textContent = getLangText("Submitted Successfully", "வெற்றிகரமாகச் சமர்ப்பிக்கப்பட்டது");
+
+  $("stepTitleTa").textContent = "";
+
+  $("stepSubtitleEn").textContent = getLangText("Your clinical details have been safely recorded.", "உங்கள் மருத்துவ விவரங்கள் பாதுகாப்பாகப் பதிவு செய்யப்பட்டுள்ளன.");
+
+  $("stepSubtitleTa").textContent = "";
+
+
+
+  $("formBody").innerHTML = `
+
+    <div class="success-card">
+
+      <div class="success-badge-icon">
+
+        <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+
+      </div>
+
+      <div class="success-tag">${getLangText("CONFIRMED &amp; RECEIVED", "பெறப்பட்டது")}</div>
+
+      <h2 class="success-title">
+
+        ${getLangText("Thank you! Your case record has been received.", "நன்றி! உங்கள் மருத்துவப் பதிவு பெறப்பட்டது.")}
+
+      </h2>
+
+      <p class="success-desc">
+
+        ${getLangText(
+
+          `Dear <strong>${esc(patientName)}</strong>, your detailed clinical case record is safely filed with <strong>Dr. G. Srinivasan M.D(Hom)</strong> at Prana Homeo Care. Our clinic will review your symptoms and reach out to you shortly.`,
+
+          `அன்புள்ள <strong>${esc(patientName)}</strong>, உங்கள் விரிவான மருத்துவப் பதிவு <strong>டாக்டர் ஜி. சீனிவாசன் M.D(Hom)</strong> அவர்களிடம் பாதுகாப்பாகப் பதிவு செய்யப்பட்டது. எங்கள் மருத்துவக் குழு உங்கள் அறிகுறிகளை ஆய்வு செய்து விரைவில் தொடர்புகொள்வார்கள்.`
+
+        )}
+
+      </p>
+
+
+
+      <div class="ref-code-card">
+
+        <span class="ref-code-label">${getLangText("YOUR CASE REFERENCE ID", "வழக்கு குறிப்பு எண்")}</span>
+
+        <div class="ref-code-value">#${esc(caseId)}</div>
+
+        <button type="button" class="btn" id="copyRefBtn" style="min-height:38px;padding:6px 14px;font-size:0.82rem;">
+
+          <svg class="svg-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+
+          <span id="copyRefLabel">${getLangText("Copy Reference ID", "குறிப்பு எண்ணை நகலெடு")}</span>
+
+        </button>
+
+      </div>
+
+
+
+      <div class="success-actions-grid">
+
+        <a class="btn btn-whatsapp" href="${waUrl}" target="_blank" rel="noopener">
+
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+
+          <span>${getLangText("Notify Doctor via WhatsApp (+91 99623 03009)", "வாட்ஸ்அப் மூலம் மருத்துவருக்குத் தெரிவிக்கவும்")}</span>
+
+        </a>
+
+        <button type="button" class="btn primary" onclick="window.print();">
+
+          <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+
+          <span>${getLangText("Print / Save Record PDF", "பதிவை அச்சிடு / PDF சேமி")}</span>
+
+        </button>
+
+        <button type="button" class="btn" id="downloadBackupBtn">
+
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+
+          <span>${getLangText("Download Case File (JSON)", "பதிவிறக்கு (JSON)")}</span>
+
+        </button>
+
+        <button type="button" class="btn" id="newCaseBtn" style="grid-column:1/-1;">
+
+          <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+
+          <span>${getLangText("Submit Another Case", "மற்றொரு வழக்கு பதிவு")}</span>
+
+        </button>
+
+      </div>
+
+
+
+      <div class="clinic-signature-card">
+
+        <div class="clinic-name">Prana Homeo Care</div>
+
+        <div class="clinic-doctor">Dr. G. Srinivasan M.D(Hom) · Specialist Paediatric &amp; Classical Constitutional Homeopathy</div>
+
+        <div class="clinic-addr">Plot no 121, 2/94A Jayalakshmi Nagar, Kattupakkam, Porur, Chennai 600056</div>
+
+        <div class="clinic-contact"><svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Helpline: +91 99623 03009 · In-clinic &amp; Global Video Consultations</div>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+
+  $("copyRefBtn").onclick = () => {
+
+    if (navigator.clipboard) {
+
+      navigator.clipboard.writeText(`#${caseId}`).then(() => {
+
+        $("copyRefLabel").innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;vertical-align:middle;margin-right:4px;"><polyline points="20 6 9 17 4 12"></polyline></svg> ${getLangText("Copied!", "நகலெடுக்கப்பட்டது!")}`;
+
+        setTimeout(() => { $("copyRefLabel").textContent = getLangText("Copy Reference ID", "குறிப்பு எண்ணை நகலெடு"); }, 2500);
+
+      });
+
+    }
+
+  };
+
+
+
+  $("downloadBackupBtn").onclick = () => {
+
+    downloadCaseJSON(caseId, patientName, data);
+
+  };
+
+
+
+  $("newCaseBtn").onclick = () => {
+
+    localStorage.removeItem(DRAFT_KEY);
+
+    window.location.reload();
+
+  };
+
+
+
+  $("formCard").scrollIntoView({ behavior: "smooth", block: "start" });
+
+}
+
+
+
+function downloadCaseJSON(id, name, answers) {
+
+  const blob = new Blob([JSON.stringify({ id, patientName: name, answers }, null, 2)], { type: "application/json;charset=utf-8" });
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+
+  a.href = url;
+
+  a.download = `prana-case-${name.replace(/[^a-zA-Z0-9]/g, "_")}-#${id}.json`;
+
+  a.click();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+}
+
+
+
+/* ==========================================================================
+
+   SUBMISSION FALLBACK MODAL
+
+   ========================================================================== */
+
+function showSubmitFallbackModal(payload, errorMsg) {
+
+  const waMsg = encodeURIComponent(
+
+    `Hello Dr. Srinivasan, I have completed my case form on Prana Homeo Care for ${payload.answers.patientName || "Patient"} (${payload.answers.phone || ""}).`
+
+  );
+
+  const waUrl = `https://wa.me/919962303009?text=${waMsg}`;
+
+
+
+  showConfirmModal(
+
+    getLangText("Server Connection Notice", "சேவையக இணைப்பு அறிவிப்பு"),
+
+    `
+
+      <p style="margin-bottom:8px;">We could not reach the clinical backend server (${esc(errorMsg)}). Don't worry — your complete case record is safely saved on this device.</p>
+
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px;">சேவையகத்துடன் இணைக்க முடியவில்லை. உங்கள் வழக்கு விவரங்கள் இந்தச் சாதனத்தில் பாதுகாப்பாக உள்ளன.</p>
+
+      <p>You can download a backup JSON file of your case record right now, or message Dr. Srinivasan directly on WhatsApp.</p>
+
+    `,
+
+    [
+
+      {
+
+        text: `<svg class="svg-icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> <span>${getLangText("Download Backup (JSON)", "பதிவிறக்கு")}</span>`,
+
+        className: "btn primary",
+
+        onClick: () => {
+
+          downloadCaseJSON("draft", payload.answers.patientName || "patient", payload.answers);
+
+        }
+
+      },
+
+      {
+
+        text: `<svg class="svg-icon" viewBox="0 0 24 24" style="width:14px;height:14px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> <span>${getLangText("WhatsApp Doctor", "வாட்ஸ்அப் செய்")}</span>`,
+
+        className: "btn btn-whatsapp",
+
+        onClick: () => {
+
+          window.open(waUrl, "_blank");
+
+        }
+
+      },
+
+      {
+
+        text: getLangText("Close", "மூடு"),
+
+        className: "btn",
+
+        onClick: hideConfirmModal
+
+      }
+
+    ]
+
+  );
+
+}
+
+
+
+/* ==========================================================================
+
+   CONFIRMATION MODAL HELPER
+
+   ========================================================================== */
+
+function showConfirmModal(title, bodyHTML, actions) {
+
+  const modal = $("confirmModal");
+
+  $("modalTitle").textContent = title;
+
+  $("modalBodyText").innerHTML = bodyHTML;
+
+
+
+  const actionsContainer = $("modalActions");
+
+  actionsContainer.innerHTML = "";
+
+  actions.forEach(a => {
+
+    const btn = document.createElement("button");
+
+    btn.type = "button";
+
+    btn.className = a.className || "btn";
+
+    if (a.style) btn.style.cssText = a.style;
+
+    btn.innerHTML = a.text;
+
+    btn.onclick = a.onClick;
+
+    actionsContainer.appendChild(btn);
+
+  });
+
+
+
+  modal.classList.add("open");
+
+}
+
+
+
+function hideConfirmModal() {
+
+  $("confirmModal").classList.remove("open");
+
+}
+
+
+
+/* ==========================================================================
+
+   DRAWER (MOBILE SECTIONS JUMP SHEET)
+
+   ========================================================================== */
+
+function openDrawer() {
+
+  renderNav();
+
+  $("stepDrawerBackdrop").classList.add("open");
+
+  if ($("drawerSearchInput")) $("drawerSearchInput").focus();
+
+}
+
+
+
+function closeDrawer() {
+
+  $("stepDrawerBackdrop").classList.remove("open");
+
+}
+
+
+
+/* ==========================================================================
+
+   TOAST HELPER
+
+   ========================================================================== */
+
+function showToast(msg) {
+
+  const container = $("toastContainer");
+
+  const el = document.createElement("div");
+
+  el.className = "toast-msg";
+
+  el.innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> <span>${esc(msg)}</span>`;
+
+  container.appendChild(el);
+
+
+
+  setTimeout(() => {
+
+    el.style.opacity = "0";
+
+    el.style.transform = "translateY(10px)";
+
+    el.style.transition = "all 0.25s ease";
+
+    setTimeout(() => el.remove(), 250);
+
+  }, 3200);
+
+}
+
+
+
+/* ==========================================================================
+
+   EVENT LISTENERS & USER CONTROLS
+
+   ========================================================================== */
+
+function goNext() {
+
+  collect();
+
+  if (current < REVIEW_STEP_INDEX) {
+
+    if (!validateCurrent()) return;
+
+    current++;
+
+    render();
+
+    $("formCard").scrollIntoView({ behavior: "smooth", block: "start" });
+
+  } else {
+
+    submitCaseToServer();
+
+  }
+
+}
+
+
+
+function goPrev() {
+
+  collect();
+
+  if (current > 0) {
+
+    current--;
+
+    render();
+
+    $("formCard").scrollIntoView({ behavior: "smooth", block: "start" });
+
+  }
+
+}
+
+
+
+// Next / Prev button events (desktop & mobile)
+
+$("nextBtn").onclick = goNext;
+
+$("mobileNextBtn").onclick = goNext;
+
+$("prevBtn").onclick = goPrev;
+
+$("mobilePrevBtn").onclick = goPrev;
+
+
+
+// 3-Way Language Segmented Switcher
+
+document.querySelectorAll(".lang-seg-btn").forEach(btn => {
+
+  btn.onclick = () => {
+
+    collect();
+
+    setLanguageMode(btn.dataset.lang, true);
+
+  };
+
+});
+
+
+
+// Theme toggle
+
+$("themeToggleBtn").onclick = toggleTheme;
+
+
+
+// Save draft buttons
+
+$("saveDraftBtn").onclick = () => saveDraft(true);
+
+$("sidebarDownloadBtn").onclick = () => {
+
+  collect();
+
+  downloadCaseJSON("draft", data.patientName || "patient", data);
+
+};
+
+$("sidebarClearBtn").onclick = clearAllDraftData;
+
+
+
+// Mobile Drawer triggers
+
+$("mobileDrawerTriggerBtn").onclick = openDrawer;
+
+$("drawerCloseBtn").onclick = closeDrawer;
+
+$("stepDrawerBackdrop").onclick = (e) => {
+
+  if (e.target === $("stepDrawerBackdrop")) closeDrawer();
+
+};
+
+
+
+// Search filter events
+
+const sidebarSearchInput = $("sidebarSearchInput");
+
+const sidebarSearchClear = $("sidebarSearchClear");
+
+if (sidebarSearchInput) {
+
+  sidebarSearchInput.addEventListener("input", renderNav);
+
+  if (sidebarSearchClear) {
+
+    sidebarSearchClear.onclick = () => {
+
+      sidebarSearchInput.value = "";
+
+      renderNav();
+
+      sidebarSearchInput.focus();
+
+    };
+
+  }
+
+}
+
+
+
+const drawerSearchInput = $("drawerSearchInput");
+
+const drawerSearchClear = $("drawerSearchClear");
+
+if (drawerSearchInput) {
+
+  drawerSearchInput.addEventListener("input", renderNav);
+
+  if (drawerSearchClear) {
+
+    drawerSearchClear.onclick = () => {
+
+      drawerSearchInput.value = "";
+
+      renderNav();
+
+      drawerSearchInput.focus();
+
+    };
+
+  }
+
+}
+
+
+
+// Keyboard shortcuts (Alt+N: Next, Alt+P: Prev, Ctrl+S: Save Draft)
+
+window.addEventListener("keydown", (e) => {
+
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
+
+    e.preventDefault();
+
+    saveDraft(true);
+
+  } else if (e.altKey && e.key.toLowerCase() === "n") {
+
+    e.preventDefault();
+
+    goNext();
+
+  } else if (e.altKey && e.key.toLowerCase() === "p") {
+
+    e.preventDefault();
+
+    goPrev();
+
+  }
+
+});
+
+
+
+// Initialize on Load
+
+initTheme();
+
+initLanguageMode();
+
+loadDraft();
+
+render();
+
+
+
+if ($("sidebarStepList")) {
+
+  $("sidebarStepList").scrollTop = 0;
+
+}
+
+</script>
+
+</body>
+
+</html>
