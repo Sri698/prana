@@ -4756,6 +4756,12 @@ body {
 
       </button>
 
+      <!-- Demo Data Quick Fill button -->
+      <button class="btn-ctrl" id="demoDataBtn" type="button" title="Fill with demo test data" onclick="fillDemoData()" style="color:var(--accent-gold); border-color:rgba(201,162,74,0.4); background:rgba(201,162,74,0.12); font-weight:800; font-size:0.75rem; padding:0 12px; gap:6px; display:inline-flex; align-items:center;">
+        <svg class="svg-icon" viewBox="0 0 24 24" style="stroke:currentColor; width:14px; height:14px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span>Demo Fill</span>
+      </button>
+
 
 
       <!-- Dark / Light Mode Switcher with Vector Sun/Moon -->
@@ -7969,6 +7975,66 @@ if ($("sidebarStepList")) {
   $("sidebarStepList").scrollTop = 0;
 
 }
+
+
+/* ==========================================================================
+   QUICK DEMO DATA GENERATOR FOR LOCAL TESTING
+   ========================================================================== */
+function fillDemoData() {
+  const demoData = {
+    patientName: "Dr. K. Anand Kumar",
+    occupation: "Professor & Academic Dean",
+    regDate: new Date().toISOString().split("T")[0],
+    age: "42",
+    gender: "Male",
+    maritalStatus: "Married",
+    address: "Plot 18, Lake View Road, Porur, Chennai 600116",
+    phone: "+91 98842 23007",
+    diagnosis: "Allergic Rhinosinusitis & Chronic Morning Sneezing",
+    consent: true,
+    chiefComplaint: "Violent bouts of 20-30 sneezes every morning immediately on stepping out of bed. Profuse watery excoriating nasal discharge with burning eyes and frontal headache, worse in air-conditioning and damp weather.",
+    complaintSite: "Nose, frontal sinuses, eyes, throat",
+    sensation: "Tickling and itching in nostrils, feeling of hot water pouring down nostrils, raw burning in throat",
+    onsetDuration: "Started 4 years ago, progressively worse in past 6 months",
+    frequencySeverity: "Daily morning episodes lasting 1 to 2 hours",
+    aggravation: "Early morning upon waking, stepping on cold floor, cold water face wash, air-conditioned rooms, dust",
+    amelioration: "Warm sun exposure, hot black tea, wrapping head in woollen scarf",
+    thermal: "Chilly patient (cannot tolerate fan on high speed, sensitive to slightest cold draft)",
+    appetiteUsual: "Good appetite, eats on time",
+    thirstAmount: "Thirst for small sips of warm water frequently",
+    desires: "Hot soups, spicy rasam, warm fluids",
+    aversions: "Cold milk, ice creams, cold water",
+    sweatAmount: "Moderate, mostly on forehead during sneezing paroxysms",
+    sleepQuality: "Disturbed sleep between 1 AM and 3 AM due to nasal blockage",
+    sleepPosition: "Sleeps on right side with head elevated on two pillows",
+    dreams: "Anxious dreams regarding deadlines and college administration",
+    mindDescribe: "Perfectionist, fastidious, orderly. Wants everything in place. Irritable if delayed.",
+    fear: "Fear of heights and enclosed spaces",
+    anger: "Quick to anger but suppresses it, feels tense in stomach",
+    natureDisposition: "Hardworking, disciplined, intellectual, sensitive to noise"
+  };
+
+  Object.assign(data, demoData);
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+  } catch(e) {}
+
+  // Update current visible inputs
+  Object.keys(demoData).forEach(k => {
+    const el = document.getElementById(k) || document.querySelector('[data-field="' + k + '"]');
+    if (el) {
+      if (el.type === 'checkbox') el.checked = Boolean(demoData[k]);
+      else el.value = demoData[k];
+    }
+  });
+
+  render();
+  updateSaveIndicator(true);
+  if (typeof showToast === "function") {
+    showToast(getLangText("Demo case data filled successfully! Click Next to review and submit.", "மாதிரி மருத்துவ விவரங்கள் நிரப்பப்பட்டன!"));
+  }
+}
+window.fillDemoData = fillDemoData;
 
 </script>
 
