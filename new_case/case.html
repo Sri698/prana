@@ -1099,7 +1099,7 @@ body {
 
   display: grid;
 
-  grid-template-columns: 320px minmax(0, 1fr);
+  grid-template-columns: 350px minmax(0, 1fr);
 
   gap: 24px;
 
@@ -1613,80 +1613,49 @@ body {
 
 
 
-.step-label-en {
-
-  font-size: 0.83rem;
-
-  font-weight: 650;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  color: inherit;
-
-  display: block;
-
-  max-width: 100%;
-
+.step-label-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
 }
 
-
+.step-label-en {
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  color: inherit;
+  display: block;
+  line-height: 1.35;
+  word-break: normal;
+}
 
 .step-label-en strong {
-
-  display: inline-block;
-
-  max-width: 100%;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  vertical-align: bottom;
-
+  display: inline;
   font-weight: 750;
-
+  overflow: visible;
+  text-overflow: clip;
 }
-
-
 
 .step-label-ta {
-
-  font-size: 0.71rem;
-
+  font-size: 0.75rem;
   color: var(--text-muted);
-
-  white-space: nowrap;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  font-weight: 500;
-
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  font-weight: 550;
   display: block;
-
-  max-width: 100%;
-
+  line-height: 1.4;
+  word-break: normal;
 }
 
-
-
 .step-label-ta strong {
-
-  display: inline-block;
-
-  max-width: 100%;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  vertical-align: bottom;
-
+  display: inline;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 
@@ -2676,23 +2645,55 @@ body {
    ========================================================================== */
 
 .card-foot {
-
-  padding: 18px 32px;
-
+  padding: 18px 28px;
   background: linear-gradient(180deg, #f7fbf9 0%, #ffffff 100%);
-
   border-top: 1px solid rgba(11, 92, 102, 0.09);
-
-  display: flex;
-
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
+  gap: 18px;
+}
 
-  justify-content: space-between;
+.foot-helper-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 550;
+  text-align: center;
+  line-height: 1.45;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  padding: 0 10px;
+}
 
-  gap: 16px;
+#prevBtn {
+  justify-self: start;
+  white-space: nowrap;
+}
 
-  flex-wrap: nowrap;
+#nextBtn {
+  justify-self: end;
+  white-space: nowrap;
+}
 
+@media (max-width: 768px) {
+  .card-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .foot-helper-text {
+    order: -1;
+    width: 100%;
+    margin-bottom: 2px;
+    font-size: 0.76rem;
+    text-align: center;
+  }
+  #prevBtn, #nextBtn {
+    flex: 1;
+    justify-content: center;
+  }
 }
 
 
@@ -5260,8 +5261,8 @@ body {
   flex: 1;
   text-align: center;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
+  text-overflow: clip;
   font-size: 0.78rem;
   line-height: 1.35;
   padding: 0 8px;
