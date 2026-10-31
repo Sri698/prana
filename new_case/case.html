@@ -7951,38 +7951,22 @@ async function submitCaseToServer() {
 
 
 
-  // Attempt 1: Standard API endpoint (/api/cases)
-
+  // Attempt 1: Relative path for subfolder / local dev (../api/cases.php)
   try {
-
-    const res = await fetch("/api/cases", {
-
+    const res = await fetch("../api/cases.php", {
       method: "POST",
-
       headers: { "Content-Type": "application/json" },
-
       body: JSON.stringify(payload)
-
     });
-
     if (res.ok) {
-
       const result = await res.json().catch(() => ({}));
-
       caseId = result.id || Math.floor(1000 + Math.random() * 9000);
-
       submitSuccess = true;
-
     } else {
-
-      errorMsg = `Endpoint /api/cases returned ${res.status}`;
-
+      errorMsg = `Endpoint ../api/cases.php returned ${res.status}`;
     }
-
   } catch (err) {
-
-    errorMsg = err.message || "Failed /api/cases";
-
+    errorMsg = err.message || "Failed ../api/cases.php";
   }
 
 

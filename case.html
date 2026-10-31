@@ -3306,19 +3306,33 @@ const OnlineCasesAdmin = ({ setView }) => {
   };
 
   const getApiEndpoint = () => {
-    if (typeof window !== 'undefined' && window.location && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-      return window.location.origin + '/api/cases.php';
+    if (typeof window !== 'undefined' && window.location) {
+      const loc = window.location;
+      if (loc.origin.startsWith('capacitor:') || (loc.hostname === 'localhost' && loc.port !== '8080')) {
+        return 'https://pranahomeocare.in/prana_case_sheet_app/api/cases.php';
+      }
+      if (loc.hostname === 'localhost' && loc.port === '8080') {
+        return loc.origin + '/api/cases.php';
+      }
+      const pathDir = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
+      return loc.origin + pathDir + 'api/cases.php';
     }
-    const base = typeof RESOLVED_SERVER_BASE !== 'undefined' ? RESOLVED_SERVER_BASE : 'https://pranahomeocare.in';
-    return base + '/api/cases.php';
+    return 'https://pranahomeocare.in/prana_case_sheet_app/api/cases.php';
   };
 
   const getFormUrl = () => {
-    if (typeof window !== 'undefined' && window.location && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-      return window.location.origin + '/new_case/case.html';
+    if (typeof window !== 'undefined' && window.location) {
+      const loc = window.location;
+      if (loc.origin.startsWith('capacitor:') || (loc.hostname === 'localhost' && loc.port !== '8080')) {
+        return 'https://pranahomeocare.in/prana_case_sheet_app/new_case/case.html';
+      }
+      if (loc.hostname === 'localhost' && loc.port === '8080') {
+        return loc.origin + '/new_case/case.html';
+      }
+      const pathDir = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1);
+      return loc.origin + pathDir + 'new_case/case.html';
     }
-    const base = typeof RESOLVED_SERVER_BASE !== 'undefined' ? RESOLVED_SERVER_BASE : 'https://pranahomeocare.in';
-    return base + '/new_case/case.html';
+    return 'https://pranahomeocare.in/prana_case_sheet_app/new_case/case.html';
   };
 
   const loadCases = async () => {
