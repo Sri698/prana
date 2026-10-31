@@ -7835,6 +7835,24 @@ async function submitCaseToServer() {
 
   }
 
+  // Attempt 3: Relative path fallback (../api/cases.php)
+  if (!submitSuccess) {
+    try {
+      const res = await fetch("../api/cases.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        const result = await res.json().catch(() => ({}));
+        caseId = result.id || Math.floor(1000 + Math.random() * 9000);
+        submitSuccess = true;
+      }
+    } catch (err3) {
+      console.warn("Relative PHP fallback notice:", err3);
+    }
+  }
+
 
 
   if (submitSuccess) {
