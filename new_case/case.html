@@ -2691,7 +2691,7 @@ body {
 
   gap: 16px;
 
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
 }
 
@@ -5137,6 +5137,191 @@ body {
   padding: 2px 8px;
   border-radius: 999px;
   font-size: 0.70rem;
+}
+
+
+/* ==========================================================================
+   PERFECT TAMIL TYPOGRAPHY, SPACING & ALIGNMENT ENHANCEMENTS
+   ========================================================================== */
+
+/* Universal Tamil typography adjustments */
+[data-lang-mode="ta"] {
+  --font-base: 'Noto Sans Tamil', 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Noto Sans Tamil', 'Outfit', sans-serif;
+}
+
+[data-lang-mode="ta"] body,
+[data-lang-mode="ta"] input,
+[data-lang-mode="ta"] textarea,
+[data-lang-mode="ta"] select,
+[data-lang-mode="ta"] button {
+  font-family: 'Noto Sans Tamil', 'Plus Jakarta Sans', sans-serif !important;
+  letter-spacing: normal !important;
+  word-spacing: 0.02em;
+}
+
+/* Tamil Step Headings & Subtitles */
+[data-lang-mode="ta"] .step-title-en {
+  font-family: 'Noto Sans Tamil', sans-serif;
+  font-size: 1.7rem;
+  line-height: 1.45;
+  letter-spacing: normal !important;
+  font-weight: 800;
+}
+
+[data-lang-mode="ta"] .step-subtitle-en {
+  font-family: 'Noto Sans Tamil', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  letter-spacing: normal !important;
+}
+
+/* Tamil Field Labels & Required Star Alignment */
+[data-lang-mode="ta"] .label-text-en {
+  font-family: 'Noto Sans Tamil', sans-serif !important;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  letter-spacing: normal !important;
+  font-weight: 700;
+}
+
+[data-lang-mode="ta"] .field-label {
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+[data-lang-mode="ta"] .btn-today {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 0.74rem;
+  line-height: 1.1;
+  vertical-align: middle;
+}
+
+/* Sidebar Step List: Multi-line wrapping so Tamil titles never truncate */
+[data-lang-mode="ta"] .step-label-en,
+[data-lang-mode="ta"] .step-item-title {
+  white-space: normal !important;
+  line-height: 1.38;
+  font-size: 0.82rem;
+  font-weight: 650;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  word-break: break-word;
+}
+
+[data-lang-mode="ta"] .step-item-btn {
+  height: auto !important;
+  min-height: 46px;
+  align-items: flex-start;
+  padding: 8px 10px;
+}
+
+[data-lang-mode="ta"] .step-num-badge {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+  white-space: normal !important;
+  line-height: 1.38;
+  font-size: 0.82rem;
+  font-weight: 650;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  word-break: break-word;
+}
+
+[data-lang-mode="ta"] .step-item-btn {
+  min-height: 50px;
+  align-items: flex-start;
+  padding: 8px 12px;
+  gap: 10px;
+}
+
+[data-lang-mode="ta"] .step-item-badge {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+[data-lang-mode="ta"] .sidebar-cat-label {
+  font-size: 0.70rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+
+/* Card Foot Action Bar: Prevents button drop & ensures perfect button alignment */
+.card-foot {
+  flex-wrap: nowrap !important;
+}
+
+.card-foot .foot-helper-text {
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  padding: 0 8px;
+}
+
+[data-lang-mode="ta"] .card-foot .foot-helper-text {
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+
+#prevBtn, #nextBtn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Review Step Table Layout Sizing */
+[data-lang-mode="ta"] .review-card-head {
+  gap: 12px;
+}
+
+[data-lang-mode="ta"] .review-section-title {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  letter-spacing: normal !important;
+}
+
+[data-lang-mode="ta"] .review-item {
+  line-height: 1.55;
+  padding: 10px 0;
+}
+
+[data-lang-mode="ta"] .review-label {
+  font-size: 0.84rem;
+  line-height: 1.5;
+  letter-spacing: normal !important;
+  width: 40%;
+  min-width: 160px;
+}
+
+[data-lang-mode="ta"] .review-val {
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 680px) {
+  .card-foot {
+    flex-wrap: wrap !important;
+    gap: 12px;
+  }
+  .card-foot .foot-helper-text {
+    order: -1;
+    width: 100%;
+    margin-bottom: 4px;
+    font-size: 0.72rem;
+  }
+  #prevBtn, #nextBtn {
+    flex: 1;
+    justify-content: center;
+  }
 }
 
 </style>
