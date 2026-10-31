@@ -18,13 +18,25 @@
 
 
 
+
+
+
+
 <!-- Favicons & App Icons -->
 
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
 
+
+
 <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
 
+
+
+
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+
+
 
 <link rel="apple-touch-icon" href="favicon.png">
 
@@ -53,15 +65,10 @@
 :root {
 
   --primary: #0b5c66;
-
   --primary-hover: #073b42;
-
   --primary-active: #052a30;
-
   --primary-light: #eef6f5;
-
   --primary-glow: rgba(11, 92, 102, 0.28);
-
   --primary-ring: rgba(11, 92, 102, 0.16);
 
   
@@ -4646,6 +4653,492 @@ body {
 
 }
 
+
+/* ==========================================================================
+   EXECUTIVE CLINICAL SUBMISSION CONFIRMATION SUITE
+   ========================================================================== */
+
+.success-screen-wrapper {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 10px 4px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeInSuccess 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInSuccess {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 1. Celebratory Hero Section */
+.success-hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.success-badge-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0b5c66 0%, #073b42 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 14px 30px -4px rgba(11, 92, 102, 0.42), 0 0 0 10px rgba(11, 92, 102, 0.09);
+  margin-bottom: 6px;
+  animation: pulseSuccess 2.6s infinite ease-in-out;
+}
+
+@keyframes pulseSuccess {
+  0%, 100% { transform: scale(1); box-shadow: 0 14px 30px -4px rgba(11, 92, 102, 0.42), 0 0 0 10px rgba(11, 92, 102, 0.09); }
+  50% { transform: scale(1.04); box-shadow: 0 18px 38px -4px rgba(11, 92, 102, 0.52), 0 0 0 14px rgba(11, 92, 102, 0.14); }
+}
+
+.success-badge-icon svg {
+  width: 36px;
+  height: 36px;
+  stroke: #ffffff;
+  stroke-width: 2.5;
+  fill: none;
+}
+
+.success-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(11, 92, 102, 0.08);
+  border: 1.5px solid rgba(11, 92, 102, 0.22);
+  color: var(--primary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .success-tag {
+  background: rgba(25, 158, 140, 0.14);
+  border-color: rgba(25, 158, 140, 0.30);
+  color: #6ee7d5;
+}
+
+.success-tag .pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.25);
+  animation: pulseDot 1.8s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.success-title {
+  font-family: var(--font-heading);
+  font-size: 1.95rem;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.success-desc {
+  font-size: 0.96rem;
+  line-height: 1.62;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 0;
+}
+
+.success-desc strong {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .success-desc strong {
+  color: #6ee7d5;
+}
+
+/* 2. Official Case Reference Voucher Pass */
+.ref-code-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f4f9f8 55%, #fbf7ee 100%);
+  border: 1.5px solid rgba(201, 162, 74, 0.40);
+  border-radius: 22px;
+  padding: 24px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 14px 34px -8px rgba(7, 59, 66, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] .ref-code-card {
+  background: linear-gradient(145deg, #0e1e1c 0%, #122421 60%, #1c2718 100%);
+  border-color: rgba(223, 168, 54, 0.32);
+  box-shadow: 0 14px 34px -8px rgba(0, 0, 0, 0.4);
+}
+
+.ref-code-top-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed rgba(7, 59, 66, 0.15);
+  margin-bottom: 16px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .ref-code-top-strip {
+  border-bottom-color: rgba(25, 158, 140, 0.20);
+}
+
+.ref-code-label {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: block;
+}
+
+.ref-code-value {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1.1;
+  margin: 6px 0 14px;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(11, 92, 102, 0.12);
+}
+
+[data-theme="dark"] .ref-code-value {
+  color: #6ee7d5;
+}
+
+.ref-patient-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.ref-patient-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(11, 92, 102, 0.06);
+  border: 1px solid rgba(11, 92, 102, 0.14);
+  color: var(--text-sub);
+  font-size: 0.80rem;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .ref-patient-pill {
+  background: rgba(25, 158, 140, 0.12);
+  border-color: rgba(25, 158, 140, 0.25);
+  color: var(--text-main);
+}
+
+/* Copy Reference ID Button */
+.btn-copy-ref {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  box-shadow: 0 4px 14px -2px rgba(11, 92, 102, 0.14);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+[data-theme="dark"] .btn-copy-ref {
+  background: #142724;
+  color: #6ee7d5;
+  border-color: #199e8c;
+}
+
+.btn-copy-ref:hover {
+  background: var(--primary);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -3px rgba(11, 92, 102, 0.32);
+}
+
+.btn-copy-ref:active {
+  transform: scale(0.97);
+}
+
+/* 3. High-Impact WhatsApp Doctor Notification Banner */
+.btn-whatsapp-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 22px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #ffffff !important;
+  text-decoration: none !important;
+  box-shadow: 0 10px 26px -4px rgba(37, 211, 102, 0.42), 0 2px 6px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btn-whatsapp-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -4px rgba(37, 211, 102, 0.52);
+  filter: brightness(1.03);
+}
+
+.btn-whatsapp-banner:active {
+  transform: scale(0.99);
+}
+
+.whatsapp-content-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+.whatsapp-icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  backdrop-filter: blur(4px);
+}
+
+.whatsapp-icon-circle svg {
+  width: 24px;
+  height: 24px;
+  fill: #ffffff;
+}
+
+.whatsapp-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.whatsapp-subtitle {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  margin-top: 2px;
+}
+
+.whatsapp-arrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* 4. Secondary Action Buttons (Print / Submit Another) */
+.success-actions-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (max-width: 580px) {
+  .success-actions-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-receipt-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 10px 18px;
+  border-radius: 14px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.btn-receipt-print {
+  background: #ffffff;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  box-shadow: 0 4px 12px -2px rgba(11, 92, 102, 0.08);
+}
+
+[data-theme="dark"] .btn-receipt-print {
+  background: #142724;
+  border-color: #199e8c;
+  color: #6ee7d5;
+}
+
+.btn-receipt-print:hover {
+  background: var(--primary-light);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -2px rgba(11, 92, 102, 0.16);
+}
+
+.btn-receipt-new {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  color: #334155;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .btn-receipt-new {
+  background: #0f1d1b;
+  border-color: #2b4843;
+  color: #b1cdc6;
+}
+
+.btn-receipt-new:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+/* 5. Official Clinic Credentials & Contact Footer Card */
+.clinic-signature-card {
+  background: linear-gradient(135deg, #f8fbfb 0%, #f1f6f6 100%);
+  border: 1.5px solid rgba(11, 92, 102, 0.12);
+  border-radius: 18px;
+  padding: 20px 22px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  text-align: left;
+}
+
+[data-theme="dark"] .clinic-signature-card {
+  background: linear-gradient(135deg, #0e1d1b 0%, #132522 100%);
+  border-color: rgba(25, 158, 140, 0.18);
+}
+
+.clinic-crest-seal {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0b5c66 0%, #073b42 100%);
+  color: #c9a24a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px -3px rgba(11, 92, 102, 0.35);
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.clinic-signature-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.clinic-name {
+  font-family: var(--font-heading);
+  font-size: 0.96rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .clinic-name {
+  color: #6ee7d5;
+}
+
+.clinic-doctor {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.clinic-addr {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.clinic-contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.clinic-contact-link {
+  color: var(--primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.clinic-contact-link:hover {
+  text-decoration: underline;
+}
+
+.clinic-consult-badge {
+  color: var(--accent-gold);
+  background: rgba(201, 162, 74, 0.12);
+  border: 1px solid rgba(201, 162, 74, 0.3);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.70rem;
+}
+
 </style>
 
 </head>
@@ -7373,151 +7866,157 @@ async function submitCaseToServer() {
    ========================================================================== */
 
 function renderSuccessScreen(caseId, patientName, phone) {
-
   const waMsg = encodeURIComponent(
-
     `Hello Dr. Srinivasan, I have submitted my case sheet record on Prana Homeo Care. Case ID: #${caseId}. Patient Name: ${patientName}${phone ? " (Phone: " + phone + ")" : ""}.`
-
   );
+  const waUrl = `https://wa.me/919884223007?text=${waMsg}`;
 
-  const waUrl = `https://wa.me/919962303009?text=${waMsg}`;
-
-
-
+  // Hide default form cards / footers so only the executive certificate is displayed
+  const cardHead = document.querySelector(".card-head");
+  if (cardHead) cardHead.style.display = "none";
   $("cardFoot").style.display = "none";
-
   $("mobileDock").style.display = "none";
 
-  $("stepKicker").textContent = getLangText("SUBMISSION COMPLETE", "சமர்ப்பிப்பு முடிந்தது");
-
-  $("stepTitleEn").textContent = getLangText("Submitted Successfully", "வெற்றிகரமாகச் சமர்ப்பிக்கப்பட்டது");
-
-  $("stepTitleTa").textContent = "";
-
-  $("stepSubtitleEn").textContent = getLangText("Your clinical details have been safely recorded.", "உங்கள் மருத்துவ விவரங்கள் பாதுகாப்பாகப் பதிவு செய்யப்பட்டுள்ளன.");
-
-  $("stepSubtitleTa").textContent = "";
-
-
+  const todayStr = new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
 
   $("formBody").innerHTML = `
-
-    <div class="success-card">
-
-      <div class="success-badge-icon">
-
-        <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-
+    <div class="success-screen-wrapper">
+      <!-- 1. Hero Celebratory Header -->
+      <div class="success-hero">
+        <div class="success-badge-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <div class="success-tag">
+          <span class="pulse-dot"></span>
+          <span>${getLangText("CONFIRMED &amp; FILED CLINICALLY", "உறுதிப்படுத்தப்பட்டு பதிவு செய்யப்பட்டது")}</span>
+        </div>
+        <h2 class="success-title">
+          ${getLangText("Thank you! Your case record has been received.", "நன்றி! உங்கள் மருத்துவப் பதிவு பெறப்பட்டது.")}
+        </h2>
+        <p class="success-desc">
+          ${getLangText(
+            `Dear <strong>${esc(patientName)}</strong>, your detailed clinical case record is safely filed with <strong>Dr. G. Srinivasan M.D(Hom)</strong> at Prana Homeo Care. Our clinic will review your symptoms and reach out to you shortly.`,
+            `அன்புள்ள <strong>${esc(patientName)}</strong>, உங்கள் விரிவான மருத்துவப் பதிவு <strong>மருத்துவர் ஜி. சீனிவாசன் M.D(Hom)</strong> அவர்களிடம் வெற்றிகரமாகப் பதிவு செய்யப்பட்டது. எங்கள் மருத்துவமனை விரைவில் தங்களைத் தொடர்பு கொள்ளும்.`
+          )}
+        </p>
       </div>
 
-      <div class="success-tag">${getLangText("CONFIRMED &amp; RECEIVED", "பெறப்பட்டது")}</div>
+      <!-- 2. Luxury Case Reference Voucher Pass -->
+      <div class="ref-code-card">
+        <div class="ref-code-top-strip">
+          <span><svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;vertical-align:middle;margin-right:4px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> ${getLangText("OFFICIAL CLINICAL RECORD", "அதிகாரப்பூர்வ மருத்துவப் பதிவு")}</span>
+          <span style="color: #16a34a; font-weight: 800;">● ${getLangText("FILED &amp; ENCRYPTED", "பாதுகாப்பாகப் பதிவு")}</span>
+        </div>
 
-      <h2 class="success-title">
-
-        ${getLangText("Thank you! Your case record has been received.", "நன்றி! உங்கள் மருத்துவப் பதிவு பெறப்பட்டது.")}
-
-      </h2>
-
-      <p class="success-desc">
-
-        ${getLangText(
-
-          `Dear <strong>${esc(patientName)}</strong>, your detailed clinical case record is safely filed with <strong>Dr. G. Srinivasan M.D(Hom)</strong> at Prana Homeo Care. Our clinic will review your symptoms and reach out to you shortly.`,
-
-          `அன்புள்ள <strong>${esc(patientName)}</strong>, உங்கள் விரிவான மருத்துவப் பதிவு <strong>டாக்டர் ஜி. சீனிவாசன் M.D(Hom)</strong> அவர்களிடம் பாதுகாப்பாகப் பதிவு செய்யப்பட்டது. எங்கள் மருத்துவக் குழு உங்கள் அறிகுறிகளை ஆய்வு செய்து விரைவில் தொடர்புகொள்வார்கள்.`
-
-        )}
-
-      </p>
-
-
-
-      <div class="ref-code-card" style="background: linear-gradient(135deg, rgba(11, 92, 102, 0.08) 0%, rgba(201, 162, 74, 0.12) 100%); border: 1.5px solid var(--border-medium); border-radius: var(--radius-lg); padding: 22px; margin: 24px 0; text-align: center;">
-        <span class="ref-code-label" style="font-weight: 800; color: var(--text-muted); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;">
-          ${getLangText("YOUR CASE REFERENCE ID", "உங்கள் மருத்துவக் குறிப்பு எண்")}
+        <span class="ref-code-label">
+          ${getLangText("YOUR CASE REFERENCE ID", "உங்கள் வழக்கின் குறிப்பு எண்")}
         </span>
-        <div class="ref-code-value" style="font-size: 2.4rem; font-weight: 900; color: var(--primary); font-family: var(--font-heading); margin: 6px 0 14px;">
+        <div class="ref-code-value">
           #${esc(caseId)}
         </div>
-        <button type="button" class="btn" id="copyRefBtn" style="min-height: 42px; padding: 8px 22px; font-size: 0.88rem; font-weight: 700; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; gap: 8px; margin: 0 auto;">
-          <svg class="svg-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+
+        <div class="ref-patient-pills">
+          <span class="ref-patient-pill">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            ${esc(patientName)}
+          </span>
+          ${phone ? `
+          <span class="ref-patient-pill">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            ${esc(phone)}
+          </span>` : ""}
+          <span class="ref-patient-pill">
+            <svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            ${todayStr}
+          </span>
+        </div>
+
+        <button type="button" class="btn-copy-ref" id="copyRefBtn">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
           <span id="copyRefLabel">${getLangText("Copy Reference ID", "குறிப்பு எண்ணை நகலெடு")}</span>
         </button>
       </div>
 
-      <div class="success-actions-grid" style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
-        <a class="btn btn-whatsapp" href="${waUrl}" target="_blank" rel="noopener" style="min-height: 52px; border-radius: var(--radius-md); font-weight: 800; font-size: 0.98rem; justify-content: center; box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 10px;">
-          <svg class="svg-icon" viewBox="0 0 24 24" style="width: 22px; height: 22px;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
-          <span>${getLangText("Notify Doctor via WhatsApp (+91 98842 23007)", "மருத்துவரை வாட்ஸ்அப்பில் தொடர்பு கொள்ளவும்")}</span>
-        </a>
+      <!-- 3. Direct WhatsApp Doctor Notification Banner -->
+      <a class="btn-whatsapp-banner" href="${waUrl}" target="_blank" rel="noopener">
+        <div class="whatsapp-content-left">
+          <div class="whatsapp-icon-circle">
+            <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+          </div>
+          <div>
+            <div class="whatsapp-title">${getLangText("Notify Doctor via WhatsApp (+91 98842 23007)", "மருத்துவரை வாட்ஸ்அப்பில் தொடர்பு கொள்ளவும்")}</div>
+            <div class="whatsapp-subtitle">${getLangText("Instant priority alert to Dr. Srinivasan's personal clinic desk", "மருத்துவரின் கவனத்திற்கு உடனடி தகவல் அனுப்பப்படும்")}</div>
+          </div>
+        </div>
+        <div class="whatsapp-arrow-pill">
+          <span>${getLangText("Send Alert", "அனுப்பு")}</span>
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;stroke:#ffffff;stroke-width:3;fill:none;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </div>
+      </a>
 
-        <div style="display: flex; gap: 12px; width: 100%;">
-          <button type="button" class="btn" onclick="window.print();" style="flex: 1; min-height: 44px; border-radius: var(--radius-md); font-weight: 700; font-size: 0.88rem; justify-content: center; display: inline-flex; align-items: center; gap: 8px;">
-            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-            <span>${getLangText("Print / Save Record PDF", "பதிவை அச்சிடுக / PDF")}</span>
-          </button>
+      <!-- 4. Secondary Action Buttons (Print / Submit Another) -->
+      <div class="success-actions-row">
+        <button type="button" class="btn-receipt-action btn-receipt-print" onclick="window.print();">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width:18px;height:18px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span>${getLangText("Print / Save Record PDF", "பதிவை அச்சிடுக / PDF")}</span>
+        </button>
 
-          <button type="button" class="btn" id="newCaseBtn" style="flex: 1; min-height: 44px; border-radius: var(--radius-md); font-size: 0.88rem; font-weight: 600; justify-content: center; display: inline-flex; align-items: center; gap: 8px;">
-            <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-            <span>${getLangText("Submit Another Case", "புதிய பதிவு")}</span>
-          </button>
+        <button type="button" class="btn-receipt-action btn-receipt-new" id="newCaseBtn">
+          <svg class="svg-icon" viewBox="0 0 24 24" style="width:18px;height:18px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+          <span>${getLangText("Submit Another Case", "புதிய பதிவு தொடங்க")}</span>
+        </button>
+      </div>
+
+      <!-- 5. Official Clinic Credentials & Contact Footer Card -->
+      <div class="clinic-signature-card">
+        <div class="clinic-crest-seal">
+          PR
+        </div>
+        <div class="clinic-signature-info">
+          <div class="clinic-name">Prana Homeo Care</div>
+          <div class="clinic-doctor">Dr. G. Srinivasan M.D(Hom) · Specialist Paediatric &amp; Classical Constitutional Homeopathy</div>
+          <div class="clinic-addr">Plot no 121, 2/94A Jayalakshmi Nagar, Kattupakkam, Porur, Chennai 600056</div>
+          <div class="clinic-contact-row">
+            <a class="clinic-contact-link" href="tel:+919962303009">
+              <svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span>Helpline: +91 99623 03009</span>
+            </a>
+            <span class="clinic-consult-badge">In-clinic &amp; Global Video Consultations</span>
+          </div>
         </div>
       </div>
-
-
-
-      <div class="clinic-signature-card">
-
-        <div class="clinic-name">Prana Homeo Care</div>
-
-        <div class="clinic-doctor">Dr. G. Srinivasan M.D(Hom) · Specialist Paediatric &amp; Classical Constitutional Homeopathy</div>
-
-        <div class="clinic-addr">Plot no 121, 2/94A Jayalakshmi Nagar, Kattupakkam, Porur, Chennai 600056</div>
-
-        <div class="clinic-contact"><svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Helpline: +91 99623 03009 · In-clinic &amp; Global Video Consultations</div>
-
-      </div>
-
     </div>
-
   `;
 
+  // Attach interactive events
+  const copyBtn = $("copyRefBtn");
+  if (copyBtn) {
+    copyBtn.onclick = () => {
+      const codeToCopy = `#${caseId}`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(codeToCopy).then(() => {
+          $("copyRefLabel").innerHTML = `<span style="color:#16a34a;font-weight:900;">✓ ${getLangText("Copied Reference ID!", "நகலெடுக்கப்பட்டது!")}</span>`;
+          setTimeout(() => {
+            $("copyRefLabel").textContent = getLangText("Copy Reference ID", "குறிப்பு எண்ணை நகலெடு");
+          }, 2400);
+        });
+      }
+    };
+  }
 
-
-  $("copyRefBtn").onclick = () => {
-
-    if (navigator.clipboard) {
-
-      navigator.clipboard.writeText(`#${caseId}`).then(() => {
-
-        $("copyRefLabel").innerHTML = `<svg class="svg-icon" viewBox="0 0 24 24" style="width:13px;height:13px;vertical-align:middle;margin-right:4px;"><polyline points="20 6 9 17 4 12"></polyline></svg> ${getLangText("Copied!", "நகலெடுக்கப்பட்டது!")}`;
-
-        setTimeout(() => { $("copyRefLabel").textContent = getLangText("Copy Reference ID", "குறிப்பு எண்ணை நகலெடு"); }, 2500);
-
-      });
-
-    }
-
-  };
-
-
-
-  const dlBtn = $("downloadBackupBtn"); if (dlBtn) { dlBtn.onclick = () => downloadCaseJSON(caseId, patientName, data); };
-
-
-
-  $("newCaseBtn").onclick = () => {
-
-    localStorage.removeItem(DRAFT_KEY);
-
-    window.location.reload();
-
-  };
-
-
-
-  $("formCard").scrollIntoView({ behavior: "smooth", block: "start" });
-
+  const newBtn = $("newCaseBtn");
+  if (newBtn) {
+    newBtn.onclick = () => {
+      localStorage.removeItem(DRAFT_KEY);
+      data = {};
+      current = 0;
+      const head = document.querySelector(".card-head");
+      if (head) head.style.display = "";
+      $("cardFoot").style.display = "";
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+  }
 }
 
 
