@@ -24,21 +24,21 @@
 
 <!-- Favicons & App Icons -->
 
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
 
 
 
-<link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
-
-
-
-
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
 
 
 
 
-<link rel="apple-touch-icon" href="favicon.png">
+<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+
+
+
+
+<link rel="apple-touch-icon" href="../favicon.png">
 
 
 
@@ -4430,16 +4430,28 @@ body {
 
   }
 
-  .btn-ctrl {
-
+  .btn-ctrl:not(#demoDataBtn) {
     width: 34px;
-
     height: 34px;
-
     min-width: 34px;
-
     padding: 0;
-
+  }
+  #demoDataBtn {
+    width: auto !important;
+    min-width: auto !important;
+    height: 34px !important;
+    padding: 0 10px !important;
+    white-space: nowrap !important;
+    font-size: 0.72rem !important;
+    border-radius: 9999px !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+  #demoDataBtn span {
+    display: inline !important;
+    font-size: 0.72rem !important;
   }
 
 }
@@ -4506,14 +4518,15 @@ body {
 
   }
 
-  .btn-ctrl {
-
+  .btn-ctrl:not(#demoDataBtn) {
     width: 30px;
-
     height: 30px;
-
     min-width: 30px;
-
+  }
+  #demoDataBtn {
+    height: 30px !important;
+    padding: 0 8px !important;
+    font-size: 0.68rem !important;
   }
 
   .doctor-portrait-avatar {
@@ -5347,7 +5360,7 @@ body {
 
       <div class="brand-logo-wrap">
 
-        <img src="logo.png" alt="Prana Homeo Care Logo" class="brand-logo" onerror="if(this.src.indexOf('logo.png')!==-1&&this.src.indexOf('/static/')===-1){this.src='/static/logo.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}" />
+        <img src="../assets/prana_brand_logo.png" alt="Prana Homeo Care Logo" class="brand-logo" onerror="if(this.src.indexOf('prana_brand_logo.png')!==-1){this.src='../favicon.png';}else if(this.src.indexOf('favicon.png')!==-1){this.src='logo.png';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}" />
 
         <div class="logo-fallback" style="display:none;" title="Prana Homeo Care">
 
@@ -5479,7 +5492,7 @@ body {
 
       <div class="doctor-portrait-avatar">
 
-        <img src="srinivas_dr.jpeg" alt="Dr. G. Srinivasan M.D.(Hom)" class="doctor-photo" onerror="if(this.src.indexOf('srinivas_dr.jpeg')!==-1&&this.src.indexOf('/static/')===-1){this.src='/static/srinivas_dr.jpeg';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}" />
+        <img src="../srinivas_dr.jpeg" alt="Dr. G. Srinivasan M.D.(Hom)" class="doctor-photo" onerror="if(this.src.indexOf('srinivas_dr.jpeg')!==-1&&this.src.indexOf('../')!==-1){this.src='srinivas_dr.jpeg';}else if(this.src.indexOf('/srinivas_dr.jpeg')===-1){this.src='/srinivas_dr.jpeg';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}" />
 
         <div class="doctor-photo-fallback" style="display:none;">
 
@@ -5954,6 +5967,15 @@ body {
      ====================================================================== -->
 
 <script>
+// Actively unregister any rogue service worker from older versions to prevent 404 cache errors
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(regs) {
+    for (let reg of regs) {
+      reg.unregister();
+      console.log('Unregistered SW to prevent caching:', reg.scope);
+    }
+  });
+}
 
 /* ==========================================================================
 
